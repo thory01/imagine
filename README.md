@@ -1,6 +1,6 @@
 # Astria Image Generation GUI
 
-A React-based graphical user interface for generating and managing images, inspired by tools like Midjourney and Ideogram.ai. This project includes a gallery view with infinite scrolling, responsive layouts, and a streamlined API for image generation and management.
+A GUI for image generation
 
 ## Table of Contents
 
