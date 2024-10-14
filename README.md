@@ -15,19 +15,9 @@ A GUI for image generation
 - [Contributing](#contributing)
 - [License](#license)
 
-## Features
-
-- **Responsive Layouts**: Fully responsive design optimized for both mobile and desktop devices.
-- **Infinite Scrolling**: Smooth scrolling for loading gallery images and prompts.
-- **Gallery and Prompt Views**: Allows users to view prompts with metadata, like images, and copy prompt metadata.
-- **Masonry Layout**: Image gallery with a clean, grid-based layout.
-- **Deep Links**: Supports deep linking to prompts and images, allowing easy sharing.
-- **API Integration**: Easily integrates with external APIs for image generation and management using Axios.
-- **Like and Download Options**: Users can like images and download prompts directly from the interface.
-
 ## Demo
 
-Check out the live version at: [https://astria.ai/imagine](https://astria.ai/imagine) (URL can be customized upon deployment).
+Check out the live version at: 
 
 ## Installation
 
