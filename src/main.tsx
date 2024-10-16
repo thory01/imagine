@@ -5,7 +5,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Gallery, UsersPrompts, Prompt } from './pages';
-import './index.css'
+import './index.css';
+import { ThemeProvider } from "@/components/theme-provider"
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>,
 )

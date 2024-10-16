@@ -1,10 +1,15 @@
 import React from 'react';
 import WithLayout from '@/components/WithLayout';
+import PromptForm from '@/components/PromptForm';
+import MasonryGallery from '@/components/MansoryGallary';
+import prompts from '@/test';
+
 
 const UsersPrompts: React.FC = () => {
     return (
-        <div>
-            <h1>Users Prompts</h1>
+        <div className='w-full'>
+            <PromptForm />
+            <MasonryGallery initialPrompts={prompts} fetchMoreData={async () => []} />
         </div>
     );
 };
