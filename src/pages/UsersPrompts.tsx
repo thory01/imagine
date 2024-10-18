@@ -37,15 +37,14 @@ const UsersPrompts: React.FC = () => {
     <div className="flex-1 relative bg-white">
       <PromptForm />
       <div className="w-full h-full absolute top-0 flex flex-col overflow-hidden">
-          <div className="max-w-[1140px] w-full mx-auto px-8 pt-28 h-full overflow-y">
+          <div className="max-w-[1140px] w-full mx-auto px-8 pt-28 h-full overflow-auto">
             {error && <p className="text-center text-red-500 mb-4">{error}</p>}
             {prompts.length > 0 &&
               prompts.map((prompt, index) => (
                 <div
                   key={prompt.id || index}
                   ref={index === prompts.length - 1 ? lastPromptElementRef : null}
-                >
-                  <PromptCard prompt={prompt} />
+                >                  <PromptCard prompt={prompt} />
                 </div>
               ))}
             {loading && (

@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { AdjustmentsHorizontalIcon, PhotoIcon } from '@heroicons/react/24/solid';
 import { Textarea } from '@/components/ui/textarea';
-import { Select } from '@/components/ui/select';
+// import { Select } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 const PromptForm: React.FC = () => {
     const [image, setImage] = useState<File | string | null>(null);
-    const [model, setModel] = useState('Flux');
-    const [aspectRatio, setAspectRatio] = useState('16:9');
+    const [model] = useState('Flux');
+    const [aspectRatio] = useState('16:9');
     const [lora, setLora] = useState('');
-    const [stylePreset, setStylePreset] = useState('');
+    const [stylePreset] = useState('');
     const [mask, setMask] = useState<File | null>(null);
     const [controlNet, setControlNet] = useState(false);
     const [showAdvancedControls, setShowAdvancedControls] = useState(false); // Controls visibility of additional options
@@ -70,12 +70,6 @@ const PromptForm: React.FC = () => {
                             className="h-7 w-7 text-gray-500 cursor-pointer"
                             onClick={() => setShowAdvancedControls(!showAdvancedControls)}
                         />
-                        <Select
-                            value={model}
-                            onChange={(e) => setModel(e.target.value)}
-                            options={['Flux', 'Other Model']} // Fetch from /gallery/tunes API
-                            placeholder="Select model"
-                        />
                     </div>
                 </div>
             </div>
@@ -100,24 +94,11 @@ const PromptForm: React.FC = () => {
                         <label htmlFor="aspect-ratio" className="block text-sm font-medium text-gray-700">
                             Aspect Ratio
                         </label>
-                        <Select
-                            value={aspectRatio}
-                            onChange={(e) => setAspectRatio(e.target.value)}
-                            options={['16:9', '4:3', '1:1', 'Custom']} // Optionally handle custom ratios
-                            placeholder="Select aspect ratio"
-                        />
                     </div>
-
                     <div>
                         <label htmlFor="style-preset" className="block text-sm font-medium text-gray-700">
                             Style Preset
                         </label>
-                        <Select
-                            value={stylePreset}
-                            onChange={(e) => setStylePreset(e.target.value)}
-                            options={['Preset 1', 'Preset 2']} // Fetch available presets
-                            placeholder="Select style preset"
-                        />
                     </div>
 
                     <div className="flex items-center gap-2">

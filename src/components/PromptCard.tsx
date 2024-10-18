@@ -28,11 +28,6 @@ const PromptCard: React.FC<{ prompt: Tune }> = React.memo(({ prompt }) => {
               src={image}
               alt={`prompt-${i}`}
               className="object-cover w-full h-auto max-h-[900px]"
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.src =
-                  "https://www.astria.ai/assets/logo-b4e21f646fb5879eb91113a70eae015a7413de8920960799acb72c60ad4eaa99.png";
-              }}
               onClick={() => {
                 navigate(`/prompt/${prompt.id}`, {
                   state: { type: "user", index: i },
