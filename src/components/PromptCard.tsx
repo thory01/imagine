@@ -15,11 +15,11 @@ const PromptCard: React.FC<{ prompt: Tune }> = React.memo(({ prompt }) => {
 
   return (
     <div
-      key={prompt.created_at}
+      key={prompt?.created_at}
       className="mb-[4px] w-full cursor-pointer flex"
     >
       <div className="flex-1 grid grid-cols-4 gap-1 w-full">
-        {prompt.images.map((image: string, i: number) => (
+        {prompt?.images?.map((image: string, i: number) => (
           <div
             key={i}
             className="flex items-center w-full justify-center rounded-lg overflow-hidden"
@@ -45,7 +45,7 @@ const PromptCard: React.FC<{ prompt: Tune }> = React.memo(({ prompt }) => {
       <div className="w-[30%] p-2 flex flex-col text-sm">
         <p className="font-medium">{prompt.text}</p>
         <div className="flex flex-wrap gap-2 mt-2">
-          {displayProperties.map(({ key, label }) => 
+          {displayProperties?.map(({ key, label }) => 
             prompt[key] && (
               <span key={key} className="text-gray-700 font-medium bg-slate-200 px-3 rounded-sm">
                 {label}: {prompt[key]}

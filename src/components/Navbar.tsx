@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 interface NavItem {
   to: string;
@@ -12,23 +13,38 @@ const navItems: NavItem[] = [
 ];
 
 const Navbar: React.FC = () => {
+  const location = useLocation();
+
   return (
-    <nav className="sticky top-0 flex h-screen w-[214px] shrink-0 flex-col items-center justify-between gap-4 overflow-visible bg-light-mode p-5 pb-[calc(20px+env(safe-area-inset-bottom))] pl-[22px] pr-[32px] text-gray-900">
-      <div className="flex w-full grow flex-col select-none items-start gap-3 whitespace-nowrap">
-        <Link to="/" className="mb-4">
-          <span className="text-xl font-bold">Imagine</span>
+    <nav className="sticky top-0 flex h-screen w-60 flex-col items-center justify-between bg-white p-6 shadow-lg">
+      <div className="flex w-full grow flex-col items-center gap-6">
+        <Link to="/" className="mb-8 text-xl font-semibold text-black">
+          Imagine
         </Link>
-        {navItems.map((item) => (
-          <NavLink key={item.to} to={item.to} label={item.label} />
-        ))}
+        <div className="flex flex-col text-center w-full space-y-4">
+          {navItems.map((item) => (
+            <NavLink key={item.to} to={item.to} label={item.label} active={location.pathname === item.to} />
+          ))}
+        </div>
       </div>
+      <footer className="text-sm text-gray-500">© 2024 Imagine</footer>
     </nav>
   );
 };
 
-const NavLink: React.FC<NavItem> = ({ to, label }) => (
-  <Link to={to} className="hover:text-gray-600 transition-colors duration-200">
-    <span>{label}</span>
+interface NavLinkProps extends NavItem {
+  active: boolean;
+}
+
+const NavLink: React.FC<NavLinkProps> = ({ to, label, active }) => (
+  <Link
+    to={to}
+    className={cn(
+      'w-full px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
+      active ? 'bg-gray-900 text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-black'
+    )}
+  >
+    {label}
   </Link>
 );
 

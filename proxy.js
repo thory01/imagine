@@ -22,6 +22,7 @@ const server = http.createServer((req, res) => {
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
     res.writeHead(204); // No content
+    console.log('Preflight request received');
     return res.end();
   }
 

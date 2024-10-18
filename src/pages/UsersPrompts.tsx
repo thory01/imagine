@@ -34,26 +34,22 @@ const UsersPrompts: React.FC = () => {
   });
 
   return (
-    <div className="w-full h-screen flex flex-col overflow-hidden bg-gray-100 scrollbar-hide">
-      <div className="flex-1 h-full relative">
-        <PromptForm />
-        <div className="p-4 absolute top-0 w-full h-screen overflow-auto">
-          <div className="max-w-7xl pt-28 w-full mx-auto overflow-hidden scrollbar-hide">
+    <div className="flex-1 relative bg-white">
+      <PromptForm />
+      <div className="w-full h-full absolute top-0 flex flex-col overflow-hidden">
+          <div className="max-w-[1140px] w-full mx-auto px-8 pt-28 h-full overflow-y">
             {error && <p className="text-center text-red-500 mb-4">{error}</p>}
-            {prompts.length > 1 &&
+            {prompts.length > 0 &&
               prompts.map((prompt, index) => (
                 <div
                   key={prompt.id || index}
-                  className="overflow-hidden"
-                  ref={
-                    index === prompts.length - 1 ? lastPromptElementRef : null
-                  }
+                  ref={index === prompts.length - 1 ? lastPromptElementRef : null}
                 >
                   <PromptCard prompt={prompt} />
                 </div>
               ))}
             {loading && (
-              <div className="grid w-full overflow-clip place-items-center h-full py-4">
+              <div className="grid w-full place-items-center py-4">
                 <Loader2 className="animate-spin text-blue-500" size={24} />
               </div>
             )}
@@ -65,7 +61,6 @@ const UsersPrompts: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
