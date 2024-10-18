@@ -28,8 +28,14 @@ jobs:
       - name: Build project
         run: npm run build
 
+      # Set up Git user
+      - name: Set up Git user
+        run: |
+          git config --global user.name "Macaulay Precious"
+          git config --global user.email "preciousmacaulay001@gmail.com"
+
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         run: npm run deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub will automatically provide this secret
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
