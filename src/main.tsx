@@ -1,10 +1,10 @@
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import { Gallery, UsersPrompts, Prompt } from "./pages";
 import "./index.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   [
     {
       path: "/",
