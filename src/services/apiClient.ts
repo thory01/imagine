@@ -1,9 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
-const BASE_URL = 'https://astria.ai/';
-
 const apiClient: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
