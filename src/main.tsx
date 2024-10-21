@@ -18,10 +18,7 @@ const router = createHashRouter(
       path: "/prompt/:id",
       element: <Prompt />,
     },
-  ],
-  {
-    basename: "/imagine",
-  }
+  ]
 );
 
 createRoot(document.getElementById("root")!).render(
