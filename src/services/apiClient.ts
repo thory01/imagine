@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
-const BASE_URL = 'https://redesigned-space-potato-qg9pj9g9g45299x5-5000.app.github.dev/';
+const BASE_URL = 'https://astria.ai/';
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
