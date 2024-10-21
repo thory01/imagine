@@ -3,6 +3,7 @@ import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 const apiClient: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
 });
 
