@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
           ))}
         </div>
       </div>
-      <footer className="text-sm text-gray-500">© 2024 Imagine</footer>
+      <footer className="text-sm text-gray-500"></footer>
     </nav>
   );
 };

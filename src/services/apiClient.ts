@@ -1,6 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
+const BASE_URL = "https://redesigned-space-potato-qg9pj9g9g45299x5-5000.app.github.dev/"
+
 const apiClient: AxiosInstance = axios.create({
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

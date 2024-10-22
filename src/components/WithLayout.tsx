@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
 import Navbar from './Navbar';
+import TabNavigation from './TabNavigation';
+import AstriaHeader from './AstriaHeader';
 
 interface LayoutProps {
   children: ReactNode;
@@ -7,10 +9,16 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="flex min-h-screen w-full select-text bg-light-mode" >
-      <Navbar />
-      {children}
-    </div>
+    <>
+      {/* <AstriaHeader /> */}
+      <div className="flex justify-center select-text bg-light-mode min-h-screen" >
+        {/* <Navbar /> */}
+        {/* <TabNavigation /> */}
+        <div className="container px-4">
+          {children}
+        </div>
+      </div>
+    </>
   );
 };
 

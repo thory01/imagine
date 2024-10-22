@@ -1,139 +1,224 @@
-import { useState } from 'react';
-import { AdjustmentsHorizontalIcon, PhotoIcon } from '@heroicons/react/24/solid';
+import { useState, useEffect } from 'react';
+import { AdjustmentsHorizontalIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Textarea } from '@/components/ui/textarea';
-// import { Select } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { ModelSelector } from './ModelSelector';
+import { AspectRatioSelector } from './AspectRatioSelector';
+import { ImageUpload } from './ImageUpload';
+import { AdvancedControls } from './AdvancedControls';
+import { createPrompt } from '@/api/prompts';
+import TabNavigation from './TabNavigation';
+import { toast } from 'react-toastify';
+import { useStore } from '@/store/promptStore';
+import AstriaHeader from './AstriaHeader';
 
-const PromptForm: React.FC = () => {
-    const [image, setImage] = useState<File | string | null>(null);
-    const [model] = useState('Flux');
-    const [aspectRatio] = useState('16:9');
+interface PromptFormProps {
+    tabDisplay?: boolean;
+}
+
+const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
+    const [images, setImages] = useState<File[]>([]);
+    const [model, setModel] = useState('Flux');
+    const [aspectRatio, setAspectRatio] = useState('16:9');
     const [lora, setLora] = useState('');
-    const [stylePreset] = useState('');
     const [mask, setMask] = useState<File | null>(null);
     const [controlNet, setControlNet] = useState(false);
-    const [showAdvancedControls, setShowAdvancedControls] = useState(false); // Controls visibility of additional options
+    const [showAdvancedControls, setShowAdvancedControls] = useState(false);
+    const [showImageControls, setShowImageControls] = useState(false);
+    const [promptText, setPromptText] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    // Image upload handler
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files ? e.target.files[0] : null;
-        setImage(file);
+    const { refreshUserPrompts } = useStore();
+
+    const handleSubmit = async () => {
+        if (!promptText.trim()) {
+            toast.error('Please enter a prompt');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const formData = new FormData();
+            formData.append('prompt[text]', promptText);
+            formData.append('prompt[tune_id]', "1504944");
+
+            if (images.length > 0) {
+                images.forEach((image, index) => {
+                    formData.append(`prompt[images][]`, image);
+                });
+            }
+
+            const response = await createPrompt(formData);
+            toast.success('Prompt generated successfully!');
+            refreshUserPrompts();
+            setPromptText('');
+            setImages([]);
+            setShowImageControls(false);
+            setShowAdvancedControls(false);
+        } catch (error) {
+            toast.error('Failed to generate. Please try again.');
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    const handleMaskUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files ? e.target.files[0] : null;
-        setMask(file);
-    };
-
-    const handleSubmit = () => {
-        // Handle form submission logic here
-        console.log({
-            prompt: '', // Extract prompt from the Textarea
-            image,
-            model,
-            lora,
-            aspectRatio,
-            stylePreset,
-            mask,
-            controlNet,
-        });
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && !isLoading) {
+            e.preventDefault();
+            handleSubmit();
+        }
     };
 
     return (
-        <div className="sticky top-0 z-10 w-full bg-gradient-to-b from-white from-35% pt-6">
-            <div className="mx-auto max-w-[1020px] rounded-2xl border bg-white py-3 px-6 shadow-lg">
-                <div className="flex items-center justify-between gap-3 mx-auto">
-                    {/* Image Upload Section */}
-                    <div className="flex gap-2">
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="hidden"
-                            id="image-upload"
-                        />
-                        <label htmlFor="image-upload" className="cursor-pointer">
-                            <PhotoIcon className="h-6 w-6 text-gray-500" />
-                        </label>
-                    </div>
+        <div className="sticky top-0 z-10 w-full bg-gradient-to-b from-[#fafbfc] pb-4 md:pb-6">
+            <AstriaHeader />
+            <div className="px-4 md:px-6 max-w-7xl mx-auto">
+                <Card className="w-full">
+                    <CardContent className="p-0">
+                        <div className="flex flex-col md:flex-row items-stretch">
+                            {/* Main Input Area */}
+                            <div className="flex-1 px-3 md:px-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="flex gap-2">
+                                        <TooltipProvider>
+                                            <Tooltip>
+                                                <TooltipTrigger asChild>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        onClick={() => {
+                                                            setShowAdvancedControls(false);
+                                                            setShowImageControls(!showImageControls);
+                                                        }}
+                                                        className="h-8 w-8"
+                                                    >
+                                                        <PhotoIcon className="h-5 w-5" />
+                                                    </Button>
+                                                </TooltipTrigger>
+                                                <TooltipContent sideOffset={4}>
+                                                    Upload images
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
 
-                    {/* Prompt Input */}
-                    <Textarea
-                        placeholder="Write a prompt"
-                        className="flex-grow h-[24px] resize-none"
-                    />
+                                    </div>
 
-                    {/* Model Selection and Advanced Controls Trigger */}
-                    <div className="flex gap-2 items-center">
-                        <AdjustmentsHorizontalIcon
-                            className="h-7 w-7 text-gray-500 cursor-pointer"
-                            onClick={() => setShowAdvancedControls(!showAdvancedControls)}
-                        />
-                    </div>
+                                    <Textarea
+                                        placeholder="Write a prompt..."
+                                        className="min-h-[44px] h-auto resize-none flex-1 pt-3"
+                                        value={promptText}
+                                        onChange={(e) => setPromptText(e.target.value)}
+                                        onKeyDown={handleKeyDown}
+                                        aria-label="Prompt text"
+                                        rows={1}
+                                    />
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    onClick={() => {
+                                                        setShowImageControls(false);
+                                                        setShowAdvancedControls(!showAdvancedControls);
+                                                    }}
+                                                    className="h-8 w-8"
+                                                >
+                                                    <AdjustmentsHorizontalIcon className="h-5 w-5" />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent sideOffset={4}>
+                                                Advanced settings
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </div>
+
+                                {/* Image Preview */}
+                                {images.length > 0 && (
+                                    <div className="mt-3 flex flex-wrap gap-2">
+                                        {images.map((image, index) => (
+                                            <div key={index} className="relative">
+                                                <img
+                                                    src={URL.createObjectURL(image)}
+                                                    alt={`Upload ${index + 1}`}
+                                                    className="h-16 w-16 object-cover rounded"
+                                                />
+                                                <Button
+                                                    variant="secondary"
+                                                    size="icon"
+                                                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full"
+                                                    onClick={() => {
+                                                        const newImages = [...images];
+                                                        newImages.splice(index, 1);
+                                                        setImages(newImages);
+                                                    }}
+                                                >
+                                                    <XMarkIcon className="h-4 w-4" />
+                                                </Button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Generate Button */}
+                            <Button
+                                onClick={handleSubmit}
+                                disabled={isLoading}
+                                className="m-3 md:m-0 md:w-24 md:rounded-l-none h-auto"
+                            >
+                                {isLoading ? "Generating..." : "Generate"}
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Controls Panels */}
+                <div className="mt-2 space-y-2">
+                    {showImageControls && (
+                        <Card className="w-full">
+                            <CardContent className="p-4">
+                                <ImageUpload
+                                    images={images}
+                                    setImages={setImages}
+                                    removeImage={(index) => {
+                                        const newImages = [...images];
+                                        newImages.splice(index, 1);
+                                        setImages(newImages);
+                                    }}
+                                />
+                            </CardContent>
+                        </Card>
+                    )}
+
+                    {showAdvancedControls && (
+                        <Card className="w-full">
+                            <CardContent className="p-4">
+                                <AdvancedControls
+                                    lora={lora}
+                                    setLora={setLora}
+                                    controlNet={controlNet}
+                                    setControlNet={setControlNet}
+                                    mask={mask}
+                                    setMask={setMask}
+                                    handleSubmit={handleSubmit}
+                                />
+                            </CardContent>
+                        </Card>
+                    )}
                 </div>
             </div>
 
-            {/* Conditionally render additional controls when toggled */}
-            {showAdvancedControls && (
-                <div className="mx-auto max-w-[1020px] rounded-2xl border bg-white py-3 px-6 shadow-lg mt-2 grid grid-cols-2 gap-4">
-                    <div>
-                        <label htmlFor="lora" className="block text-sm font-medium text-gray-700">
-                            LORA Model
-                        </label>
-                        <Input
-                            id="lora"
-                            type="text"
-                            value={lora}
-                            onChange={(e) => setLora(e.target.value)}
-                            placeholder="Enter LORA model"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="aspect-ratio" className="block text-sm font-medium text-gray-700">
-                            Aspect Ratio
-                        </label>
-                    </div>
-                    <div>
-                        <label htmlFor="style-preset" className="block text-sm font-medium text-gray-700">
-                            Style Preset
-                        </label>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                        <label htmlFor="controlnet" className="block text-sm font-medium text-gray-700">
-                            ControlNet
-                        </label>
-                        <input
-                            id="controlnet"
-                            type="checkbox"
-                            checked={controlNet}
-                            onChange={() => setControlNet(!controlNet)}
-                            className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="mask-upload" className="block text-sm font-medium text-gray-700">
-                            Mask (optional)
-                        </label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleMaskUpload}
-                            id="mask-upload"
-                            className="mt-1 block w-full"
-                        />
-                    </div>
-
-                    <div className="mt-6">
-                        <Button onClick={handleSubmit} className="w-full">
-                            Generate
-                        </Button>
-                    </div>
-                </div>
-            )}
+            {tabDisplay && <TabNavigation />}
         </div>
     );
 };

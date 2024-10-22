@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Tune } from "@/types";
+import { Prompt } from "@/types";
 
 export const usePromptNavigation = (
   currentPromptIndex: number,
-  prompts: Tune[],
+  prompts: Prompt[],
   type: string,
   currentImageIndex: number
 ) => {

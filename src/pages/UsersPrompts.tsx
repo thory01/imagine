@@ -5,6 +5,7 @@ import PromptCard from "@/components/PromptCard";
 import PromptForm from "@/components/PromptForm";
 import usePrompts from "@/hooks/usePrompts";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const UsersPrompts: React.FC = () => {
   const { prompts, fetchMoreData } = usePrompts(false);
@@ -12,6 +13,7 @@ const UsersPrompts: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  console.log(prompts);
   const loadMorePrompts = useCallback(async () => {
     if (loading) return;
 
@@ -21,7 +23,7 @@ const UsersPrompts: React.FC = () => {
       const hasMoreData = await fetchMoreData();
       setHasMore(hasMoreData);
     } catch (error) {
-      setError("Failed to load more prompts.");
+      setError("An error occurred while loading more prompts. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -34,32 +36,35 @@ const UsersPrompts: React.FC = () => {
   });
 
   return (
-    <div className="flex-1 relative bg-white">
+    <div className="flex-1 relative">
       <PromptForm />
-      <div className="w-full h-full absolute top-0 flex flex-col overflow-hidden">
-          <div className="max-w-[1140px] w-full mx-auto px-8 pt-28 h-full overflow-auto">
-            {error && <p className="text-center text-red-500 mb-4">{error}</p>}
-            {prompts.length > 0 &&
-              prompts.map((prompt, index) => (
-                <div
-                  key={prompt.id || index}
-                  ref={index === prompts.length - 1 ? lastPromptElementRef : null}
-                >                  <PromptCard prompt={prompt} />
-                </div>
-              ))}
-            {loading && (
-              <div className="grid w-full place-items-center py-4">
-                <Loader2 className="animate-spin text-blue-500" size={24} />
+      <div className="mx-auto overflow-hidden">
+        <InfiniteScroll
+          dataLength={prompts.length}
+          next={loadMorePrompts}
+          hasMore={hasMore}
+          loader={<Loader2 className="mx-auto animate-spin" />}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+          scrollThreshold={0.8}
+          style={{ overflow: "hidden" }}
+        >
+          <div className="grid grid-cols-1">
+            {prompts.map((prompt, index) => (
+              <div
+                key={prompt.id || index}
+                ref={index === prompts.length - 1 ? lastPromptElementRef : null}
+              >
+                <PromptCard prompt={prompt} />
               </div>
-            )}
-            {!hasMore && (
-              <p className="text-center text-gray-500 py-4">
-                You've reached the end!
-              </p>
-            )}
+            ))}
           </div>
-        </div>
+        </InfiniteScroll>
       </div>
+    </div>
   );
 };
 

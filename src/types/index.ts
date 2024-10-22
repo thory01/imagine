@@ -1,4 +1,4 @@
-export interface Tune {
+export interface Prompt {
   id: number;
   callback: string | null;
   trained_at: string;
@@ -23,16 +23,23 @@ export interface Tune {
 }
 
 export interface PromptsState {
-  galleryPrompts: Tune[];
-  userPrompts: Tune[];
+  galleryPrompts: Prompt[];
+  userPrompts: Prompt[];
   galleryOffset: number;
   userOffset: number;
   limit: number;
-  addGalleryPrompts: (prompts: Tune[]) => void;
-  addUserPrompts: (prompts: Tune[]) => void;
+  addGalleryPrompts: (prompts: Prompt[]) => void;
+  addUserPrompts: (prompts: Prompt[]) => void;
+  resetGalleryPrompts: () => void;
+  resetUserPrompts: () => void;
+  refreshGalleryPrompts: () => Promise<void>;
+  refreshUserPrompts: () => Promise<void>;
+  retrieveSinglePrompt: (tuneId: number, promptId: number) => Promise<Prompt>;
+  updateSinglePrompt: (tuneId: number, promptId: number) => Promise<void>;
 }
 
 
 export interface PromptDetailsProps {
-  prompt: Tune;
+  prompt: Prompt;
+  imageUrl: string;
 }
