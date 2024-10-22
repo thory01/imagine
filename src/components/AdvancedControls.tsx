@@ -1,5 +1,5 @@
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+// import { Input } from '@/components/ui/input';
+// import { Button } from '@/components/ui/button';
 
 interface AdvancedControlsProps {
   lora: string;
@@ -12,18 +12,18 @@ interface AdvancedControlsProps {
 }
 
 export const AdvancedControls: React.FC<AdvancedControlsProps> = ({
-  lora,
-  setLora,
+  // lora,
+  // setLora,
   controlNet,
   setControlNet,
-  mask,
-  setMask,
-  handleSubmit,
+  // mask,
+  // setMask,
+  // handleSubmit,
 }) => {
-  const handleMaskUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    setMask(file);
-  };
+  // const handleMaskUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files ? e.target.files[0] : null;
+  //   setMask(file);
+  // };
 
   return (
     <div>

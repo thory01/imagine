@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
-import Navbar from './Navbar';
-import TabNavigation from './TabNavigation';
-import AstriaHeader from './AstriaHeader';
+// import Navbar from './Navbar';
+// import TabNavigation from './TabNavigation';
+// import AstriaHeader from './AstriaHeader';
 
 interface LayoutProps {
   children: ReactNode;

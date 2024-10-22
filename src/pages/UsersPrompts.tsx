@@ -22,8 +22,9 @@ const UsersPrompts: React.FC = () => {
     try {
       const hasMoreData = await fetchMoreData();
       setHasMore(hasMoreData);
-    } catch (error) {
+    } catch (e) {
       setError("An error occurred while loading more prompts. Please try again.");
+      console.error(error);
     } finally {
       setLoading(false);
     }

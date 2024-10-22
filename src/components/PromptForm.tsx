@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AdjustmentsHorizontalIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -9,8 +9,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { ModelSelector } from './ModelSelector';
-import { AspectRatioSelector } from './AspectRatioSelector';
 import { ImageUpload } from './ImageUpload';
 import { AdvancedControls } from './AdvancedControls';
 import { createPrompt } from '@/api/prompts';
@@ -25,8 +23,8 @@ interface PromptFormProps {
 
 const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
     const [images, setImages] = useState<File[]>([]);
-    const [model, setModel] = useState('Flux');
-    const [aspectRatio, setAspectRatio] = useState('16:9');
+    // const [model, setModel] = useState('Flux');
+    // const [aspectRatio, setAspectRatio] = useState('16:9');
     const [lora, setLora] = useState('');
     const [mask, setMask] = useState<File | null>(null);
     const [controlNet, setControlNet] = useState(false);
@@ -50,12 +48,13 @@ const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
             formData.append('prompt[tune_id]', "1504944");
 
             if (images.length > 0) {
-                images.forEach((image, index) => {
+                images.forEach((image) => {
                     formData.append(`prompt[images][]`, image);
                 });
             }
 
             const response = await createPrompt(formData);
+            console.log(response);
             toast.success('Prompt generated successfully!');
             refreshUserPrompts();
             setPromptText('');
