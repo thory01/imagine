@@ -1,4 +1,4 @@
-import { apiClient } from "@/services/apiClient";
+import { apiClient, apiClient2 } from "@/services/apiClient";
 import { Prompt } from "@/types";
 
 export const fetchGalleryPrompts = async (offset: number, limit: number): Promise<Prompt[]> => {
@@ -12,7 +12,7 @@ export const fetchUserPrompts = async (offset: number, limit: number): Promise<P
 };
 
 export const createPrompt = async (formData: FormData): Promise<Prompt> => {
-  const response = await apiClient.post(`/prompts`, formData);
+  const response = await apiClient2.post(`/prompts`, formData);
   return response.data;
 };
 

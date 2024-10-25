@@ -10,6 +10,15 @@ const apiClient: AxiosInstance = axios.create({
   },
 });
 
+// multipart form data api client2
+const apiClient2: AxiosInstance = axios.create({
+  // baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Accept: 'application/json',
+  },
+});
+
 interface ApiResponse<T> {
   data: T;
   status: number;
@@ -54,4 +63,4 @@ const handleApiError = (error: AxiosError): void => {
   }
 };
 
-export { apiClient };
+export { apiClient, apiClient2 }; 
