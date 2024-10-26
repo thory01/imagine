@@ -7,7 +7,7 @@ const apiClient: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
-    "X-CRSF-Token": document.querySelector('meta[name="csrf-token"]')?.getAttribute('content'),
+    "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.getAttribute('content'),
   },
 });
 
