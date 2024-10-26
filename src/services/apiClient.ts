@@ -7,7 +7,7 @@ const apiClient: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
-    "X-CRSFToken": document.querySelector('meta[name="csrf-token"]')?.getAttribute('content'),
+    "X-CRSF-Token": document.querySelector('meta[name="csrf-token"]')?.getAttribute('content'),
   },
 });
 
@@ -17,7 +17,7 @@ const apiClient2: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'multipart/form-data',
     Accept: 'application/json',
-    "X-CRSFToken": document.querySelector('meta[name="csrf-token"]')?.getAttribute('content'),
+    "X-CRSF-Token": document.querySelector('meta[name="csrf-token"]')?.getAttribute('content'),
   },
 });
 
