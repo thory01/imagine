@@ -12,10 +12,10 @@ import {
 import { ImageUpload } from './ImageUpload';
 import { AdvancedControls } from './AdvancedControls';
 import { createPrompt } from '@/api/prompts';
-import TabNavigation from './TabNavigation';
+// import TabNavigation from './TabNavigation';
 import { toast } from 'react-toastify';
 import { useStore } from '@/store/promptStore';
-import AstriaHeader from './AstriaHeader';
+// import AstriaHeader from './AstriaHeader';
 
 interface PromptFormProps {
     tabDisplay?: boolean;
@@ -78,8 +78,8 @@ const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
 
     return (
         <div className="sticky top-0 z-10 w-full bg-gradient-to-b from-[#fafbfc] pb-4 md:pb-6">
-            <AstriaHeader />
-            <div className="px-4 md:px-6 max-w-7xl mx-auto">
+            {/* <AstriaHeader /> */}
+            <div className="px-4 pt-6 md:px-6 max-w-7xl mx-auto">
                 <Card className="w-full">
                     <CardContent className="p-0">
                         <div className="flex flex-col md:flex-row items-stretch">
@@ -217,7 +217,7 @@ const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
                 </div>
             </div>
 
-            {tabDisplay && <TabNavigation />}
+            {tabDisplay && null}
         </div>
     );
 };

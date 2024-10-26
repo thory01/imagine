@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
 
   return (
-    <nav className="sticky top-0 flex h-screen w-60 flex-col items-center justify-between bg-white p-6 shadow-lg">
+    <nav className="sticky top-0 h-screen w-60 flex-col items-center justify-between bg-white p-6 shadow-lg hidden md:flex">
       <div className="flex w-full grow flex-col items-center gap-6">
         <Link to="/" className="mb-8 text-xl font-semibold text-black">
           Imagine
