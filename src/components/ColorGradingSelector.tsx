@@ -9,9 +9,9 @@ import {
 import { cn } from "@/lib/utils";
 
 const colorGradingOptions = [
-  { label: 'Film Velvia', value: 'film-velvia' },
-  { label: 'Film Portra', value: 'film-portra' },
-  { label: 'Ektar', value: 'ektar' },
+  { label: 'Film Velvia', value: 'Film Velvia' },
+  { label: 'Film Portra', value: 'Film Portra' },
+  { label: 'Ektar', value: 'Ektar' },
 ];
 
 interface ColorGradingSelectorProps {

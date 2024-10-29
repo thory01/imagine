@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AdjustmentsHorizontalIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -26,8 +26,8 @@ const PromptForm: React.FC<PromptFormProps> = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [aspectRatio, setAspectRatio] = useState('1:1');
-    const [ width, setWidth ] = useState(1024);
-    const [ height, setHeight ] = useState(1024);
+    const [width, setWidth] = useState(1024);
+    const [height, setHeight] = useState(1024);
     const [controlNet, setControlNet] = useState<string>('');
     const [colorGrading, setColorGrading] = useState<string>('');
     const [filmGrain, setFilmGrain] = useState(false);
@@ -88,6 +88,22 @@ const PromptForm: React.FC<PromptFormProps> = () => {
 
             formData.append('prompt[backend_version]', '1');
 
+            console.log('formData', {
+                promptText,
+                controlNet,
+                colorGrading,
+                superResolution,
+                hiresFix,
+                inpaintFaces,
+                faceCorrect,
+                faceSwap,
+                aspectRatio,
+                denoisingStrength,
+                conditioningScale,
+                numImages,
+                width,
+                height,
+            });
 
             const response = await createPrompt(formData);
             console.log(response);
@@ -110,6 +126,22 @@ const PromptForm: React.FC<PromptFormProps> = () => {
             handleSubmit();
         }
     };
+
+    // enter key to submit
+
+    useEffect(() => {
+        if (promptText.trim() && !isLoading) {
+            const handleKeyDown = (e: KeyboardEvent) => {
+                if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSubmit();
+                }
+            };
+
+            window.addEventListener('keydown', handleKeyDown);
+            return () => window.removeEventListener('keydown', handleKeyDown);
+        }
+    }, [promptText, isLoading, handleSubmit]);
 
     return (
         <div className={`sticky top-0 z-10 w-full bg-gradient-to-b from-[#fafbfc] pb-4 md:pb-6`}>

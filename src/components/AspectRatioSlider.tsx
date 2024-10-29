@@ -15,7 +15,6 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
   className = '',
   onChange,
 }) => {
-  // Update to use the converted aspectData array with predefined aspect ratios
   const aspectRatios = [
     { ratio: '1:2', value: -5 },
     { ratio: '13:25', value: -4 },
@@ -33,14 +32,33 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
   const [sliderValue, setSliderValue] = useState(aspectRatios.find((r) => r.ratio === value)?.value || 0)
   const selectedRatio = aspectRatios.find((r) => r.value === sliderValue)?.ratio || '1:1'
 
-
   const dimensions = useMemo(() => {
     const [width, height] = selectedRatio.split(':').map(Number)
     const aspectRatio = width / height
 
+    // Calculate initial dimensions
+    let calculatedWidth = height > width ? Math.round(baseSize * aspectRatio) : baseSize
+    let calculatedHeight = height > width ? baseSize : Math.round(baseSize / aspectRatio)
+
+    // Round to nearest multiple of 8
+    const roundToMultipleOf8 = (num: number) => Math.round(num / 8) * 8
+
+    calculatedWidth = roundToMultipleOf8(calculatedWidth)
+    calculatedHeight = roundToMultipleOf8(calculatedHeight)
+
+    // Ensure the aspect ratio is maintained as closely as possible
+    // while keeping both dimensions as multiples of 8
+    if (height > width) {
+      // Portrait: adjust width based on height
+      calculatedWidth = roundToMultipleOf8(calculatedHeight * aspectRatio)
+    } else {
+      // Landscape or Square: adjust height based on width
+      calculatedHeight = roundToMultipleOf8(calculatedWidth / aspectRatio)
+    }
+
     return {
-      width: height > width ? Math.round(baseSize * aspectRatio) : baseSize,
-      height: height > width ? baseSize : Math.round(baseSize / aspectRatio),
+      width: calculatedWidth,
+      height: calculatedHeight,
     }
   }, [selectedRatio, baseSize])
 
@@ -87,11 +105,9 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
         />
       </div>
 
-
-
       <div className="flex justify-around mb-6">
         {['Portrait', 'Square', 'Landscape'].map((label, index) => {
-          const value = [-4, 0, 4][index]  // Matching values for Portrait, Square, and Landscape
+          const value = [-4, 0, 4][index]
           return (
             <Button
               key={label}
