@@ -76,7 +76,7 @@ const PromptCard: React.FC<PromptCardProps> = React.memo(({ prompt: initialPromp
         displayPrompt[key] && (
           <span 
             key={key} 
-            className="text-gray-700 font-medium bg-slate-200 px-3 rounded-sm"
+            className="text-gray-700 text-[12px] font-medium bg-slate-200 px-2 rounded-sm"
           >
             {label}: {displayPrompt[key]}
           </span>
@@ -88,7 +88,7 @@ const PromptCard: React.FC<PromptCardProps> = React.memo(({ prompt: initialPromp
   return (
     <div className="mb-[4px] w-full cursor-pointer flex flex-col-reverse md:flex-row">
       {renderImages()}
-      <div className="md:w-[30%] p-2 flex flex-col text-sm">
+      <div className="md:w-[30%] p-2 flex flex-col text-sm text-black">
         <p className="font-medium">{displayPrompt.text}</p>
         {renderProperties()}
       </div>

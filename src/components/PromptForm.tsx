@@ -14,6 +14,7 @@ import { createPrompt } from '@/api/prompts';
 import { toast } from 'react-toastify';
 import { useStore } from '@/store/promptStore';
 import { useImageUpload } from '@/hooks/useImageUpload';
+import { MagicWandIcon } from '@radix-ui/react-icons';
 
 interface PromptFormProps {
     tabDisplay?: boolean;
@@ -211,9 +212,15 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                                     <Button
                                         onClick={handleSubmit}
                                         disabled={isLoading}
-                                        className="m-3 md:m-0 md:w-24 md:rounded-l-none h-full"
+                                        className="md:w-24 md:rounded-l-none h-full"
                                     >
+                                        <span className="hidden md:inline">
                                         {isLoading ? "Generating..." : "Generate"}
+                                        </span>
+                                        {/* use icon for small screens */}
+                                        <span className="inline">
+                                            <MagicWandIcon className="mr-1 w-4 h-4" />
+                                        </span>
                                     </Button>
                                 </div>
 
