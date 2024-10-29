@@ -16,11 +16,19 @@ const Navbar: React.FC = () => {
   const location = useLocation();
 
   return (
-    <nav className="sticky top-0 h-screen w-60 flex-col items-center justify-between bg-white p-6 shadow-lg hidden md:flex">
+    <nav className="sticky top-0 h-screen w-60 flex-col items-center justify-between p-6 bg-none hidden md:flex">
       <div className="flex w-full grow flex-col items-center gap-6">
-        <Link to="/" className="mb-8 text-xl font-semibold text-black">
-          Imagine
-        </Link>
+        {/* Logo and brand */}
+        <div className="flex-shrink-0 my-3">
+          <Link to="/" className="flex items-center">
+            <img
+              src="https://www.astria.ai/assets/logo-b4e21f646fb5879eb91113a70eae015a7413de8920960799acb72c60ad4eaa99.png"
+              alt="Logo"
+              className="h-7 w-7"
+            />
+            <span className="ml-2 text-md font-semibold">Astria Imagine</span>
+          </Link>
+        </div>
         <div className="flex flex-col text-center w-full space-y-4">
           {navItems.map((item) => (
             <NavLink key={item.to} to={item.to} label={item.label} active={location.pathname === item.to} />

@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import Navbar from './Navbar';
+import MobileTabNav from './MobileTabNav';
 // import TabNavigation from './TabNavigation';
 // import AstriaHeader from './AstriaHeader';
 
@@ -13,6 +14,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* <AstriaHeader /> */}
       <div className="flex justify-center select-text bg-light-mode min-h-screen" >
         <Navbar />
+        <MobileTabNav />
         {/* <TabNavigation /> */}
         <div className="container px-4">
           {children}

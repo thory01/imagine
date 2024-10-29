@@ -31,7 +31,7 @@ const Prompt: React.FC = () => {
 
   return (
     <div className="w-full h-screen flex flex-col overflow-hidden">
-      <PromptForm tabDisplay={false} />
+      <PromptForm />
       <div className="flex-1 p-4 overflow-auto">
         <div className="w-full h-full flex flex-col md:flex-row bg-light-mode">
           <PromptImage imageUrl={prompt?.images[index as number]} type={type} setZoomImage={setZoomImage} />

@@ -9,31 +9,45 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { ImageUpload } from './ImageUpload';
 import { AdvancedControls } from './AdvancedControls';
 import { createPrompt } from '@/api/prompts';
-// import TabNavigation from './TabNavigation';
 import { toast } from 'react-toastify';
 import { useStore } from '@/store/promptStore';
-// import AstriaHeader from './AstriaHeader';
+import { useImageUpload } from '@/hooks/useImageUpload';
 
 interface PromptFormProps {
     tabDisplay?: boolean;
 }
 
-const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
-    const [images, setImages] = useState<File[]>([]);
-    // const [model, setModel] = useState('Flux');
-    // const [aspectRatio, setAspectRatio] = useState('16:9');
-    const [lora, setLora] = useState('');
-    const [mask, setMask] = useState<File | null>(null);
-    const [controlNet, setControlNet] = useState(false);
+const PromptForm: React.FC<PromptFormProps> = () => {
     const [showAdvancedControls, setShowAdvancedControls] = useState(false);
     const [showImageControls, setShowImageControls] = useState(false);
     const [promptText, setPromptText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    const [aspectRatio, setAspectRatio] = useState('1:1');
+    const [controlNet, setControlNet] = useState<string>('composition');
+    const [colorGrading, setColorGrading] = useState<string>('');
+    const [filmGrain, setFilmGrain] = useState(false);
+    const [superResolution, setSuperResolution] = useState(false);
+    const [hiresFix, setHiresFix] = useState(false);
+    const [inpaintFaces, setInpaintFaces] = useState(false);
+    const [faceCorrect, setFaceCorrect] = useState(false);
+    const [faceSwap, setFaceSwap] = useState(false);
+
     const { refreshUserPrompts } = useStore();
+
+    const {
+        image,
+        urlImage,
+        uploadError,
+        getRootProps,
+        getInputProps,
+        // setUrl,
+        // handleUrlUpload,
+        clearImage,
+        // isDragActive,
+    } = useImageUpload({});
 
     const handleSubmit = async () => {
         if (!promptText.trim()) {
@@ -47,18 +61,29 @@ const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
             formData.append('prompt[text]', promptText);
             formData.append('prompt[tune_id]', "1504944");
 
-            if (images.length > 0) {
-                images.forEach((image) => {
-                    formData.append(`prompt[images][]`, image);
-                });
+            if (image) {
+                formData.append('prompt[image]', image);
             }
+
+            // add optional settings
+            formData.append('prompt[control_net]', controlNet);
+            formData.append('prompt[color_grading]', colorGrading);
+            formData.append('prompt[super_resolution]', superResolution.toString());
+            formData.append('prompt[hires_fix]', hiresFix.toString());
+            formData.append('prompt[inpaint_faces]', inpaintFaces.toString());
+            formData.append('prompt[face_correct]', faceCorrect.toString());
+            formData.append('prompt[face_swap]', faceSwap.toString());
+            formData.append('prompt[aspect_ratio]', aspectRatio);
+
+            const [width, height] = aspectRatio.split(':').map(Number);
+            formData.append('prompt[w]', (width * 50).toString());
+            formData.append('prompt[h]', (height * 50).toString());
 
             const response = await createPrompt(formData);
             console.log(response);
             toast.success('Prompt generated successfully!');
             refreshUserPrompts();
             setPromptText('');
-            setImages([]);
             setShowImageControls(false);
             setShowAdvancedControls(false);
         } catch (error) {
@@ -77,16 +102,16 @@ const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
     };
 
     return (
-        <div className="sticky top-0 z-10 w-full bg-gradient-to-b from-[#fafbfc] pb-4 md:pb-6">
-            {/* <AstriaHeader /> */}
-            <div className="px-4 pt-6 md:px-6 max-w-7xl mx-auto">
+        <div className={`sticky top-0 z-10 w-full bg-gradient-to-b from-[#fafbfc] pb-4 md:pb-6`}>
+            <div className="px-0 pt-6 md:px-6 max-w-7xl mx-auto">
                 <Card className="w-full">
                     <CardContent className="p-0">
                         <div className="flex flex-col md:flex-row items-stretch">
                             {/* Main Input Area */}
-                            <div className="flex-1 px-3 md:px-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex gap-2">
+                            <div className="flex-1">
+
+                                <div className="flex items-center gap-3 h-12">
+                                    <div className="flex gap-2 mx-2">
                                         <TooltipProvider>
                                             <Tooltip>
                                                 <TooltipTrigger asChild>
@@ -112,7 +137,7 @@ const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
 
                                     <Textarea
                                         placeholder="Write a prompt..."
-                                        className="min-h-[44px] h-auto resize-none flex-1 pt-3"
+                                        className="resize-none flex-1"
                                         value={promptText}
                                         onChange={(e) => setPromptText(e.target.value)}
                                         onKeyDown={handleKeyDown}
@@ -139,85 +164,83 @@ const PromptForm: React.FC<PromptFormProps> = ({ tabDisplay = true }) => {
                                             </TooltipContent>
                                         </Tooltip>
                                     </TooltipProvider>
+
+                                    {/* Generate Button */}
+                                    <Button
+                                        onClick={handleSubmit}
+                                        disabled={isLoading}
+                                        className="m-3 md:m-0 md:w-24 md:rounded-l-none h-full"
+                                    >
+                                        {isLoading ? "Generating..." : "Generate"}
+                                    </Button>
                                 </div>
 
-                                {/* Image Preview */}
-                                {images.length > 0 && (
-                                    <div className="mt-3 flex flex-wrap gap-2">
-                                        {images.map((image, index) => (
-                                            <div key={index} className="relative">
+                                {/* Image Upload */}
+                                {showImageControls && <div className='flex m-2'>
+                                    <div
+                                        {...getRootProps()}
+                                        className="border-2 border-dashed p-1 rounded-lg cursor-pointer transition-all duration-200 w-24 h-24 flex items-center justify-center"
+                                    >
+                                        <input {...getInputProps()} />
+                                        {image || urlImage ? (
+                                            <div className="relative w-full h-full">
                                                 <img
-                                                    src={URL.createObjectURL(image)}
-                                                    alt={`Upload ${index + 1}`}
-                                                    className="h-16 w-16 object-cover rounded"
+                                                    src={image ? URL.createObjectURL(image) : urlImage!}
+                                                    alt="Uploaded"
+                                                    className="object-cover h-full rounded-md"
                                                 />
-                                                <Button
-                                                    variant="secondary"
-                                                    size="icon"
-                                                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full"
-                                                    onClick={() => {
-                                                        const newImages = [...images];
-                                                        newImages.splice(index, 1);
-                                                        setImages(newImages);
-                                                    }}
+                                                <button
+                                                    onClick={clearImage}
+                                                    className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
                                                 >
-                                                    <XMarkIcon className="h-4 w-4" />
-                                                </Button>
+                                                    <XMarkIcon className="h-2 w-2" />
+                                                </button>
                                             </div>
-                                        ))}
+                                        ) : (
+                                            <p className="text-gray-500 text-center text-[12px]">
+                                                Drag, paste, or click to upload image
+                                            </p>
+                                        )}
                                     </div>
-                                )}
-                            </div>
 
-                            {/* Generate Button */}
-                            <Button
-                                onClick={handleSubmit}
-                                disabled={isLoading}
-                                className="m-3 md:m-0 md:w-24 md:rounded-l-none h-auto"
-                            >
-                                {isLoading ? "Generating..." : "Generate"}
-                            </Button>
+                                    {uploadError && <p className="text-red-600 text-sm mt-2">{uploadError}</p>}
+
+                                </div>}
+                            </div>
                         </div>
                     </CardContent>
                 </Card>
 
                 {/* Controls Panels */}
                 <div className="mt-2 space-y-2">
-                    {showImageControls && (
-                        <Card className="w-full">
-                            <CardContent className="p-4">
-                                <ImageUpload
-                                    images={images}
-                                    setImages={setImages}
-                                    removeImage={(index) => {
-                                        const newImages = [...images];
-                                        newImages.splice(index, 1);
-                                        setImages(newImages);
-                                    }}
-                                />
-                            </CardContent>
-                        </Card>
-                    )}
-
                     {showAdvancedControls && (
                         <Card className="w-full">
                             <CardContent className="p-4">
                                 <AdvancedControls
-                                    lora={lora}
-                                    setLora={setLora}
                                     controlNet={controlNet}
                                     setControlNet={setControlNet}
-                                    mask={mask}
-                                    setMask={setMask}
-                                    handleSubmit={handleSubmit}
+                                    colorGrading={colorGrading}
+                                    setColorGrading={setColorGrading}
+                                    filmGrain={filmGrain}
+                                    setFilmGrain={setFilmGrain}
+                                    aspectRatio={aspectRatio}
+                                    setAspectRatio={setAspectRatio}
+                                    superResolution={superResolution}
+                                    setSuperResolution={setSuperResolution}
+                                    hiresFix={hiresFix}
+                                    setHiresFix={setHiresFix}
+                                    inpaintFaces={inpaintFaces}
+                                    setInpaintFaces={setInpaintFaces}
+                                    faceCorrect={faceCorrect}
+                                    setFaceCorrect={setFaceCorrect}
+                                    faceSwap={faceSwap}
+                                    setFaceSwap={setFaceSwap}
                                 />
                             </CardContent>
                         </Card>
                     )}
                 </div>
             </div>
-
-            {tabDisplay && null}
         </div>
     );
 };

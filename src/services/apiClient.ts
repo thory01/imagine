@@ -1,9 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
-// const BASE_URL = "https://redesigned-space-potato-qg9pj9g9g45299x5-5000.app.github.dev/"
+const BASE_URL = "https://redesigned-space-potato-qg9pj9g9g45299x5-5000.app.github.dev/"
 
 const apiClient: AxiosInstance = axios.create({
-  // baseURL: BASE_URL,
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -13,7 +13,7 @@ const apiClient: AxiosInstance = axios.create({
 
 // multipart form data api client2
 const apiClient2: AxiosInstance = axios.create({
-  // baseURL: BASE_URL,
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'multipart/form-data',
     Accept: 'application/json',
