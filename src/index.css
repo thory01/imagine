@@ -24,19 +24,6 @@ body {
   background-color: hsl(225 10% 99%/var(--tw-bg-opacity));
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 @layer base {
   :root {
     --radius: 0.5rem;

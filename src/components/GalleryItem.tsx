@@ -1,5 +1,5 @@
-import React from "react";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react";
+import { Heart } from "lucide-react";
 import { Clipboard } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLike } from "@/hooks/useLike";
@@ -13,8 +13,23 @@ interface GalleryItemProps {
 
 const GalleryItem: React.FC<GalleryItemProps> = ({ prompt, index }) => {
   const navigate = useNavigate();
-  const { isLiked, handleLike } = useLike(false); // Pass initial state as needed
+  const { isLiked: initialIsLiked, handleLike } = useLike(prompt.liked);
   const { isCopied, handleCopy } = useCopy();
+
+  // Local state to track like status and like count
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
+  const [likeCount, setLikeCount] = useState(prompt.prompt_likes_count);
+
+  const toggleLike = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    // Update the like status and like count in the UI
+    setIsLiked((prev) => !prev);
+    setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+
+    // Call the hook's handleLike function to handle backend update
+    handleLike(prompt.id);
+  };
 
   return (
     <div
@@ -44,26 +59,25 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ prompt, index }) => {
             {index + 1}
           </div>
           <div className="text-white flex">
-            <div
-              className={`mr-2 p-2 rounded-full cursor-pointer ${isCopied ? "bg-green-500" : "hover:bg-white hover:bg-opacity-20"
-                }`}
+            <button
+              className={`p-2 rounded-full transition-colors ${isCopied ? "bg-green-500" : "hover:bg-white/20"}`}
               onClick={(e) => {
                 e.stopPropagation();
                 handleCopy(prompt.text);
               }}
+              aria-label="Copy prompt text"
             >
-              <Clipboard size={18} />
-            </div>
-            <div
-              className={`p-2 rounded-full cursor-pointer ${isLiked ? "text-red-500" : "hover:bg-white hover:bg-opacity-20"
-                }`}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleLike(prompt.id);
-              }}
+              <Clipboard className="w-4 h-4" />
+            </button>
+
+            <button
+              className={`p-2 rounded-full transition-colors flex items-center gap-1 ${isLiked ? "text-red-500" : "hover:bg-white/20"}`}
+              onClick={toggleLike}
+              aria-label={isLiked ? "Unlike" : "Like"}
             >
-              <HeartIcon className="h-5 w-5" />
-            </div>
+              <Heart className={`w-4 h-4 ${isLiked ? "fill-current" : ""}`} />
+              <span className="text-xs">{likeCount}</span>
+            </button>
           </div>
         </div>
       </div>

@@ -18,6 +18,8 @@ const Gallery: React.FC<MasonryGalleryProps> = ({
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log({ prompts });
+
   const loadMorePrompts = async () => {
     if (isLoading) return; // Prevent multiple fetches
     setIsLoading(true);

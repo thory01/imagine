@@ -20,6 +20,8 @@ export interface Prompt {
   style: string | null;
   url: string;
   images: string[];
+  prompt_likes_count: number;
+  liked: boolean;
 }
 
 export interface PromptsState {
