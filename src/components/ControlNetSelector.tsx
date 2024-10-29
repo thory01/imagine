@@ -10,18 +10,9 @@ import {
 import { cn } from "@/lib/utils";
 
 const controlNetOptions = [
-  { label: 'Composition', value: 'composition' },
-  { label: 'Reference', value: 'reference' },
-  { label: 'Segroom', value: 'segroom' },
-  { label: 'IP Adapter', value: 'ipadapter' },
-  { label: 'Lineart', value: 'lineart' },
   { label: 'Canny', value: 'canny' },
   { label: 'Depth', value: 'depth' },
-  { label: 'MLSD', value: 'mlsd' },
-  { label: 'HED', value: 'hed' },
   { label: 'Pose', value: 'pose' },
-  { label: 'Tile', value: 'tile' },
-  { label: 'QR', value: 'qr' },
 ];
 
 interface ControlNetSelectorProps {
@@ -31,7 +22,7 @@ interface ControlNetSelectorProps {
 }
 
 const ControlNetSelector: React.FC<ControlNetSelectorProps> = ({
-  value = 'composition',
+  value = '',
   onChange,
   className = '',
 }) => {
@@ -40,27 +31,29 @@ const ControlNetSelector: React.FC<ControlNetSelectorProps> = ({
   };
 
   return (
-    <div className={cn("controlnet-selector", className)}>
-      <label htmlFor="controlnet" className="text-gray-700 text-sm font-medium mb-2 block">
+    <div className={cn("controlnet-selector grid grid-cols-3 items-center", className)}>
+      <label htmlFor="controlnet" className="text-gray-700 text-sm font-medium block">
         ControlNet
       </label>
-      <Select
-        onValueChange={handleValueChange}
-        defaultValue={value}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="Select a model..." />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {controlNetOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <div className="col-span-2">
+        <Select
+          onValueChange={handleValueChange}
+          defaultValue={value}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select a model..." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {controlNetOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 };

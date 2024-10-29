@@ -6,21 +6,22 @@ interface AspectRatioSliderProps {
   value?: string
   baseSize?: number
   className?: string
-  onChange?: (ratio: string) => void
+  onChange?: (ratio: string, width: number, height: number) => void
 }
 
 const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
   value,
-  baseSize = 300,
+  baseSize = 1024,
   className = '',
   onChange,
 }) => {
+  // Update to use the converted aspectData array with predefined aspect ratios
   const aspectRatios = [
     { ratio: '1:2', value: -5 },
-    { ratio: '9:16', value: -4 },   // Portrait
-    { ratio: '2:3', value: -3 },
-    { ratio: '3:4', value: -2 },
-    { ratio: '5:6', value: -1 },
+    { ratio: '13:25', value: -4 },
+    { ratio: '4:7', value: -3 },
+    { ratio: '3:5', value: -2 },
+    { ratio: '17:25', value: -1 },
     { ratio: '1:1', value: 0 },     // Square
     { ratio: '6:5', value: 1 },
     { ratio: '4:3', value: 2 },
@@ -32,10 +33,6 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
   const [sliderValue, setSliderValue] = useState(aspectRatios.find((r) => r.ratio === value)?.value || 0)
   const selectedRatio = aspectRatios.find((r) => r.value === sliderValue)?.ratio || '1:1'
 
-  const handleSliderChange = (value: number) => {
-    setSliderValue(value)
-    onChange?.(aspectRatios.find((r) => r.value === value)?.ratio || '1:1')
-  }
 
   const dimensions = useMemo(() => {
     const [width, height] = selectedRatio.split(':').map(Number)
@@ -47,6 +44,12 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
     }
   }, [selectedRatio, baseSize])
 
+  const handleSliderChange = (value: number) => {
+    setSliderValue(value)
+    onChange?.(aspectRatios.find((r) => r.value === value)?.ratio || '1:1',
+      dimensions.width, dimensions.height)
+  }
+
   const handleReset = () => {
     handleSliderChange(0)
   }
@@ -56,13 +59,6 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-sm font-medium text-gray-800">Aspect Ratio</h2>
         <div className="flex items-center gap-2">
-          <div
-            className="border border-gray-300 rounded-md shadow-sm"
-            style={{
-              width: dimensions.width / 10,
-              height: dimensions.height / 10,
-            }}
-          />
           <Button
             variant="ghost"
             size="sm"
@@ -73,6 +69,25 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
           </Button>
         </div>
       </div>
+
+      <div style={{
+        width: '100%',
+        height: (baseSize / 12) + 'px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: '1rem',
+      }}>
+        <div
+          className="border border-gray-300 rounded-md shadow-sm"
+          style={{
+            width: dimensions.width / 12,
+            height: dimensions.height / 12,
+          }}
+        />
+      </div>
+
+
 
       <div className="flex justify-around gap-4 mb-6">
         {['Portrait', 'Square', 'Landscape'].map((label, index) => {

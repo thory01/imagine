@@ -30,10 +30,11 @@ const ColorGradingSelector: React.FC<ColorGradingSelectorProps> = ({
   };
 
   return (
-    <div className={cn("color-grading-selector flex flex-col", className)}>
+    <div className={cn("color-grading-selector grid grid-cols-3 items-center", className)}>
       <label htmlFor="color-grading" className="text-gray-700 text-sm font-medium mb-2">
         Color Grading
       </label>
+      <div className="col-span-2">
       <Select
         onValueChange={handleValueChange}
         defaultValue={value}
@@ -49,6 +50,7 @@ const ColorGradingSelector: React.FC<ColorGradingSelectorProps> = ({
           ))}
         </SelectContent>
       </Select>
+      </div>
     </div>
   );
 };

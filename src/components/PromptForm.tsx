@@ -26,7 +26,9 @@ const PromptForm: React.FC<PromptFormProps> = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [aspectRatio, setAspectRatio] = useState('1:1');
-    const [controlNet, setControlNet] = useState<string>('composition');
+    const [ width, setWidth ] = useState(1024);
+    const [ height, setHeight ] = useState(1024);
+    const [controlNet, setControlNet] = useState<string>('');
     const [colorGrading, setColorGrading] = useState<string>('');
     const [filmGrain, setFilmGrain] = useState(false);
     const [superResolution, setSuperResolution] = useState(false);
@@ -34,6 +36,9 @@ const PromptForm: React.FC<PromptFormProps> = () => {
     const [inpaintFaces, setInpaintFaces] = useState(false);
     const [faceCorrect, setFaceCorrect] = useState(false);
     const [faceSwap, setFaceSwap] = useState(false);
+    const [denoisingStrength, setDenoisingStrength] = useState(0.5);
+    const [conditioningScale, setConditioningScale] = useState(0.5);
+    const [numImages, setNumImages] = useState(4);
 
     const { refreshUserPrompts } = useStore();
 
@@ -75,9 +80,12 @@ const PromptForm: React.FC<PromptFormProps> = () => {
             formData.append('prompt[face_swap]', faceSwap.toString());
             formData.append('prompt[aspect_ratio]', aspectRatio);
 
-            const [width, height] = aspectRatio.split(':').map(Number);
-            formData.append('prompt[w]', (width * 50).toString());
-            formData.append('prompt[h]', (height * 50).toString());
+            formData.append('prompt[denoising_strength]', denoisingStrength.toString());
+            formData.append('prompt[conditioning_scale]', conditioningScale.toString());
+            formData.append('prompt[num_images]', numImages.toString());
+            formData.append('prompt[w]', width.toString());
+            formData.append('prompt[h]', height.toString());
+            
 
             const response = await createPrompt(formData);
             console.log(response);
@@ -235,6 +243,14 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                                     setFaceCorrect={setFaceCorrect}
                                     faceSwap={faceSwap}
                                     setFaceSwap={setFaceSwap}
+                                    denoisingStrength={denoisingStrength}
+                                    setDenoisingStrength={setDenoisingStrength}
+                                    conditioningScale={conditioningScale}
+                                    setConditioningScale={setConditioningScale}
+                                    numImages={numImages}
+                                    setNumImages={setNumImages}
+                                    setWidth={setWidth}
+                                    setHeight={setHeight}
                                 />
                             </CardContent>
                         </Card>
