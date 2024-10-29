@@ -64,7 +64,7 @@ export const AdvancedControls: React.FC<AdvancedControlsProps> = ({
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 border rounded-lg overflow-auto h-[400px] scrollbar shadow-lg dark:bg-zinc-900 dark:border-zinc-800">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 overflow-auto h-[400px] scrollbar dark:bg-zinc-900 dark:border-zinc-800">
       <AspectRatioSlider
         value={aspectRatio}
         baseSize={1024}

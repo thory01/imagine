@@ -85,7 +85,9 @@ const PromptForm: React.FC<PromptFormProps> = () => {
             formData.append('prompt[num_images]', numImages.toString());
             formData.append('prompt[w]', width.toString());
             formData.append('prompt[h]', height.toString());
-            
+
+            formData.append('prompt[backend_version]', '1');
+
 
             const response = await createPrompt(formData);
             console.log(response);

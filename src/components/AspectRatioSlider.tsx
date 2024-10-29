@@ -55,7 +55,7 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
   }
 
   return (
-    <div className={`w-full max-w-md ${className} p-6 bg-gray-50 rounded-lg shadow-sm`}>
+    <div className={`w-full ${className} p-6 bg-gray-50 rounded-lg shadow-sm`}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-sm font-medium text-gray-800">Aspect Ratio</h2>
         <div className="flex items-center gap-2">
@@ -89,15 +89,15 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
 
 
 
-      <div className="flex justify-around gap-4 mb-6">
+      <div className="flex justify-around mb-6">
         {['Portrait', 'Square', 'Landscape'].map((label, index) => {
           const value = [-4, 0, 4][index]  // Matching values for Portrait, Square, and Landscape
           return (
             <Button
               key={label}
-              variant="outline"
+              variant="ghost"
               size="sm"
-              className={`px-3 ${sliderValue === value ? 'bg-gray-200 text-gray-800' : 'text-gray-500'} hover:bg-gray-300`}
+              className={`px-2 ${sliderValue === value ? 'bg-gray-200 text-gray-800' : 'text-gray-500'} hover:bg-gray-300`}
               onClick={() => handleSliderChange(value)}
             >
               {label}
