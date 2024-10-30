@@ -17,6 +17,15 @@ const navItems: NavItem[] = [
 const Navbar: React.FC = () => {
   const location = useLocation();
 
+  const computeActive = (path: string) => {
+    if (location.state?.type === "user") {
+      return '/' === path
+    } else if (location.state?.type === "gallery") {
+      return '/gallery' === path
+    }
+    return location.pathname === path;
+  }
+
   return (
     <nav className="sticky top-0 h-screen w-20 lg:w-60 flex-col items-center justify-between p-4 bg-none hidden md:flex">
       <div className="flex w-full grow flex-col items-center gap-6">
@@ -38,8 +47,7 @@ const Navbar: React.FC = () => {
               to={item.to}
               label={item.label}
               Icon={item.Icon}
-              active={location.pathname === item.to}
-
+              active={computeActive(item.to)}
             />
           ))}
         </div>
