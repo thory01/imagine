@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { useStore } from '@/store/promptStore';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { MagicWandIcon } from '@radix-ui/react-icons';
+import usePaste from '@/hooks/usePaste';
 
 interface PromptFormProps {
     tabDisplay?: boolean;
@@ -24,6 +25,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
     const [showAdvancedControls, setShowAdvancedControls] = useState(false);
     const [showImageControls, setShowImageControls] = useState(false);
     const [promptText, setPromptText] = useState('');
+    const [loraTextList, setLoraTextList] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const [aspectRatio, setAspectRatio] = useState('1:1');
@@ -40,6 +42,57 @@ const PromptForm: React.FC<PromptFormProps> = () => {
     const [denoisingStrength, setDenoisingStrength] = useState(0.5);
     const [conditioningScale, setConditioningScale] = useState(0.5);
     const [numImages, setNumImages] = useState(4);
+
+    usePaste((pasteText, pasteObject) => {
+        console.log('Paste di:', pasteText, pasteObject);
+        if (pasteText) {
+            setPromptText((prev) => {
+                console.log('prev:', prev);
+                return pasteText;
+            });
+        }
+        if (pasteObject) {
+            if (pasteObject.controlnet) {
+                setControlNet(pasteObject.controlnet);
+            }
+            if (pasteObject.color_grading) {
+                setColorGrading(pasteObject.color_grading);
+            }
+            if (pasteObject.super_resolution === 'true' || pasteObject.super_resolution === 'false') {
+                setSuperResolution(pasteObject.super_resolution === 'true');
+            }
+            if (pasteObject.hires_fix === 'true' || pasteObject.hires_fix === 'false') {
+                setHiresFix(pasteObject.hires_fix === 'true');
+            }
+            if (pasteObject.inpaint_faces === 'true' || pasteObject.inpaint_faces === 'false') {
+                setInpaintFaces(pasteObject.inpaint_faces === 'true');
+            }
+            if (pasteObject.face_correct === 'true' || pasteObject.face_correct === 'false') {
+                setFaceCorrect(pasteObject.face_correct === 'true');
+            }
+            if (pasteObject.face_swap === 'true' || pasteObject.face_swap === 'false') {
+                setFaceSwap(pasteObject.face_swap === 'true');
+            }
+            if (pasteObject.ar) {
+                setAspectRatio(pasteObject.ar);
+            }
+            if (!isNaN(parseFloat(pasteObject.denoising_strength))) {
+                setDenoisingStrength(parseFloat(pasteObject.denoising_strength));
+            }
+            if (!isNaN(parseFloat(pasteObject.controlnet_conditioning_scale))) {
+                setConditioningScale(parseFloat(pasteObject.controlnet_conditioning_scale));
+            }
+            if (!isNaN(parseInt(pasteObject.num_images))) {
+                setNumImages(parseInt(pasteObject.num_images));
+            }
+            if (!isNaN(parseInt(pasteObject.w))) {
+                setWidth(parseInt(pasteObject.w));
+            }
+            if (!isNaN(parseInt(pasteObject.h))) {
+                setHeight(parseInt(pasteObject.h));
+            }
+        }
+    });
 
     const { refreshUserPrompts } = useStore();
 
@@ -181,7 +234,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                                     <Textarea
                                         placeholder="Write a prompt..."
                                         className="resize-none flex-1"
-                                        value={promptText}
+                                        value={`${promptText}`}
                                         onChange={(e) => setPromptText(e.target.value)}
                                         onKeyDown={handleKeyDown}
                                         aria-label="Prompt text"
@@ -215,7 +268,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                                         className="md:w-24 md:rounded-l-none h-full"
                                     >
                                         <span className="hidden md:inline">
-                                        {isLoading ? "Generating..." : "Generate"}
+                                            {isLoading ? "Generating..." : "Generate"}
                                         </span>
                                         {/* use icon for small screens */}
                                         <span className="inline">
@@ -292,6 +345,9 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                                     setNumImages={setNumImages}
                                     setWidth={setWidth}
                                     setHeight={setHeight}
+                                    loraTextList={loraTextList}
+                                    setLoraTextList={setLoraTextList}
+                                    setPromptText={setPromptText}
                                 />
                             </CardContent>
                         </Card>

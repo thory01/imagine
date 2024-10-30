@@ -22,6 +22,44 @@ export interface Prompt {
   images: string[];
   prompt_likes_count: number;
   liked: boolean;
+
+  // New properties added
+  w: number | null; // Width
+  h: number | null; // Height
+  scheduler: string | null;
+  color_grading: boolean;
+  film_grain: boolean;
+  only_upscale: boolean;
+  tiled_upscale: boolean;
+  hires_fix: boolean;
+  face_correct: boolean;
+  face_swap: boolean;
+  inpaint_faces: boolean;
+  is_multiperson: boolean;
+  prompt_expansion: boolean;
+  theme: string | null;
+  input_image: string | null;
+  mask_image: string | null;
+  controlnet: boolean;
+  use_lpw: boolean;
+}
+
+export interface Tune {
+  id: number;
+  callback: string | null;
+  created_at: string;
+  eta: string;
+  expires_at: string;
+  is_api: boolean;
+  model_type: string;
+  name: string;
+  orig_images: string[];
+  started_training_at: string;
+  title: string;
+  token: string;
+  trained_at: string;
+  updated_at: string;
+  url: string;
 }
 
 export interface PromptsState {

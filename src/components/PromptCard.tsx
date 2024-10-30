@@ -5,17 +5,39 @@ import { useStore } from "@/store/promptStore";
 import { Prompt } from "@/types";
 import usePromptPolling from "@/hooks/usePromptPolling";
 
-
 type PromptKeys = keyof Prompt;
 
 interface DisplayProperty {
   key: PromptKeys;
   label: string;
+  extraText?: string; // For any additional static text
+  link?: string; // Optional link if the property needs documentation
 }
 
 const displayProperties: DisplayProperty[] = [
   { key: 'ar', label: 'Aspect Ratio' },
   { key: 'style', label: 'Style' },
+  { key: 'cfg_scale', label: 'Scale' },
+  { key: 'seed', label: 'Seed' },
+  { key: 'steps', label: 'Steps' },
+  { key: 'w', label: 'Size', extraText: 'x', link: '' },  // Adjust size display as needed
+  { key: 'scheduler', label: 'Scheduler' },
+  { key: 'color_grading', label: 'Color Grading' },
+  { key: 'film_grain', label: 'Film Grain' },
+  { key: 'super_resolution', label: 'Super-Resolution' },
+  { key: 'only_upscale', label: 'Upscale', link: 'https://docs.astria.ai/docs/use-cases/upscale' },
+  { key: 'tiled_upscale', label: 'Tiled Upscale', link: 'https://docs.astria.ai/docs/features/tiled-upscale' },
+  { key: 'hires_fix', label: 'HiRes Fix' },
+  { key: 'face_correct', label: 'Face Correct' },
+  { key: 'face_swap', label: 'Face Swap', link: 'https://docs.astria.ai/docs/features/face-swap' },
+  { key: 'inpaint_faces', label: 'Inpaint Faces', link: 'https://docs.astria.ai/docs/features/face-inpainting' },
+  { key: 'is_multiperson', label: 'Multiperson' }, // This would require additional logic for multi-person vs multi-pass
+  { key: 'prompt_expansion', label: 'Prompt Expansion' },
+  { key: 'theme', label: 'Theme' },
+  { key: 'input_image', label: 'Image' },
+  { key: 'mask_image', label: 'Mask' },
+  { key: 'controlnet', label: 'ControlNet', link: 'https://docs.astria.ai/docs/use-cases/controlnet' },
+  { key: 'use_lpw', label: 'Weighted' },
 ];
 
 interface PromptCardProps {
@@ -26,10 +48,7 @@ const PromptCard: React.FC<PromptCardProps> = React.memo(({ prompt: initialPromp
   const navigate = useNavigate();
   const { retrieveSinglePrompt, updateSinglePrompt } = useStore();
 
-  // Use the custom polling hook and get the latest retrieved prompt
   const retrievedPrompt = usePromptPolling(initialPrompt, retrieveSinglePrompt, updateSinglePrompt);
-  
-  // Use retrieved prompt if available, otherwise use initial prompt
   const displayPrompt = retrievedPrompt || initialPrompt;
 
   const handleImageClick = (index: number) => {
@@ -72,25 +91,39 @@ const PromptCard: React.FC<PromptCardProps> = React.memo(({ prompt: initialPromp
 
   const renderProperties = () => (
     <div className="flex flex-wrap gap-2 mt-2">
-      {displayProperties.map(({ key, label }) =>
-        displayPrompt[key] && (
-          <span 
-            key={key} 
+      {displayProperties.map(({ key, label, extraText, link }) => {
+        const value = displayPrompt[key];
+        if (!value) return null;
+
+        return (
+          <span
+            key={key}
             className="text-gray-700 text-[12px] font-medium bg-slate-200 px-2 rounded-sm"
           >
-            {label}: {displayPrompt[key]}
+            {label}: {value}{extraText || ''}
+            {link && (
+              <a href={link} className="text-blue-500 underline ml-1" target="_blank" rel="noopener noreferrer">
+                Docs
+              </a>
+            )}
           </span>
-        )
-      )}
+        );
+      })}
     </div>
   );
 
   return (
     <div className="mb-[4px] w-full cursor-pointer flex flex-col-reverse md:flex-row">
       {renderImages()}
+
       <div className="md:w-[30%] p-2 flex flex-col text-sm text-black">
-        <p className="font-medium">{displayPrompt.text}</p>
-        {renderProperties()}
+        <div className="flex-1">
+          <p className="font-medium">{displayPrompt.text?.length > 100 ? (displayPrompt.text?.slice(0, 100) + '...') : displayPrompt.text}</p>
+          {renderProperties()}
+        </div>
+        <div>
+          sjndsjdnjsn
+        </div>
       </div>
     </div>
   );

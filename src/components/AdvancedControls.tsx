@@ -3,6 +3,7 @@ import AspectRatioSlider from "./AspectRatioSlider";
 import ControlNetSelector from "./ControlNetSelector";
 import { Switch } from "./ui/switch";
 import ColorGradingSelector from "./ColorGradingSelector";
+import AddLoraText from "./AddLoraText";
 
 interface AdvancedControlsProps {
   aspectRatio: string;
@@ -31,6 +32,9 @@ interface AdvancedControlsProps {
   setConditioningScale: (value: number) => void;
   numImages: number;
   setNumImages: (value: number) => void;
+  loraTextList: string[];
+  setLoraTextList: React.Dispatch<React.SetStateAction<string[]>>;
+  setPromptText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const AdvancedControls: React.FC<AdvancedControlsProps> = ({
@@ -60,6 +64,9 @@ export const AdvancedControls: React.FC<AdvancedControlsProps> = ({
   setNumImages,
   setWidth,
   setHeight,
+  loraTextList,
+  setLoraTextList,
+  setPromptText,
 }) => {
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
 
@@ -77,6 +84,13 @@ export const AdvancedControls: React.FC<AdvancedControlsProps> = ({
       />
 
       <div className="grid grid-cols-1 gap-4">
+        <AddLoraText loraTextList={loraTextList} setLoraTextList={setLoraTextList} onSelect={(tune) => {
+          setPromptText((prevText) => `<lora:${tune.id}:1> ${prevText}`);
+        }} onRemove={
+          (loraText) => {
+            setPromptText((prevText) => prevText.replace(loraText, ""));
+          }
+        } />
         <ControlNetSelector value={controlNet} onChange={(model) => setControlNet(model)} />
         <ColorGradingSelector value={colorGrading} onChange={(grading) => setColorGrading(grading)} />
 

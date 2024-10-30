@@ -28,3 +28,12 @@ export const likePrompt = async (promptId: number) => {
     return true;
   }
 };
+
+export const getTunes = async (
+  page: number,
+  limit: number,
+  searchQuery: string
+) => {
+  const response = await apiClient.get(`/tunes?branch=flux1&model_type=lora&page=${page}&limit=${limit}&title=${searchQuery}`);
+  return response.data;
+};

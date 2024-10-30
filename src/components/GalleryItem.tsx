@@ -63,7 +63,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ prompt, index }) => {
               className={`p-2 rounded-full transition-colors ${isCopied ? "bg-green-500" : "hover:bg-white/20"}`}
               onClick={(e) => {
                 e.stopPropagation();
-                handleCopy(prompt.text);
+                handleCopy(prompt);
               }}
               aria-label="Copy prompt text"
             >
