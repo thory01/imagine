@@ -14,7 +14,6 @@ import { createPrompt } from '@/api/prompts';
 import { toast } from 'react-toastify';
 import { useStore } from '@/store/promptStore';
 import { useImageUpload } from '@/hooks/useImageUpload';
-import { MagicWandIcon } from '@radix-ui/react-icons';
 import usePaste from '@/hooks/usePaste';
 import { SendIcon } from 'lucide-react';
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { X, Loader2 } from "lucide-react";
+import React, { useState } from "react";
+import { Loader2 } from "lucide-react";
 import { Dialog, DialogOverlay, DialogContent, DialogClose } from "@/components/ui/dialog";
 
 type ImageZoomProps = {
