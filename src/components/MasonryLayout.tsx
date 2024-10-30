@@ -7,6 +7,7 @@ interface MasonryLayoutProps {
 
 const breakpointColumnsObj = {
   default: 4,
+  2560: 5,
   1100: 4,
   700: 3,
   500: 2,

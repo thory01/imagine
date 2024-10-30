@@ -23,18 +23,40 @@ const Prompt: React.FC = () => {
 
   const navigate = useNavigate();
 
+  // Capture phase listener to override Escape behavior
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      e.preventDefault(); // Prevent default behavior, if any
+      console.log("Escape key pressed - overridden by parent");
+      console.log("Custom Escape action");
+      if (zoomImage) {
+        setZoomImage(false);
+      } else {
+        navigate(type === "gallery" ? "/gallery" : "/");
+      }
+    }
+  }
+
   useEffect(() => {
     if (!prompt) {
       navigate("/gallery");
     }
-  }, [prompt, navigate]);
+
+    // Adding the Escape key listener in the capture phase
+    window.addEventListener("keydown", handleKeyDown, { capture: true });
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown, { capture: true });
+    };
+  }, [prompt, navigate, zoomImage]); // Keep dependencies minimal
 
   return (
     <div className="w-full h-screen flex flex-col overflow-hidden">
       <PromptForm />
       <div className="flex-1 p-4 overflow-auto">
         <div className="w-full h-full flex flex-col md:flex-row bg-light-mode">
-          <PromptImage imageUrl={prompt?.images[index as number]} type={type} setZoomImage={setZoomImage} />
+          <PromptImage imageUrl={prompt?.images[index as number]} type={type} setDisplay={setZoomImage} />
           <PromptDetails prompt={prompt} imageUrl={prompt?.images[index as number]} />
         </div>
       </div>

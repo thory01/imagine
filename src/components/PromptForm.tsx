@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AdjustmentsHorizontalIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { AdjustmentsHorizontalIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -16,6 +16,7 @@ import { useStore } from '@/store/promptStore';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { MagicWandIcon } from '@radix-ui/react-icons';
 import usePaste from '@/hooks/usePaste';
+import { SendIcon } from 'lucide-react';
 
 interface PromptFormProps {
     tabDisplay?: boolean;
@@ -175,7 +176,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && !isLoading) {
+        if (e.key === 'Enter' && !isLoading) {
             e.preventDefault();
             handleSubmit();
         }
@@ -186,7 +187,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
     useEffect(() => {
         if (promptText.trim() && !isLoading) {
             const handleKeyDown = (e: KeyboardEvent) => {
-                if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                if (e.key === 'Enter') {
                     e.preventDefault();
                     handleSubmit();
                 }
@@ -250,7 +251,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                                                         setShowImageControls(false);
                                                         setShowAdvancedControls(!showAdvancedControls);
                                                     }}
-                                                    className="h-8 w-8"
+                                                    className="h-8 w-8 mr-0 md:mr-2"
                                                 >
                                                     <AdjustmentsHorizontalIcon className="h-5 w-5" />
                                                 </Button>
@@ -265,14 +266,11 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                                     <Button
                                         onClick={handleSubmit}
                                         disabled={isLoading}
-                                        className="md:w-24 md:rounded-l-none h-full"
+                                        className="md:w-24 md:rounded-l-none h-full md:hidden"
                                     >
-                                        <span className="hidden md:inline">
-                                            {isLoading ? "Generating..." : "Generate"}
-                                        </span>
                                         {/* use icon for small screens */}
                                         <span className="inline">
-                                            <MagicWandIcon className="mr-1 w-4 h-4" />
+                                            <SendIcon className="w-4 h-4" />
                                         </span>
                                     </Button>
                                 </div>

@@ -19,6 +19,9 @@ export default {
           "100%": { opacity: 1 },
         },
       },
+      screens: {
+        'custom-lg': '1343px',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

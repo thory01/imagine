@@ -5,16 +5,17 @@ import { useNavigate } from "react-router-dom";
 interface PromptImageProps {
   imageUrl: string;
   type: string;
-  setZoomImage?: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplay?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PromptImage: React.FC<PromptImageProps> = ({ imageUrl, type, setZoomImage }) => {
+const PromptImage: React.FC<PromptImageProps> = ({ imageUrl, type, setDisplay }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex-1 relative cursor-zoom-in overflow-hidden" onClick={
-      () => setZoomImage && setZoomImage(true)
-    }>
+    <div 
+      className="flex-1 relative cursor-zoom-in overflow-hidden" 
+      onClick={() => setDisplay && setDisplay(true)}
+    >
       <div className="h-full p-6 flex justify-center items-center">
         <img
           src={imageUrl}
@@ -28,7 +29,10 @@ const PromptImage: React.FC<PromptImageProps> = ({ imageUrl, type, setZoomImage 
         />
       </div>
       <button
-        onClick={() => navigate(type == 'gallery' ? "/gallery" : '/')}
+        onClick={(e) => {
+          e.stopPropagation();
+          navigate(type === 'gallery' ? "/gallery" : '/');
+        }}
         className="absolute right-6 top-2 p-2 bg-white rounded-full hover:bg-gray-300"
       >
         <X className="text-black" />

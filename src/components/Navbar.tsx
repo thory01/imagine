@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
               alt="Logo"
               className="h-7 w-7"
             />
-            <span className="ml-2 text-md font-semibold hidden lg:inline">Astria Imagine</span>
+            <span className="ml-2 text-black text-md font-semibold hidden lg:inline">Astria Imagine</span>
           </Link>
         </div>
         <div className="flex flex-col text-center w-full space-y-4">
@@ -61,8 +61,8 @@ const NavLink: React.FC<NavLinkProps> = ({ to, label, Icon, active }) => (
       active ? 'bg-gray-900 text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-black'
     )}
   >
-    <Icon className="h-4 w-4" />
-    <span className="ml-2 hidden lg:inline">{label}</span>
+    <Icon className="h-6 w-6" />
+    <span className="ml-2 hidden custom-lg:inline">{label}</span>
   </Link>
 );
 
