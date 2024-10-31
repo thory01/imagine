@@ -83,7 +83,7 @@ export const AdvancedControls: React.FC<AdvancedControlsProps> = ({
         className="my-1"
       />
 
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-4 overflow-auto scrollbar">
         <AddLoraText loraTextList={loraTextList} setLoraTextList={setLoraTextList} onSelect={(tune) => {
           setPromptText((prevText) => `<lora:${tune.id}:1> ${prevText}`);
         }} onRemove={
@@ -139,61 +139,59 @@ export const AdvancedControls: React.FC<AdvancedControlsProps> = ({
             {showAdvancedOptions ? "▼" : "▶"}
           </button>
         </div>
+        {showAdvancedOptions && (
+          <div className="mt-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                Inpaint Faces
+              </label>
+              <Switch className="justify-self-end" checked={inpaintFaces} onCheckedChange={setInpaintFaces} disabled={!superResolution} />
+            </div>
 
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                Hi-Res Fix
+              </label>
+              <Switch className="justify-self-end" checked={hiresFix} onCheckedChange={setHiresFix} disabled={!superResolution} />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                Number of Images
+              </label>
+              <input
+                type="number"
+                min="1"
+                max="8"
+                value={numImages}
+                onChange={(e) => setNumImages(parseInt(e.target.value, 10))}
+                className="col-span-2 border rounded-lg px-2 py-1 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                Film Grain
+              </label>
+              <Switch className="justify-self-end" checked={filmGrain} onCheckedChange={setFilmGrain} />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                Face Correct
+              </label>
+              <Switch className="justify-self-end" checked={faceCorrect} onCheckedChange={setFaceCorrect} />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                Face Swap
+              </label>
+              <Switch className="justify-self-end" checked={faceSwap} onCheckedChange={setFaceSwap} />
+            </div>
+          </div>
+        )}
       </div>
-      <div></div>
-      {showAdvancedOptions && (
-        <div className="mt-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-              Inpaint Faces
-            </label>
-            <Switch className="justify-self-end" checked={inpaintFaces} onCheckedChange={setInpaintFaces} disabled={!superResolution} />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-              Hi-Res Fix
-            </label>
-            <Switch className="justify-self-end" checked={hiresFix} onCheckedChange={setHiresFix} disabled={!superResolution} />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-              Number of Images
-            </label>
-            <input
-              type="number"
-              min="1"
-              max="8"
-              value={numImages}
-              onChange={(e) => setNumImages(parseInt(e.target.value, 10))}
-              className="col-span-2 border rounded-lg px-2 py-1 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-              Film Grain
-            </label>
-            <Switch className="justify-self-end" checked={filmGrain} onCheckedChange={setFilmGrain} />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-              Face Correct
-            </label>
-            <Switch className="justify-self-end" checked={faceCorrect} onCheckedChange={setFaceCorrect} />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-              Face Swap
-            </label>
-            <Switch className="justify-self-end" checked={faceSwap} onCheckedChange={setFaceSwap} />
-          </div>
-        </div>
-      )}
     </div>
   );
 };
