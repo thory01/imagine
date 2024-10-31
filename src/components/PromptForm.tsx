@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/tooltip"
 import { AdvancedControls } from './AdvancedControls';
 import { createPrompt } from '@/api/prompts';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 import { useStore } from '@/store/promptStore';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import usePaste from '@/hooks/usePaste';
@@ -161,13 +162,14 @@ const PromptForm: React.FC<PromptFormProps> = () => {
 
             const response = await createPrompt(formData);
             console.log(response);
-            toast.success('Prompt generated successfully!');
+            toast.success('Prompt created successfully!');
             refreshUserPrompts();
             setPromptText('');
             setShowImageControls(false);
             setShowAdvancedControls(false);
         } catch (error) {
-            toast.error('Failed to generate. Please try again.');
+            const errorMessage = (error as any)?.response?.data?.text?.join(', ') || (error as any).message;
+            toast.error(`Error creating prompt: ${errorMessage}`);
             console.error(error);
         } finally {
             setIsLoading(false);
@@ -351,6 +353,17 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                     )}
                 </div>
             </div>
+            <ToastContainer 
+            position="top-right"
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            />
         </div>
     );
 };

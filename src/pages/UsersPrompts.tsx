@@ -6,6 +6,7 @@ import PromptForm from "@/components/PromptForm";
 import usePrompts from "@/hooks/usePrompts";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { format, isToday, isYesterday, parseISO } from "date-fns";
 
 const UsersPrompts: React.FC = () => {
   const { prompts, fetchMoreData } = usePrompts(false);
@@ -13,10 +14,8 @@ const UsersPrompts: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  console.log(prompts);
   const loadMorePrompts = useCallback(async () => {
     if (loading) return;
-
     setLoading(true);
     setError(null);
     try {
@@ -36,6 +35,22 @@ const UsersPrompts: React.FC = () => {
     loadMore: loadMorePrompts,
   });
 
+  // Helper function to format date headers
+  const formatDateHeader = (dateString: string) => {
+    const date = parseISO(dateString);
+    if (isToday(date)) return "Today";
+    if (isYesterday(date)) return "Yesterday";
+    return format(date, "dd MMM yyyy");
+  };
+
+  // Group prompts by date
+  const groupedPrompts = prompts.reduce((acc, prompt) => {
+    const dateHeader = formatDateHeader(prompt.created_at);
+    if (!acc[dateHeader]) acc[dateHeader] = [];
+    acc[dateHeader].push(prompt);
+    return acc;
+  }, {} as Record<string, typeof prompts>);
+
   return (
     <div className="flex-1 relative">
       <PromptForm />
@@ -53,14 +68,19 @@ const UsersPrompts: React.FC = () => {
           scrollThreshold={0.8}
           style={{ overflow: "hidden" }}
         >
-          <div className="grid grid-cols-1">
-            {prompts.map((prompt, index) => (
-              <div
-                key={prompt.id || index}
-                ref={index === prompts.length - 1 ? lastPromptElementRef : null}
-              >
-                <PromptCard prompt={prompt} />
-              </div>
+          <div className="grid grid-cols-1 gap-2">
+            {Object.entries(groupedPrompts).map(([dateHeader, groupedPrompts]) => (
+              <React.Fragment key={dateHeader}>
+                <h2 className="text-xl font-semibold mt-4 mb-2 text-black">{dateHeader}</h2>
+                {groupedPrompts.map((prompt, index) => (
+                  <div
+                    key={prompt.id || index}
+                    ref={index === prompts.length - 1 ? lastPromptElementRef : null}
+                  >
+                    <PromptCard prompt={prompt} />
+                  </div>
+                ))}
+              </React.Fragment>
             ))}
           </div>
         </InfiniteScroll>
