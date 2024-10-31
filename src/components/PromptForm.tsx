@@ -141,7 +141,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
             formData.append('prompt[w]', width.toString());
             formData.append('prompt[h]', height.toString());
 
-            formData.append('prompt[backend_version]', '1');
+            formData.append('prompt[backend_version]', '0');
 
             console.log('formData', {
                 promptText,
@@ -208,8 +208,8 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                             {/* Main Input Area */}
                             <div className="flex-1">
 
-                                <div className="flex items-center gap-3 h-12">
-                                    <div className="flex gap-2 mx-2">
+                                <div className="flex items-center h-12">
+                                    <div className="flex gap-2 mx-1">
                                         <TooltipProvider>
                                             <Tooltip>
                                                 <TooltipTrigger asChild>
@@ -252,7 +252,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                                                         setShowImageControls(false);
                                                         setShowAdvancedControls(!showAdvancedControls);
                                                     }}
-                                                    className="h-8 w-8 mr-0 md:mr-2"
+                                                    className="h-8 w-8 mr-0 md:mr-1"
                                                 >
                                                     <AdjustmentsHorizontalIcon className="h-5 w-5" />
                                                 </Button>
@@ -265,9 +265,10 @@ const PromptForm: React.FC<PromptFormProps> = () => {
 
                                     {/* Generate Button */}
                                     <Button
+                                        variant={'ghost'}
                                         onClick={handleSubmit}
                                         disabled={isLoading}
-                                        className="md:w-24 md:rounded-l-none h-full md:hidden"
+                                        className="h-full pl-1 md:hidden"
                                     >
                                         {/* use icon for small screens */}
                                         <span className="inline">

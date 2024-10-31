@@ -38,7 +38,7 @@ export const ImageZoom: React.FC<ImageZoomProps> = ({
   return (
     <Dialog open={display} onOpenChange={handleClose}>
       <DialogOverlay className="bg-black/80 backdrop-blur-sm" />
-      <DialogContent className="flex items-center justify-center p-0 border-none bg-transparent max-w-screen-lg w-full sm:w-[90vw]">
+      <DialogContent className="flex items-center justify-center p-0 border-none bg-transparent max-w-screen-lg w-full sm:w-[99vw]">
         <div className="relative w-full h-full flex items-center justify-center">
           <DialogClose asChild>
           </DialogClose>
@@ -54,7 +54,7 @@ export const ImageZoom: React.FC<ImageZoomProps> = ({
               src={src}
               alt={alt}
               className={`
-                max-h-[80vh] max-w-[90vw] object-contain rounded-lg
+                max-h-[98vh] max-w-[99vw] object-contain rounded-lg
                 transition-opacity duration-300
                 ${isLoading ? 'opacity-0' : 'opacity-100'}
               `}

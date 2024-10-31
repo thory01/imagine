@@ -12,11 +12,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       {/* <AstriaHeader /> */}
-      <div className="flex justify-center select-text bg-light-mode min-h-screen" >
+      <div className="flex justify-center w-full select-text bg-light-mode min-h-screen" >
         <Navbar />
         <MobileTabNav />
         {/* <TabNavigation /> */}
-        <div className="container px-4">
+        <div className="container">
           {children}
         </div>
       </div>

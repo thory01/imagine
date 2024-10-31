@@ -17,7 +17,7 @@ export const usePromptNavigation = (
       const nextImageIndex = currentImageIndex + 1;
       const images = prompts[currentPromptIndex].images;
 
-      console.log(`/prompt/${prompts[currentPromptIndex].id}`, { type, index: nextImageIndex })
+      console.log(`/prompt/${prompts[currentPromptIndex].id}`, { type, index: nextImageIndex });
       if (nextImageIndex < images.length) {
         navigate(`/prompt/${prompts[currentPromptIndex].id}`, {
           state: { type, index: nextImageIndex },
@@ -32,7 +32,7 @@ export const usePromptNavigation = (
 
   const navigateToPrevious = () => {
     const previousIndex = currentPromptIndex - 1;
-    const images = prompts[previousIndex].images;
+    const images = prompts[previousIndex]?.images;
 
     if (previousIndex >= 0) {
       const previousImageIndex = currentImageIndex - 1;
@@ -66,12 +66,47 @@ export const usePromptNavigation = (
       }
     };
 
+    // Variables to store touch start and end coordinates
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    // Handle touch start
+    const handleTouchStart = (event: TouchEvent) => {
+      touchStartX = event.touches[0].clientX;
+    };
+
+    // Handle touch move
+    const handleTouchMove = (event: TouchEvent) => {
+      touchEndX = event.touches[0].clientX;
+    };
+
+    // Handle touch end
+    const handleTouchEnd = () => {
+      if (touchStartX - touchEndX > 50) {
+        // Swipe left to navigate to the next prompt
+        navigateToNext();
+      } else if (touchEndX - touchStartX > 50) {
+        // Swipe right to navigate to the previous prompt
+        navigateToPrevious();
+      }
+    };
+
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("wheel", handleScroll);
+
+    // Add touch event listeners for mobile support
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchend", handleTouchEnd);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("wheel", handleScroll);
+
+      // Remove touch event listeners
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [currentPromptIndex, currentImageIndex, prompts]);
 

@@ -147,6 +147,8 @@ const PromptCard: React.FC<PromptCardProps> = React.memo(({ prompt: initialPromp
     }
 
     formData.append('prompt[tune_id]', "1504944");
+    formData.append('prompt[backend_version]', '0');
+    formData.append('prompt[seed]', '-1');
 
     console.log("formData", {
       ...Object.fromEntries(formData),
