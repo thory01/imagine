@@ -52,7 +52,18 @@ const Navbar: React.FC = () => {
           ))}
         </div>
       </div>
-      <footer className="text-sm text-gray-500"></footer>
+      <footer className="text-sm text-gray-500">
+        <div className="flex-shrink-0 my-3">
+          <Link to="https://github.com/astriaai/imagine" className="flex items-center justify-center md:justify-start" target="_blank" rel="noopener noreferrer">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub Logo"
+              className="h-7 w-7"
+            />
+            <span className="ml-2 text-black text-md font-semibold hidden lg:inline">Open Source Code</span>
+          </Link>
+        </div>
+      </footer>
     </nav>
   );
 };
