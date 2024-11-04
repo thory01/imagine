@@ -24,11 +24,10 @@ const PromptForm: React.FC<PromptFormProps> = () => {
 
     const { promptText, setPromptText,
         aspectRatio, setAspectRatio, width, setWidth, height, setHeight,
-        controlNet, setControlNet, colorGrading, setColorGrading, filmGrain, setFilmGrain,
+        controlNet, setControlNet, colorGrading, setColorGrading,
         superResolution, setSuperResolution, hiresFix, setHiresFix, inpaintFaces, setInpaintFaces,
         faceCorrect, setFaceCorrect, faceSwap, setFaceSwap, denoisingStrength, setDenoisingStrength,
-        conditioningScale, setConditioningScale, numImages, setNumImages,
-        loraTextList, setLoraTextList, isLoading, setIsLoading,
+        conditioningScale, setConditioningScale, numImages, setNumImages, isLoading, setIsLoading,
     } = usePromptFormStore();
 
     const { refreshUserPrompts } = useStore();
@@ -106,7 +105,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
 
             formData.append('prompt[backend_version]', '0');
 
-            const response = await createPrompt(formData);
+            await createPrompt(formData);
             toast.success('Prompt created successfully!');
             refreshUserPrompts();
             setPromptText('');
