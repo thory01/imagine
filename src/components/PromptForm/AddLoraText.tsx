@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
 import { getTunes } from '@/api/prompts';
+import { usePromptFormStore } from '@/store/promptFormStore';
 
 interface Tune {
     id: string;
@@ -22,8 +23,6 @@ interface Tune {
 }
 
 interface AddLoraTextProps {
-    loraTextList: string[];
-    setLoraTextList: React.Dispatch<React.SetStateAction<string[]>>;
     onSelect?: (tune: Tune) => void;
     onRemove?: (loraText: string) => void;
 }
@@ -31,8 +30,6 @@ interface AddLoraTextProps {
 const ITEMS_PER_PAGE = 12;
 
 const AddLoraText: React.FC<AddLoraTextProps> = ({
-    loraTextList,
-    setLoraTextList,
     onSelect,
     onRemove,
 }) => {
@@ -44,6 +41,11 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
     const [hasMore, setHasMore] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
+
+    const {
+        loraTextList,
+        setLoraTextList
+    } = usePromptFormStore();
 
     // Debounce search query
     useEffect(() => {
@@ -91,7 +93,7 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
     };
 
     const handleSelect = (tune: Tune) => {
-        setLoraTextList(prev => [...prev, `<lora:${tune.id}:1>`]);
+        setLoraTextList([...loraTextList, `<lora:${tune.id}:1>`]);
         onSelect?.(tune);
         setIsOpen(false);
     };
@@ -198,7 +200,7 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
                             {text}
                             <button
                                 onClick={() => {
-                                    setLoraTextList(prev => prev.filter((_, i) => i !== index));
+                                    setLoraTextList(loraTextList.filter((_, i) => i !== index));
                                     onRemove?.(loraTextList[index]);
                                 }}
                                 className="hover:text-red-500"

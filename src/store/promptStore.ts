@@ -34,15 +34,11 @@ export const useStore = create<PromptsState>((set) => ({
     }),
 
   refreshGalleryPrompts: async () => {
-    // Reset the gallery prompts and fetch the first set
-    set({ galleryPrompts: [], galleryOffset: 0 }); // Reset state
     const prompts = await fetchGalleryPrompts(0, 20); // Fetch first set
     set({ galleryPrompts: prompts, galleryOffset: prompts.length }); // Update state with new prompts
   },
 
   refreshUserPrompts: async () => {
-    // Reset the user prompts and fetch the first set
-    set({ userPrompts: [], userOffset: 0 }); // Reset state
     const prompts = await fetchUserPrompts(0, 20); // Fetch first set
     set({ userPrompts: prompts, userOffset: prompts.length }); // Update state with new prompts
   },

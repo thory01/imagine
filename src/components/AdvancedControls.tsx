@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import AspectRatioSlider from "./AspectRatioSlider";
-import ControlNetSelector from "./ControlNetSelector";
+import AspectRatioSlider from "./PromptForm/AspectRatioSlider";
+import ControlNetSelector from "./PromptForm/ControlNetSelector";
 import { Switch } from "./ui/switch";
-import ColorGradingSelector from "./ColorGradingSelector";
-import AddLoraText from "./AddLoraText";
+import ColorGradingSelector from "./PromptForm/ColorGradingSelector";
+import AddLoraText from "./PromptForm/AddLoraText";
 
 interface AdvancedControlsProps {
   aspectRatio: string;
@@ -80,7 +80,7 @@ export const AdvancedControls: React.FC<AdvancedControlsProps> = ({
           setWidth(width);
           setHeight(height);
         }}
-        className="my-1"
+        className="my-1 h-fit"
       />
 
       <div className="grid grid-cols-1 gap-4 overflow-auto scrollbar">

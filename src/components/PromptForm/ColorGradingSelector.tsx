@@ -30,7 +30,7 @@ const ColorGradingSelector: React.FC<ColorGradingSelectorProps> = ({
   };
 
   return (
-    <div className={cn("color-grading-selector grid grid-cols-3 items-center", className)}>
+    <div className={cn("color-grading-selector gap-1 grid grid-cols-3 items-center", className)}>
       <label htmlFor="color-grading" className="text-gray-700 text-sm font-medium mb-2">
         Color Grading
       </label>

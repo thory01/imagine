@@ -31,7 +31,7 @@ const ControlNetSelector: React.FC<ControlNetSelectorProps> = ({
   };
 
   return (
-    <div className={cn("controlnet-selector grid grid-cols-3 items-center", className)}>
+    <div className={cn("controlnet-selector gap-1 grid grid-cols-3 items-center", className)}>
       <label htmlFor="controlnet" className="text-gray-700 text-sm font-medium block">
         ControlNet
       </label>

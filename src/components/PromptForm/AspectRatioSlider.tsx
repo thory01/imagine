@@ -17,7 +17,7 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
 }) => {
   const aspectRatios = [
     { ratio: '1:2', value: -5 },
-    { ratio: '13:25', value: -4 },
+    { ratio: '9:16', value: -4 },  // Portrait
     { ratio: '4:7', value: -3 },
     { ratio: '3:5', value: -2 },
     { ratio: '17:25', value: -1 },
@@ -77,6 +77,22 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-sm font-medium text-gray-800">Aspect Ratio</h2>
         <div className="flex items-center gap-2">
+
+          <div style={{
+            height: (baseSize / 25) + 'px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '1rem',
+          }}>
+            <div
+              className="border border-gray-300 rounded-md shadow-sm"
+              style={{
+                width: dimensions.width / 25,
+                height: dimensions.height / 25,
+              }}
+            />
+          </div>
           <Button
             variant="ghost"
             size="sm"
@@ -86,23 +102,6 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
             Reset
           </Button>
         </div>
-      </div>
-
-      <div style={{
-        width: '100%',
-        height: (baseSize / 12) + 'px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: '1rem',
-      }}>
-        <div
-          className="border border-gray-300 rounded-md shadow-sm"
-          style={{
-            width: dimensions.width / 12,
-            height: dimensions.height / 12,
-          }}
-        />
       </div>
 
       <div className="flex justify-around mb-6">

@@ -83,3 +83,25 @@ export interface PromptDetailsProps {
   prompt: Prompt;
   imageUrl: string;
 }
+
+
+export interface PromptFormState {
+  promptText: string; setPromptText: (text: string) => void;
+  aspectRatio: string; setAspectRatio: (aspectRatio: string) => void;
+  width: number; setWidth: (width: number) => void;
+  height: number; setHeight: (height: number) => void;
+  controlNet: string; setControlNet: (controlNet: string) => void;
+  colorGrading: string; setColorGrading: (colorGrading: string) => void;
+  filmGrain: boolean; setFilmGrain: (filmGrain: boolean) => void;
+  superResolution: boolean; setSuperResolution: (superResolution: boolean) => void;
+  hiresFix: boolean; setHiresFix: (hiresFix: boolean) => void;
+  inpaintFaces: boolean; setInpaintFaces: (inpaintFaces: boolean) => void;
+  faceCorrect: boolean; setFaceCorrect: (faceCorrect: boolean) => void;
+  faceSwap: boolean; setFaceSwap: (faceSwap: boolean) => void;
+  denoisingStrength: number; setDenoisingStrength: (denoisingStrength: number) => void;
+  conditioningScale: number; setConditioningScale: (conditioningScale: number) => void;
+  numImages: number; setNumImages: (numImages: number) => void;
+  loraTextList: string[]; setLoraTextList: (loraTextList: string[]) => void;
+
+  isLoading: boolean; setIsLoading: (isLoading: boolean) => void;
+}
