@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { cn } from "@/lib/utils";
 
 const controlNetOptions = [
@@ -31,28 +24,30 @@ const ControlNetSelector: React.FC<ControlNetSelectorProps> = ({
   };
 
   return (
-    <div className={cn("controlnet-selector gap-1 grid grid-cols-3 items-center", className)}>
-      <label htmlFor="controlnet" className="text-gray-700 text-sm font-medium block">
-        ControlNet
+    <div className={cn("color-grading-selector gap-1 grid grid-cols-3 items-center", className)}>
+      <label htmlFor="color-grading" className="text-gray-700 text-sm font-medium mb-2">
+        Control Net
       </label>
-      <div className="col-span-2">
-        <Select
+      <div className="col-span-2 ml-auto">
+        <ToggleGroup.Root
+          type="single"
+          value={value}
           onValueChange={handleValueChange}
-          defaultValue={value}
+          className="flex space-x-2"
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Select a model..." />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {controlNetOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+          {controlNetOptions.map((option) => (
+            <ToggleGroup.Item
+              key={option.value}
+              value={option.value}
+              className={cn(
+                "px-4 py-2 rounded-md text-sm font-medium",
+                value === option.value ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+              )}
+            >
+              {option.label}
+            </ToggleGroup.Item>
+          ))}
+        </ToggleGroup.Root>
       </div>
     </div>
   );

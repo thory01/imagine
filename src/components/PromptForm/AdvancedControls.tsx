@@ -78,7 +78,6 @@ export const AdvancedControls = () => {
                     setPromptText(promptText.replace(loraText, ""));
                 }} />
                 <ControlNetSelector value={controlNet} onChange={setControlNet} />
-                <ColorGradingSelector value={colorGrading} onChange={setColorGrading} />
 
                 <RangeInput label="Denoising Strength" value={denoisingStrength} onChange={setDenoisingStrength} />
                 <RangeInput label="ControlNet Conditioning Scale" value={conditioningScale} onChange={setConditioningScale} />
@@ -97,6 +96,7 @@ export const AdvancedControls = () => {
                     <div className="mt-4 space-y-3">
                         <SwitchInput label="Inpaint Faces" checked={inpaintFaces} onCheckedChange={setInpaintFaces} disabled={!superResolution} />
                         <SwitchInput label="Hi-Res Fix" checked={hiresFix} onCheckedChange={setHiresFix} disabled={!superResolution} />
+                        <ColorGradingSelector value={colorGrading} onChange={setColorGrading} />
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-semibold text-gray-700 dark:text-gray-200">
                                 Number of Images
