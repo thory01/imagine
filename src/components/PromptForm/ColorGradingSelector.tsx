@@ -25,24 +25,26 @@ const ColorGradingSelector: React.FC<ColorGradingSelectorProps> = ({
 
   return (
     <div className={cn("color-grading-selector gap-1 grid grid-cols-3 items-center", className)}>
-      <label htmlFor="color-grading" className="text-gray-700 text-sm font-medium mb-2">
+      <label htmlFor="color-grading" className="text-gray-700 font-[400] text-sm mb-2">
         Color Grading
       </label>
-      <div className="col-span-2 ml-auto">
+      <div className="col-span-2 ml-auto bg-gray-100 rounded-full">
         <ToggleGroup.Root
           type="single"
           value={value}
           onValueChange={handleValueChange}
           className="flex space-x-2"
         >
-          {colorGradingOptions.map((option) => (
+          {colorGradingOptions.map((option, index) => (
             <ToggleGroup.Item
               key={option.value}
               value={option.value}
               className={cn(
-                "px-4 py-2 rounded-md text-sm font-medium",
-                value === option.value ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+                "px-3 py-1 rounded-md text-sm font-medium",
+                value === option.value ? "bg-blue-500 text-white" : "text-gray-700",
+                index === 1 ? 'rounded-none' : index === 0 ? 'rounded-l-full' : 'rounded-r-full'
               )}
+              
             >
               {option.label}
             </ToggleGroup.Item>

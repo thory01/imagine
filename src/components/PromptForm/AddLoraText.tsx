@@ -72,7 +72,7 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
             );
 
             setTunes(prev => page === 1 ? response : [...prev, ...response]);
-            setHasMore(response.length === ITEMS_PER_PAGE);
+            setHasMore(response.length > 0 && response.length === ITEMS_PER_PAGE);
         } catch (err) {
             setError('Failed to load tunes. Please try again.');
             console.error('Error fetching tunes:', err);
@@ -101,18 +101,18 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
     return (
         <div className="flex flex-col gap-4">
             <div className="flex flex-wrap items-center justify-between">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label className="text-sm font-[400] text-gray-700 dark:text-gray-200">
                     Add Loras ({loraTextList.length})
                 </label>
 
                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                     <DialogTrigger asChild>
-                        <Button variant="default">
+                        <Button variant="default" className='rounded-full'>
                             Browse Loras
                         </Button>
                     </DialogTrigger>
 
-                    <DialogContent className="max-w-[94%] md:max-w-3xl max-h-[90vh] p-3">
+                    <DialogContent className="max-w-[94%] md:max-w-3xl max-h-[90vh] p-3 overflow-auto scrollbar">
                         <DialogHeader>
                             <DialogTitle>Available Loras</DialogTitle>
                             <DialogDescription>

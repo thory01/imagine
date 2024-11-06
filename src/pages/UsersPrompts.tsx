@@ -54,7 +54,7 @@ const UsersPrompts: React.FC = () => {
   return (
     <div className="flex-1 relative">
       <PromptForm />
-      <div className="mx-auto overflow-hidden">
+      <div className="mx-auto overflow-hidden px-4">
         <InfiniteScroll
           dataLength={prompts.length}
           next={loadMorePrompts}
