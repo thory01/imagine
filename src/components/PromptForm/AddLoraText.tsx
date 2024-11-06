@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Search } from 'lucide-react';
 import { getTunes } from '@/api/prompts';
 import { usePromptFormStore } from '@/store/promptFormStore';
 
@@ -112,26 +112,27 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
                         </Button>
                     </DialogTrigger>
 
-                    <DialogContent className="max-w-[94%] md:max-w-3xl max-h-[90vh] p-3 overflow-auto scrollbar">
-                        <DialogHeader>
+                    <DialogContent className="max-w-[94%] md:max-w-3xl max-h-[90vh] px-0 pt-0 overflow-auto scrollbar">
+                        <DialogHeader className='sticky top-0 z-10 bg-white shadow-sm p-3'>
                             <DialogTitle>Available Loras</DialogTitle>
                             <DialogDescription>
                                 Select a lora to add to your prompt.
                             </DialogDescription>
 
-                            <div className="mt-2">
+                            <div className="mt-2 relative">
                                 <Input
                                     type="search"
                                     placeholder="Search loras..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full md:w-1/2 text-gray-800"
+                                    className="w-full md:w-1/2 text-gray-800 pl-10"
                                 />
+                                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                             </div>
                         </DialogHeader>
 
                         <div
-                            className="overflow-y-auto mt-1"
+                            className="overflow-y-auto mt-1 p-3"
                             onScroll={handleScroll}
                             style={{ height: '100%' }}
                         >
@@ -148,11 +149,11 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
                                 </div>
                             )}
 
-                            <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                            <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 mt-2">
                                 {tunes.map((tune) => (
                                     <Card
                                         key={tune.id}
-                                        className="cursor-pointer hover:ring-2 hover:ring-primary transition-all"
+                                        className="cursor-pointer hover:scale-105 transition-all shadow-none"
                                         onClick={() => handleSelect(tune)}
                                     >
                                         <div className="aspect-square relative overflow-clip">

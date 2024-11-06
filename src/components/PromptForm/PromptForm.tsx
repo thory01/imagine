@@ -189,12 +189,17 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                 </Card>
 
                 <div className="mt-2 space-y-2">
-                    {showAdvancedControls && (
+                    {showAdvancedControls && (<>
+                        <div className='fixed inset-0 z-[-1] opacity-100' onClick={
+                            () => setShowAdvancedControls(false)
+                        }>
+                        </div>
                         <Card className="w-full">
-                            <CardContent className="p-4">
+                            <CardContent className="p-2 z-20">
                                 <AdvancedControls />
                             </CardContent>
                         </Card>
+                    </>
                     )}
                 </div>
             </div>

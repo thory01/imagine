@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import AspectRatioSlider from "./AspectRatioSlider";
 import ControlNetSelector from "./ControlNetSelector";
 import { Switch } from "../ui/switch";
@@ -51,34 +51,20 @@ const SwitchInput = ({ label, checked, onCheckedChange, disabled = false }: Swit
 
 export const AdvancedControls = () => {
     const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
-    const advancedOptionsRef = useRef<HTMLDivElement>(null);
     const { controlNet, setControlNet, colorGrading, setColorGrading, filmGrain, setFilmGrain,
         superResolution, setSuperResolution, hiresFix, setHiresFix, inpaintFaces, setInpaintFaces,
         faceCorrect, setFaceCorrect, faceSwap, setFaceSwap, denoisingStrength, setDenoisingStrength,
         conditioningScale, setConditioningScale, numImages, setNumImages, promptText, setPromptText
     } = usePromptFormStore();
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (advancedOptionsRef.current && !advancedOptionsRef.current.contains(event.target as Node)) {
-                setShowAdvancedOptions(false);
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [advancedOptionsRef]);
-
     return (
-        <div className="grid grid-rows-2 grid-cols-1 md:grid-cols-2 gap-2 overflow-auto h-[450px] scrollbar dark:bg-zinc-900 dark:border-zinc-800">
+        <div className="advanced-controls grid grid-rows-2 grid-cols-1 md:grid-cols-2 gap-2 overflow-auto h-[480px] scrollbar dark:bg-zinc-900 dark:border-zinc-800">
             <AspectRatioSlider
                 baseSize={1024}
                 className="my-1 h-fit"
             />
 
-            <div ref={advancedOptionsRef} className={`row-span-2 scrollbar bg-gray-50 p-4 rounded-md`}>
+            <div className={`row-span-2 scrollbar bg-gray-50 p-4 rounded-md`}>
                 <div className="flex justify-between items-center mb-1">
                     <h2 className="text-sm font-medium text-gray-800">Advance Settings</h2>
                 </div>
