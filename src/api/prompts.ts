@@ -37,3 +37,10 @@ export const getTunes = async (
   const response = await apiClient.get(`/tunes?branch=flux1&model_type=lora&page=${page}&limit=${limit}&title=${searchQuery}`);
   return response.data;
 };
+
+export const trashPrompt = async (promptId: number) => {
+  const response = await apiClient.delete(`/prompts/${promptId}`);
+  if (response.status === 200) {
+    return response.data;
+  }
+};

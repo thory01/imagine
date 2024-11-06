@@ -50,8 +50,7 @@ const SwitchInput = ({ label, checked, onCheckedChange, disabled = false }: Swit
 
 export const AdvancedControls = () => {
     const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
-    const {
-        aspectRatio, setAspectRatio, setWidth, setHeight,
+    const { width, setWidth, height, setHeight,
         controlNet, setControlNet, colorGrading, setColorGrading, filmGrain, setFilmGrain,
         superResolution, setSuperResolution, hiresFix, setHiresFix, inpaintFaces, setInpaintFaces,
         faceCorrect, setFaceCorrect, faceSwap, setFaceSwap, denoisingStrength, setDenoisingStrength,
@@ -61,10 +60,10 @@ export const AdvancedControls = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 overflow-auto h-[400px] scrollbar dark:bg-zinc-900 dark:border-zinc-800">
             <AspectRatioSlider
-                value={aspectRatio}
+                width={width}
+                height={height}
                 baseSize={1024}
                 onChange={(value, width, height) => {
-                    setAspectRatio(value);
                     setWidth(width);
                     setHeight(height);
                 }}

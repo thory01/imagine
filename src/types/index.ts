@@ -14,20 +14,18 @@ export interface Prompt {
   ar: string;
   num_images: number;
   seed: number | null;
-  controlnet_conditioning_scale: number | null;
+  controlnet_conditioning_scale: number;
   controlnet_txt2img: boolean;
-  denoising_strength: number | null;
+  denoising_strength: number;
   style: string | null;
   url: string;
   images: string[];
   prompt_likes_count: number;
   liked: boolean;
-
-  // New properties added
-  w: number | null; // Width
-  h: number | null; // Height
+  w: number;
+  h: number;
   scheduler: string | null;
-  color_grading: boolean;
+  color_grading: string;
   film_grain: boolean;
   only_upscale: boolean;
   tiled_upscale: boolean;
@@ -40,7 +38,7 @@ export interface Prompt {
   theme: string | null;
   input_image: string | null;
   mask_image: string | null;
-  controlnet: boolean;
+  controlnet: string;
   use_lpw: boolean;
 }
 
@@ -87,7 +85,6 @@ export interface PromptDetailsProps {
 
 export interface PromptFormState {
   promptText: string; setPromptText: (text: string) => void;
-  aspectRatio: string; setAspectRatio: (aspectRatio: string) => void;
   width: number; setWidth: (width: number) => void;
   height: number; setHeight: (height: number) => void;
   controlNet: string; setControlNet: (controlNet: string) => void;

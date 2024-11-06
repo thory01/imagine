@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { DownloadIcon, CheckIcon, CopyIcon } from "lucide-react";
+import { DownloadIcon, CheckIcon, CopyIcon, Heart, Type } from "lucide-react";
 import { PromptDetailsProps } from "@/types";
 import { useCopy } from "@/hooks/useCopy";
 import { useLike } from "@/hooks/useLike";
-import { Heart } from "lucide-react";
+import { useAPrompt } from "@/hooks/useAPrompt";
 
 
 const PromptDetails: React.FC<PromptDetailsProps> = ({ prompt, imageUrl }) => {
   const { isLiked: initialIsLiked, handleLike } = useLike(prompt?.liked);
   const { isCopied, handleCopy } = useCopy();
+  const { isPromptUsed, handleUsePrompt } = useAPrompt();
 
   // Local state to track like status and like count
   const [isLiked, setIsLiked] = useState(initialIsLiked);
@@ -46,11 +47,36 @@ const PromptDetails: React.FC<PromptDetailsProps> = ({ prompt, imageUrl }) => {
               <DownloadIcon className="text-gray-600 w-4 h-4" />
             </button>
             <button
+              className={`p-2 rounded-full hover:bg-gray-100 ${isPromptUsed ? "text-green-500" : "text-gray-600"
+              }`}
+              onClick={() => handleUsePrompt(prompt)}
+            >
+              {isPromptUsed ? (
+              <CheckIcon className="w-4 h-4 text-green-500" />
+              ) : (
+              <Type className="w-4 h-4" />
+              )}
+            </button>
+            <button
+              className="p-2 rounded-full hover:bg-gray-100"
+              onClick={() => handleCopy(prompt)}
+            >
+              {isCopied ? (
+                <>
+                  <CheckIcon className="text-green-500 w-4 h-4" />
+                </>
+              ) : (
+                <>
+                  <CopyIcon className="text-gray-600 w-4 h-4" />
+                </>
+              )}
+            </button>
+            <button
               className={`p-2 rounded-full hover:bg-gray-100 ${isLiked ? "text-red-500" : "text-gray-600"
                 }`}
               onClick={toggleLike}
             >
-             <Heart className={`w-4 h-4 ${isLiked ? "fill-current" : ""}`} />
+              <Heart className={`w-4 h-4 ${isLiked ? "fill-current" : ""}`} />
             </button>
           </div>
         </div>
@@ -59,20 +85,6 @@ const PromptDetails: React.FC<PromptDetailsProps> = ({ prompt, imageUrl }) => {
         </p>
       </div>
       <div className="flex justify-center p-2 mt-2">
-        <button
-          className="px-3 py-2 text-[12px] rounded-xl hover:bg-slate-700 text-gray-700 hover:text-white transition duration-200 flex items-center gap-2"
-          onClick={() => handleCopy(prompt)}
-        >
-          {isCopied ? (
-            <>
-              <CheckIcon className="text-green-500 w-4 h-4" /> Copied!
-            </>
-          ) : (
-            <>
-              <CopyIcon className="w-4 h-4" /> Copy Prompt
-            </>
-          )}
-        </button>
       </div>
     </div>
   );

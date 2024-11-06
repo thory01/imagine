@@ -13,6 +13,7 @@ import { useImageUpload } from '@/hooks/useImageUpload';
 import usePaste from '@/hooks/usePaste';
 import { SendIcon } from 'lucide-react';
 import { useStore } from '@/store/promptStore';
+import { useAPrompt } from '@/hooks/useAPrompt';
 
 interface PromptFormProps {
     tabDisplay?: boolean;
@@ -22,55 +23,37 @@ const PromptForm: React.FC<PromptFormProps> = () => {
     const [showAdvancedControls, setShowAdvancedControls] = useState(false);
     const [showImageControls, setShowImageControls] = useState(false);
 
-    const { promptText, setPromptText,
-        aspectRatio, setAspectRatio, width, setWidth, height, setHeight,
+    const { handleUsePrompt } = useAPrompt();
+
+    // get all the states from the store
+    const { promptText, setPromptText, width, setWidth, height, setHeight,
         controlNet, setControlNet, colorGrading, setColorGrading,
         superResolution, setSuperResolution, hiresFix, setHiresFix, inpaintFaces, setInpaintFaces,
         faceCorrect, setFaceCorrect, faceSwap, setFaceSwap, denoisingStrength, setDenoisingStrength,
         conditioningScale, setConditioningScale, numImages, setNumImages, isLoading, setIsLoading,
     } = usePromptFormStore();
 
-    const { refreshUserPrompts } = useStore();
-
-    usePaste((pasteText, pasteObject) => {
-        if (pasteText) {
-            setPromptText(pasteText);
-        }
-        if (pasteObject) {
-            if (pasteObject.controlnet) { setControlNet(pasteObject.controlnet); }
-            if (pasteObject.color_grading) { setColorGrading(pasteObject.color_grading); }
-            if (pasteObject.super_resolution === 'true' || pasteObject.super_resolution === 'false') {
-                setSuperResolution(pasteObject.super_resolution === 'true');
-            }
-            if (pasteObject.hires_fix === 'true' || pasteObject.hires_fix === 'false') {
-                setHiresFix(pasteObject.hires_fix === 'true');
-            }
-            if (pasteObject.inpaint_faces === 'true' || pasteObject.inpaint_faces === 'false') {
-                setInpaintFaces(pasteObject.inpaint_faces === 'true');
-            }
-            if (pasteObject.face_correct === 'true' || pasteObject.face_correct === 'false') {
-                setFaceCorrect(pasteObject.face_correct === 'true');
-            }
-            if (pasteObject.face_swap === 'true' || pasteObject.face_swap === 'false') {
-                setFaceSwap(pasteObject.face_swap === 'true');
-            }
-            if (pasteObject.ar) { setAspectRatio(pasteObject.ar); }
-            if (!isNaN(parseFloat(pasteObject.denoising_strength))) {
-                setDenoisingStrength(parseFloat(pasteObject.denoising_strength));
-            }
-            if (!isNaN(parseFloat(pasteObject.controlnet_conditioning_scale))) {
-                setConditioningScale(parseFloat(pasteObject.controlnet_conditioning_scale));
-            }
-            if (!isNaN(parseInt(pasteObject.num_images))) {
-                setNumImages(parseInt(pasteObject.num_images));
-            }
-            if (!isNaN(parseInt(pasteObject.w))) { setWidth(parseInt(pasteObject.w)); }
-            if (!isNaN(parseInt(pasteObject.h))) { setHeight(parseInt(pasteObject.h)); }
-        }
-    });
-
+    const { userPrompts, refreshUserPrompts } = useStore();
 
     const { image, urlImage, uploadError, getRootProps, getInputProps, clearImage } = useImageUpload({});
+
+    usePaste((pasteText, pasteObject) => {
+        if (pasteText) setPromptText(pasteText);
+        if (pasteObject) {
+            setControlNet(pasteObject.controlnet || controlNet);
+            setColorGrading(pasteObject.color_grading || colorGrading);
+            setSuperResolution(pasteObject.super_resolution === 'true');
+            setHiresFix(pasteObject.hires_fix === 'true');
+            setInpaintFaces(pasteObject.inpaint_faces === 'true');
+            setFaceCorrect(pasteObject.face_correct === 'true');
+            setFaceSwap(pasteObject.face_swap === 'true');
+            setDenoisingStrength(parseFloat(pasteObject.denoising_strength) || denoisingStrength);
+            setConditioningScale(parseFloat(pasteObject.controlnet_conditioning_scale) || conditioningScale);
+            setNumImages(parseInt(pasteObject.num_images) || numImages);
+            setWidth(parseInt(pasteObject.w) || width);
+            setHeight(parseInt(pasteObject.h) || height);
+        }
+    });
 
     const handleSubmit = async () => {
         if (!promptText.trim()) {
@@ -83,42 +66,34 @@ const PromptForm: React.FC<PromptFormProps> = () => {
             const formData = new FormData();
             formData.append('prompt[text]', promptText);
             formData.append('prompt[tune_id]', "1504944");
-
-            if (image) {
-                formData.append('prompt[image]', image);
-            }
-
+            if (image) formData.append('prompt[image]', image);
             formData.append('prompt[control_net]', controlNet);
             formData.append('prompt[color_grading]', colorGrading);
-            formData.append('prompt[super_resolution]', superResolution.toString());
-            formData.append('prompt[hires_fix]', hiresFix.toString());
-            formData.append('prompt[inpaint_faces]', inpaintFaces.toString());
-            formData.append('prompt[face_correct]', faceCorrect.toString());
-            formData.append('prompt[face_swap]', faceSwap.toString());
-            formData.append('prompt[aspect_ratio]', aspectRatio);
-
+            formData.append('prompt[super_resolution]', `${superResolution}`);
+            formData.append('prompt[hires_fix]', `${hiresFix}`);
+            formData.append('prompt[inpaint_faces]', `${inpaintFaces}`);
+            formData.append('prompt[face_correct]', `${faceCorrect}`);
+            formData.append('prompt[face_swap]', `${faceSwap}`);
             formData.append('prompt[denoising_strength]', denoisingStrength.toString());
             formData.append('prompt[conditioning_scale]', conditioningScale.toString());
             formData.append('prompt[num_images]', numImages.toString());
             formData.append('prompt[w]', width.toString());
             formData.append('prompt[h]', height.toString());
-
             formData.append('prompt[backend_version]', '0');
 
             await createPrompt(formData);
             toast.success('Prompt created successfully!');
             refreshUserPrompts();
-            setPromptText('');
             setShowImageControls(false);
             setShowAdvancedControls(false);
         } catch (error) {
-            const errorMessage = (error as any)?.response?.data?.text?.join(', ') || (error as any).message;
-            toast.error(`Error creating prompt: ${errorMessage}`);
+            toast.error(`Error creating prompt: ${(error as any)?.response?.data?.text?.join(', ') || (error as any).message}`);
             console.error(error);
         } finally {
             setIsLoading(false);
         }
     };
+
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -131,6 +106,14 @@ const PromptForm: React.FC<PromptFormProps> = () => {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [promptText, isLoading, handleSubmit]);
+
+    useEffect(() => {
+        console.log(userPrompts[0]);
+        if (userPrompts.length > 0) {
+            const prompt = userPrompts[0];
+            handleUsePrompt(prompt);
+        }
+    }, [userPrompts]);
 
     return (
         <div className={`sticky top-0 z-10 w-full bg-gradient-to-b from-[#fafbfc] pb-4 md:pb-6`}>

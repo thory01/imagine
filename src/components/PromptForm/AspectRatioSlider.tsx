@@ -1,16 +1,18 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { BidirectionalSlider } from '@/components/ui/bidirectional-slider'
 
 interface AspectRatioSliderProps {
-  value?: string
+  width?: number
+  height?: number
   baseSize?: number
   className?: string
   onChange?: (ratio: string, width: number, height: number) => void
 }
 
 const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
-  value,
+  width,
+  height,
   baseSize = 1024,
   className = '',
   onChange,
@@ -29,16 +31,29 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
     { ratio: '2:1', value: 5 },
   ]
 
-  const [sliderValue, setSliderValue] = useState(aspectRatios.find((r) => r.ratio === value)?.value || 0)
+  const initialRatio = useMemo(() => {
+    if (width && height) {
+      const aspectRatio = width / height
+      const closestRatio = aspectRatios.reduce((prev, curr) => {
+        const [currWidth, currHeight] = curr.ratio.split(':').map(Number)
+        const currAspectRatio = currWidth / currHeight
+        return Math.abs(currAspectRatio - aspectRatio) < Math.abs(prev - aspectRatio) ? currAspectRatio : prev
+      }, Infinity)
+      return aspectRatios.find(r => (r.ratio.split(':').map(Number)[0] / r.ratio.split(':').map(Number)[1]) === closestRatio)?.value || 0
+    }
+    return 0
+  }, [width, height])
+
+  const [sliderValue, setSliderValue] = useState(initialRatio)
   const selectedRatio = aspectRatios.find((r) => r.value === sliderValue)?.ratio || '1:1'
 
   const dimensions = useMemo(() => {
-    const [width, height] = selectedRatio.split(':').map(Number)
-    const aspectRatio = width / height
+    const [ratioWidth, ratioHeight] = selectedRatio.split(':').map(Number)
+    const aspectRatio = ratioWidth / ratioHeight
 
     // Calculate initial dimensions
-    let calculatedWidth = height > width ? Math.round(baseSize * aspectRatio) : baseSize
-    let calculatedHeight = height > width ? baseSize : Math.round(baseSize / aspectRatio)
+    let calculatedWidth = ratioHeight > ratioWidth ? Math.round(baseSize * aspectRatio) : baseSize
+    let calculatedHeight = ratioHeight > ratioWidth ? baseSize : Math.round(baseSize / aspectRatio)
 
     // Round to nearest multiple of 8
     const roundToMultipleOf8 = (num: number) => Math.round(num / 8) * 8
@@ -48,7 +63,7 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
 
     // Ensure the aspect ratio is maintained as closely as possible
     // while keeping both dimensions as multiples of 8
-    if (height > width) {
+    if (ratioHeight > ratioWidth) {
       // Portrait: adjust width based on height
       calculatedWidth = roundToMultipleOf8(calculatedHeight * aspectRatio)
     } else {
@@ -61,6 +76,18 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
       height: calculatedHeight,
     }
   }, [selectedRatio, baseSize])
+
+  useEffect(() => {
+    if (width && height) {
+      const aspectRatio = width / height
+      const closestRatio = aspectRatios.reduce((prev, curr) => {
+        const [currWidth, currHeight] = curr.ratio.split(':').map(Number)
+        const currAspectRatio = currWidth / currHeight
+        return Math.abs(currAspectRatio - aspectRatio) < Math.abs(prev - aspectRatio) ? currAspectRatio : prev
+      }, Infinity)
+      setSliderValue(aspectRatios.find(r => (r.ratio.split(':').map(Number)[0] / r.ratio.split(':').map(Number)[1]) === closestRatio)?.value || 0)
+    }
+  }, [width, height])
 
   const handleSliderChange = (value: number) => {
     setSliderValue(value)

@@ -49,7 +49,7 @@ const Prompt: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown, { capture: true });
     };
-  }, [prompt, navigate, zoomImage]); // Keep dependencies minimal
+  }, [prompt, navigate, zoomImage]);
 
   return (
     <div className="w-full h-screen flex flex-col overflow-hidden">

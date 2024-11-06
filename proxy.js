@@ -16,7 +16,7 @@ const server = http.createServer((req, res) => {
 
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins, or specify a domain
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Specify allowed methods
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE'); // Specify allowed methods
   res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type'); // Specify allowed headers
 
   // Handle preflight requests
@@ -25,6 +25,7 @@ const server = http.createServer((req, res) => {
     console.log('Preflight request received');
     return res.end();
   }
+  
 
   // Set the Authorization header for the proxied request
   req.headers['Authorization'] = `Bearer ${BEARER_TOKEN}`;
