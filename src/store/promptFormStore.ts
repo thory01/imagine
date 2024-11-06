@@ -3,7 +3,6 @@ import { PromptFormState } from '@/types';
 
 export const usePromptFormStore = create<PromptFormState>((set) => ({
     promptText: '', setPromptText: (text) => set({ promptText: text }),
-    aspectRatio: '1:1', setAspectRatio: (aspectRatio) => set({ aspectRatio }),
     width: 1024, setWidth: (width) => set({ width }),
     height: 1024, setHeight: (height) => set({ height }),
 

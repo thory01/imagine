@@ -64,6 +64,7 @@ export const AdvancedControls = () => {
                 height={height}
                 baseSize={1024}
                 onChange={(value, width, height) => {
+                    console.log(value);
                     setWidth(width);
                     setHeight(height);
                 }}
