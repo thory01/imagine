@@ -14,6 +14,7 @@ import usePaste from '@/hooks/usePaste';
 import { SendIcon } from 'lucide-react';
 import { useStore } from '@/store/promptStore';
 import { useAPrompt } from '@/hooks/useAPrompt';
+import { AxiosError } from 'axios';
 
 interface PromptFormProps {
     tabDisplay?: boolean;
@@ -30,7 +31,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
         controlNet, setControlNet, colorGrading, setColorGrading,
         superResolution, setSuperResolution, hiresFix, setHiresFix, inpaintFaces, setInpaintFaces,
         faceCorrect, setFaceCorrect, faceSwap, setFaceSwap, denoisingStrength, setDenoisingStrength,
-        conditioningScale, setConditioningScale, numImages, setNumImages, isLoading, setIsLoading,
+        conditioningScale, setConditioningScale, numImages, setNumImages, isLoading, setIsLoading, setError
     } = usePromptFormStore();
 
     const { userPrompts, refreshUserPrompts } = useStore();
@@ -39,6 +40,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
 
     usePaste((pasteText, pasteObject) => {
         if (pasteText) setPromptText(pasteText);
+        console.log(pasteObject);
         if (pasteObject) {
             setControlNet(pasteObject.controlnet || controlNet);
             setColorGrading(pasteObject.color_grading || colorGrading);
@@ -66,19 +68,20 @@ const PromptForm: React.FC<PromptFormProps> = () => {
             const formData = new FormData();
             formData.append('prompt[text]', promptText);
             formData.append('prompt[tune_id]', "1504944");
-            if (image) formData.append('prompt[image]', image);
-            formData.append('prompt[control_net]', controlNet);
-            formData.append('prompt[color_grading]', colorGrading);
-            formData.append('prompt[super_resolution]', `${superResolution}`);
-            formData.append('prompt[hires_fix]', `${hiresFix}`);
-            formData.append('prompt[inpaint_faces]', `${inpaintFaces}`);
-            formData.append('prompt[face_correct]', `${faceCorrect}`);
-            formData.append('prompt[face_swap]', `${faceSwap}`);
-            formData.append('prompt[denoising_strength]', denoisingStrength.toString());
-            formData.append('prompt[conditioning_scale]', conditioningScale.toString());
-            formData.append('prompt[num_images]', numImages.toString());
-            formData.append('prompt[w]', width.toString());
-            formData.append('prompt[h]', height.toString());
+            if (image) formData.append('prompt[input_image]', image);
+            if (urlImage) formData.append('prompt[input_image_url]', urlImage);
+            if (controlNet) formData.append('prompt[control_net]', controlNet);
+            if (colorGrading) formData.append('prompt[color_grading]', colorGrading);
+            if (superResolution !== undefined) formData.append('prompt[super_resolution]', `${superResolution}`);
+            if (hiresFix !== undefined) formData.append('prompt[hires_fix]', `${hiresFix}`);
+            if (inpaintFaces !== undefined) formData.append('prompt[inpaint_faces]', `${inpaintFaces}`);
+            if (faceCorrect !== undefined) formData.append('prompt[face_correct]', `${faceCorrect}`);
+            if (faceSwap !== undefined) formData.append('prompt[face_swap]', `${faceSwap}`);
+            if (denoisingStrength !== undefined) formData.append('prompt[denoising_strength]', `${denoisingStrength}`);
+            if (conditioningScale !== undefined) formData.append('prompt[conditioning_scale]', `${conditioningScale}`);
+            if (numImages !== undefined) formData.append('prompt[num_images]', `${numImages}`);
+            if (width !== undefined) formData.append('prompt[w]', `${width}`);
+            if (height !== undefined) formData.append('prompt[h]', `${height}`);
             formData.append('prompt[backend_version]', '0');
 
             await createPrompt(formData);
@@ -86,9 +89,13 @@ const PromptForm: React.FC<PromptFormProps> = () => {
             refreshUserPrompts();
             setShowImageControls(false);
             setShowAdvancedControls(false);
-        } catch (error) {
-            toast.error(`Error creating prompt: ${(error as any)?.response?.data?.text?.join(', ') || (error as any).message}`);
-            console.error(error);
+        } catch (error: AxiosError | any) {
+            console.error(error.response?.data);
+            if (error.response?.data) {
+                setError(error.response.data);
+            } else {
+                toast.error('Error creating prompt');
+            }
         } finally {
             setIsLoading(false);
         }
@@ -196,7 +203,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                         </div>
                         <Card className="w-full">
                             <CardContent className="p-2 z-20">
-                                <AdvancedControls />
+                                <AdvancedControls image={image} imageUrl={urlImage} />
                             </CardContent>
                         </Card>
                     </>

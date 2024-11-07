@@ -12,18 +12,22 @@ interface ColorGradingSelectorProps {
   value?: string;
   onChange?: (grading: string) => void;
   className?: string;
+  error?: string;
 }
 
 const ColorGradingSelector: React.FC<ColorGradingSelectorProps> = ({
   value = 'film-velvia',
   onChange,
   className = '',
+  error,
 }) => {
   const handleValueChange = (grading: string) => {
     onChange?.(grading);
   };
 
+
   return (
+    <div className="leading-0">
     <div className={cn("color-grading-selector gap-1 grid grid-cols-3 items-center", className)}>
       <label htmlFor="color-grading" className="text-gray-700 font-[400] text-sm mb-2">
         Color Grading
@@ -40,7 +44,7 @@ const ColorGradingSelector: React.FC<ColorGradingSelectorProps> = ({
               key={option.value}
               value={option.value}
               className={cn(
-                "px-3 py-1 rounded-md text-sm font-medium",
+                "px-3 py-1 rounded-md text-sm font-medium leading-3",
                 value === option.value ? "bg-blue-500 text-white" : "text-gray-700",
                 index === 1 ? 'rounded-none' : index === 0 ? 'rounded-l-full' : 'rounded-r-full'
               )}
@@ -51,6 +55,8 @@ const ColorGradingSelector: React.FC<ColorGradingSelectorProps> = ({
           ))}
         </ToggleGroup.Root>
       </div>
+    </div>
+      {error && <p className="text-red-500 text-xs">{error}</p>}
     </div>
   );
 };

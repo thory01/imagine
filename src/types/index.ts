@@ -82,6 +82,10 @@ export interface PromptDetailsProps {
   imageUrl: string;
 }
 
+export type ErrorObject = {
+  [key in keyof Prompt]?: string[];
+};
+
 
 export interface PromptFormState {
   promptText: string; setPromptText: (text: string) => void;
@@ -99,6 +103,6 @@ export interface PromptFormState {
   conditioningScale: number; setConditioningScale: (conditioningScale: number) => void;
   numImages: number; setNumImages: (numImages: number) => void;
   loraTextList: string[]; setLoraTextList: (loraTextList: string[]) => void;
-
+  error: ErrorObject; setError: (error: ErrorObject) => void;
   isLoading: boolean; setIsLoading: (isLoading: boolean) => void;
 }

@@ -87,7 +87,7 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
   const handleReset = () => handleSliderChange(0);
 
   return (
-    <div className={`w-full ${className} p-4 bg-gray-50 rounded-lg`}>
+    <div className={`w-full ${className} p-4 bg-gray-50`}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-sm font-medium text-gray-800">Aspect Ratio</h2>
         <div className="flex items-center gap-2">

@@ -12,18 +12,21 @@ interface ControlNetSelectorProps {
   value?: string;
   onChange?: (model: string) => void;
   className?: string;
+  error?: string;
 }
 
 const ControlNetSelector: React.FC<ControlNetSelectorProps> = ({
   value = '',
   onChange,
   className = '',
+  error
 }) => {
   const handleValueChange = (model: string) => {
     onChange?.(model);
   };
 
   return (
+    <div className="leading-0">
     <div className={cn("color-grading-selector gap-1 grid grid-cols-3 items-center", className)}>
       <label htmlFor="color-grading" className="text-gray-700 text-sm font-[400] mb-2">
         ControlNet
@@ -50,6 +53,8 @@ const ControlNetSelector: React.FC<ControlNetSelectorProps> = ({
           ))}
         </ToggleGroup.Root>
       </div>
+    </div>
+    {error && <p className="text-red-500 text-xs">{error}</p>}
     </div>
   );
 };
