@@ -22,7 +22,7 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt: initialPrompt }) => {
   };
 
   return (
-    <div className="mb-4 w-full cursor-pointer flex flex-col-reverse md:flex-row">
+    <div className="mb-4 w-full cursor-pointer flex flex-col-reverse md:flex-row group">
       <ImageGrid images={displayPrompt.images} onClick={handleImageClick} />
       <div className="md:w-[30%] p-2 flex flex-col text-sm text-black">
         <div className="flex-1">
@@ -31,7 +31,9 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt: initialPrompt }) => {
           </p>
           <PropertiesDisplay prompt={displayPrompt} />
         </div>
-        <ActionButtons prompt={displayPrompt} />
+        <div className="md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <ActionButtons prompt={displayPrompt} />
+        </div>
       </div>
     </div>
   );

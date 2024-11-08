@@ -130,7 +130,7 @@ const PromptForm: React.FC<PromptFormProps> = () => {
                         <div className="flex flex-col md:flex-row items-stretch">
                             <div className="flex-1">
 
-                                <div className="flex items-center h-12">
+                                <div className="flex items-center h-auto min-h-12">
                                     <div className="flex gap-2 mx-1">
                                         <TooltipProvider>
                                             <Tooltip>
@@ -147,10 +147,18 @@ const PromptForm: React.FC<PromptFormProps> = () => {
 
                                     </div>
 
-                                    <Textarea placeholder="Write a prompt..." className="resize-none flex-1"
+                                    <Textarea placeholder="Write a prompt..." className="resize-none text-wrap flex-1"
                                         value={`${promptText}`}
                                         onChange={(e) => setPromptText(e.target.value)}
-                                        aria-label="Prompt text" rows={1} />
+                                        aria-label="Prompt text"
+                                        rows={1}
+                                        style={{ overflow: 'hidden' }}
+                                        onInput={(e) => {
+                                            const target = e.target as HTMLTextAreaElement;
+                                            target.style.height = 'auto';
+                                            target.style.height = `${target.scrollHeight}px`;
+                                        }}
+                                        autoFocus />
                                     <TooltipProvider>
                                         <Tooltip>
                                             <TooltipTrigger asChild>

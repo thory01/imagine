@@ -27,7 +27,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({ prompt }) => {
         className="flex items-center gap-1"
       >
         <Heart className={`w-4 h-4 text-red-600 ${isLiked ? "fill-current" : ""}`} />
-        <span className="hidden md:inline">{isLiked ? "Unlike" : "Like"}</span>
+        <span className="hidden custom-lg:inline">{isLiked ? "Unlike" : "Like"}</span>
       </Button>
       <Button
         variant="ghost"
@@ -36,7 +36,7 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({ prompt }) => {
         className="flex items-center gap-1"
       >
         {isPromptUsed ? <Check className="w-4 h-4 text-green-600" /> : <Type className="w-4 h-4" />}
-        <span className="hidden md:inline">Use</span>
+        <span className="hidden custom-lg:inline">Use</span>
       </Button>
       <Button
         variant="ghost"
@@ -45,11 +45,11 @@ export const ActionButtons: React.FC<ActionButtonsProps> = ({ prompt }) => {
         className="flex items-center gap-1"
       >
         {isTrashed ? <Check className="w-4 h-4 text-green-600" /> : <Trash className="w-4 h-4" />}
-        <span className="hidden md:inline">{isTrashed ? "Trashed!" : "Trash"}</span>
+        <span className="hidden custom-lg:inline">{isTrashed ? "Trashed!" : "Trash"}</span>
       </Button>
       <Button variant="ghost" size="sm" onClick={() => handleCopy(prompt)} className="flex items-center gap-1">
         {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-        <span className="hidden md:inline">{isCopied ? "Copied!" : "Copy"}</span>
+        <span className="hidden custom-lg:inline">{isCopied ? "Copied!" : "Copy"}</span>
       </Button>
     </div>
   );
