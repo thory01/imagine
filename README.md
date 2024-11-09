@@ -16,7 +16,7 @@ A GUI for image generation
 - [License](#license)
 
 ## Deploy to Vercel
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/astriaai/imagine)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fastriaai%2Fimagine&env=ASTRIA_API_KEY,VITE_PROXY_URL)
 
 ## Installation
 
