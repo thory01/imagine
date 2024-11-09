@@ -16,7 +16,6 @@ A GUI for image generation
 - [License](#license)
 
 ## Deploy to Vercel
-Check out the live version at: 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/astriaai/imagine)
 
 ## Installation
