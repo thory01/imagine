@@ -77,8 +77,8 @@ const PromptForm: React.FC<PromptFormProps> = () => {
             if (inpaintFaces !== undefined) formData.append('prompt[inpaint_faces]', `${inpaintFaces}`);
             if (faceCorrect !== undefined) formData.append('prompt[face_correct]', `${faceCorrect}`);
             if (faceSwap !== undefined) formData.append('prompt[face_swap]', `${faceSwap}`);
-            if (denoisingStrength !== undefined) formData.append('prompt[denoising_strength]', `${denoisingStrength}`);
-            if (conditioningScale !== undefined) formData.append('prompt[conditioning_scale]', `${conditioningScale}`);
+            if (denoisingStrength) formData.append('prompt[denoising_strength]', `${denoisingStrength}`);
+            if (conditioningScale) formData.append('prompt[conditioning_scale]', `${conditioningScale}`);
             if (numImages !== undefined) formData.append('prompt[num_images]', `${numImages}`);
             if (width !== undefined) formData.append('prompt[w]', `${width}`);
             if (height !== undefined) formData.append('prompt[h]', `${height}`);
