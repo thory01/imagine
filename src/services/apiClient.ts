@@ -1,9 +1,10 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
-// const BASE_URL = "https://5000-astriaai-imagine-t7a0u5m1trj.ws-eu116.gitpod.io/"
+// Conditionally set BASE_URL based on VITE_PROXY_URL environment variable
+const BASE_URL = import.meta.env.VITE_PROXY_URL || '';
 
 const apiClient: AxiosInstance = axios.create({
-  // baseURL: BASE_URL,
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -13,7 +14,7 @@ const apiClient: AxiosInstance = axios.create({
 
 // multipart form data api client2
 const apiClient2: AxiosInstance = axios.create({
-  // baseURL: BASE_URL,
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'multipart/form-data',
     Accept: 'application/json',
@@ -65,4 +66,4 @@ const handleApiError = (error: AxiosError): void => {
   }
 };
 
-export { apiClient, apiClient2 }; 
+export { apiClient, apiClient2 };
