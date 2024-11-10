@@ -13,11 +13,5 @@
         "distDir": "dist"
       }
     }
-  ],
-  "routes": [
-    {
-      "src": "/imagine/(.*)",
-      "dest": "/imagine/index.html"
-    }
   ]
 }
