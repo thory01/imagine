@@ -1,24 +1,23 @@
 {
-    "rewrites": [
-      { "source": "/imagine/**", "destination": "/index.html" }
-    ],
-    "builds": [
-      {
-        "src": "vite.config.js",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "dist"
-        }
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/imagine/index.html"
-      }
-    ],
-    "static": {
-      "public": true
+  "rewrites": [
+    {
+      "source": "/imagine/**",
+      "destination": "/index.html"
     }
-  }
-  
+  ],
+  "builds": [
+    {
+      "src": "vite.config.js",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/imagine/(.*)",
+      "dest": "/imagine/index.html"
+    }
+  ]
+}
