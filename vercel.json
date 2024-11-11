@@ -1,0 +1,19 @@
+{
+    "functions": {
+      "api/proxy.js": {
+        "memory": 3009,
+        "maxDuration": 30
+      }
+    },
+    "routes": [
+      {
+        "src": "/api/proxy(?:/.*)?",
+        "dest": "/api/proxy.js"
+      },
+      {
+        "src": "/rails/active_storage/blobs/redirect(?:/.*)?",
+        "dest": "/api/proxy.js"
+      }
+    ]
+  }
+  
