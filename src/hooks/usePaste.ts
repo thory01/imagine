@@ -38,7 +38,7 @@ const usePaste = (callback: (pasteText: string, prompt: Record<string, any>, eve
     const remainingParts: string[] = [];
     
     text.split(' ').forEach(part => {
-      const [key, value] = part.split('=');
+      const [key] = part.split('=');
       if (!allowedKeys.has(key)) {
         remainingParts.push(part);  // If the key isn't in the allowed list, it's part of the remaining prompt text
       }

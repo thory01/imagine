@@ -1,5 +1,5 @@
 import { useDropzone } from 'react-dropzone';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface UseImageUploadProps {
     initialImage?: File | null;
