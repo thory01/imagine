@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
       <div className="flex w-full grow flex-col items-center gap-6">
         {/* Logo and brand */}
         <div className="flex-shrink-0 my-3 transition-all duration-200 ease-in-out">
-          <Link to="/" className="flex items-center justify-center md:justify-start">
+          <Link to="https://astria.ai/" className="flex items-center justify-center md:justify-start">
             <img
               src="https://www.astria.ai/assets/logo-b4e21f646fb5879eb91113a70eae015a7413de8920960799acb72c60ad4eaa99.png"
               alt="Logo"
