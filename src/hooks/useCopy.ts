@@ -19,7 +19,7 @@ export const useCopy = () => {
 
     // Add other allowed keys
     for (const key of Object.keys(prompt) as (keyof Prompt)[]) {
-      if (key !== "text" && allowedKeys.has(key)) {
+      if (key !== "text" && allowedKeys.has(key) && prompt[key]) {
         text += ` ${key}=${prompt[key]}`;
       }
     }

@@ -82,8 +82,10 @@ const PromptForm: React.FC<PromptFormProps> = () => {
   } = useImageUpload({});
 
   const { getPromptText } = usePaste((pasteText, pasteObject, event) => {
-    if (pasteText) setPromptText(pasteText);
-    console.log({ pasteObject });
+    // if (pasteText) {
+    //   setPromptText(pasteText);
+    // }
+    console.log({ pasteObject, pasteText, event,promptText });
     if (pasteObject) {
       setControlNet(pasteObject.controlnet || controlNet);
       setColorGrading(pasteObject.color_grading || colorGrading);
