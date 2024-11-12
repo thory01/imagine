@@ -32,7 +32,7 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt: initialPrompt, promptIn
           </p>
           <PropertiesDisplay prompt={displayPrompt} />
         </div>
-        <div className="order-1 md:order-2 flex justify-between items-center md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="order-1 md:order-2 flex justify-between items-center md:opacity-0 group-hover:opacity-100">
           <p className="font-medium block md:hidden">{promptIndex}</p>
           <ActionButtons prompt={displayPrompt} />
         </div>

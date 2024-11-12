@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
 // Conditionally set BASE_URL based on VITE_PROXY_URL environment variable
-const BASE_URL = import.meta.env.VITE_PROXY_URL || '';
+const BASE_URL = import.meta.env.VITE_DEPLOY_TO_ASTRIA === 'true' ? '' : '/api';
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
