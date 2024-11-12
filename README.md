@@ -16,15 +16,13 @@ A GUI for image generation
 - [License](#license)
 
 ## Deploy to Vercel
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fastriaai%2Fimagine&env=VITE_PROXY_URL,ASTRIA_API_KEY,VITE_DEPLOY_TO_SUBDIRECTORY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fastriaai%2Fimagine&env=ASTRIA_API_KEY)
 
 ### Vercel Deployment ENV
 On click of the deployment button fill the env accordingly:
 
    ```plaintext
-   VITE_PROXY_URL=/api/proxy
    ASTRIA_API_KEY=fill your astria api key
-   VITE_DEPLOY_TO_SUBDIRECTORY=false
    ```
 
 ## Installation
