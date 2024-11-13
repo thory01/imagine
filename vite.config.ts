@@ -8,10 +8,6 @@ dotenv.config();
 
 const BEARER_TOKEN = process.env.ASTRIA_API_KEY;
 
-if (!BEARER_TOKEN) {
-  throw new Error('BEARER_TOKEN is not defined in the environment variables');
-}
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -24,26 +20,28 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    proxy: {
-      '/api': {
-        target: 'https://api.astria.ai',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-        configure: (proxy) => {
-          proxy.on('proxyReq', (proxyReq) => {
-            proxyReq.setHeader('Authorization', `Bearer ${BEARER_TOKEN}`);
-          });
+    ...(BEARER_TOKEN && {
+      proxy: {
+        '/api': {
+          target: 'https://api.astria.ai',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+          configure: (proxy) => {
+            proxy.on('proxyReq', (proxyReq) => {
+              proxyReq.setHeader('Authorization', `Bearer ${BEARER_TOKEN}`);
+            });
+          }
+        },
+        '/rails/active_storage/blobs': {
+          target: 'https://api.astria.ai',
+          changeOrigin: true,
+          configure: (proxy) => {
+            proxy.on('proxyReq', (proxyReq) => {
+              proxyReq.setHeader('Authorization', `Bearer ${BEARER_TOKEN}`);
+            });
+          }
         }
-      },
-      '/rails/active_storage/blobs': {
-        target: 'https://api.astria.ai',
-        changeOrigin: true,
-        configure: (proxy) => {
-          proxy.on('proxyReq', (proxyReq) => {
-            proxyReq.setHeader('Authorization', `Bearer ${BEARER_TOKEN}`);
-          });
-        }
-      },
-    }
+      }
+    })
   }
 })
