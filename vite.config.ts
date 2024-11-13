@@ -24,7 +24,7 @@ export default defineConfig({
       proxy: {
         '/api': {
           target: 'https://api.astria.ai',
-          changeOrigin: true,
+          changeOrigin: false,
           rewrite: (path) => path.replace(/^\/api/, ''),
           configure: (proxy) => {
             proxy.on('proxyReq', (proxyReq) => {
