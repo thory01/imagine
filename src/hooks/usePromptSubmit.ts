@@ -3,16 +3,23 @@ import { createPrompt } from "@/api/prompts";
 import { toast } from "react-toastify";
 import { useStore } from "@/store/promptStore";
 
-async function convertImageToBase64(image) {
-  if (image) {
-    const reader = new FileReader();
-    return new Promise((resolve, reject) => {
-      reader.onload = () => resolve(reader.result.split(',')[1]); // Base64 part only
-      reader.onerror = error => reject(error);
-      reader.readAsDataURL(image);
-    });
-  }
-  return null;
+async function convertImageToBase64(image: File | null): Promise<string | null> {
+  if (!image) return null;
+
+  const reader = new FileReader();
+  
+  return new Promise((resolve, reject) => {
+    reader.onload = () => {
+      const result = reader.result;
+      if (typeof result === 'string') {
+        resolve(result.split(',')[1]); // Return the Base64 part
+      } else {
+        reject(new Error("Failed to read image as a string"));
+      }
+    };
+    reader.onerror = (error) => reject(error);
+    reader.readAsDataURL(image);
+  });
 }
 
 export const usePromptSubmit = () => {
@@ -39,23 +46,16 @@ export const usePromptSubmit = () => {
 
   const { refreshUserPrompts } = useStore();
 
-    const extractPromptText = (text: string) => {
+  const extractPromptText = (text: string) => {
     const allowedKeys = new Set([
       'controlnet', 'color_grading', 'super_resolution', 'hires_fix', 'inpaint_faces',
       'face_correct', 'face_swap', 'ar', 'denoising_strength', 'controlnet_conditioning_scale',
       'num_images', 'w', 'h', 'input_image'
     ]);
-
-    const remainingParts: string[] = [];
-
-    text.split(' ').forEach(part => {
-      const [key] = part.split('=');
-      if (!allowedKeys.has(key)) {
-        remainingParts.push(part);
-      }
-    });
-
-    return remainingParts.join(' ');
+    return text
+      .split(' ')
+      .filter(part => !allowedKeys.has(part.split('=')[0]))
+      .join(' ');
   };
 
   const handleSubmit = async () => {
@@ -88,9 +88,10 @@ export const usePromptSubmit = () => {
         backend_version: "0",
       };
 
+      // Append each entry in `promptData` to formData
       Object.entries(promptData).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-            formData.append(`prompt[${key}]`, String(value));
+          formData.append(`prompt[${key}]`, String(value));
         }
       });
 
@@ -98,11 +99,10 @@ export const usePromptSubmit = () => {
       toast.success("Prompt created successfully!");
       refreshUserPrompts();
       return true;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       setError(error.response?.data || "Error creating prompt");
-      toast.error("Error creating prompt" + error.response?.data?.base.join(', '));
+      toast.error("Error creating prompt: " + (error.response?.data?.base.join(', ') || "Unknown error"));
       return false;
     } finally {
       setIsLoading(false);
