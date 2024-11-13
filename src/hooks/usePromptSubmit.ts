@@ -58,7 +58,7 @@ export const usePromptSubmit = () => {
       const promptData = {
         text: extractPromptText(promptText),
         tune_id: "1504944",
-        input_image: image && URL.createObjectURL(image),
+        input_image: image,
         input_image_url: urlImage,
         control_net: controlNet,
         color_grading: colorGrading,
@@ -78,7 +78,11 @@ export const usePromptSubmit = () => {
 
       Object.entries(promptData).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
+            if (image) {
+              formData.append(`prompt[${key}]`, value);
+              } else {
             formData.append(`prompt[${key}]`, String(value));
+            }
         }
       });
 
