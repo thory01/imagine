@@ -99,7 +99,8 @@ export const usePromptSubmit = () => {
       toast.success("Prompt created successfully!");
       refreshUserPrompts();
       return true;
-    } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error(error);
       setError(error.response?.data || "Error creating prompt");
       toast.error("Error creating prompt: " + (error.response?.data?.base.join(', ') || "Unknown error"));
