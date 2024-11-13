@@ -72,7 +72,7 @@ const PromptForm: React.FC = () => {
                   <Textarea
                     ref={textareaRef}
                     placeholder="Write a prompt..."
-                    className="resize-none text-wrap flex-1 order-1"
+                    className="resize-none text-wrap flex-1 order-1 py-3"
                     value={promptText}
                     onChange={(e) => {
                       setPromptText(e.target.value)

@@ -51,7 +51,7 @@ interface SwitchInputProps {
 
 const SwitchInput = ({ label, checked, onCheckedChange, disabled = false, error }: SwitchInputProps & { error?: string }) => (
     <div className="leading-0">
-        <div className="flex items-center justify-between mt-1">
+        <div className="flex items-center justify-between">
             <label className="text-sm font-[400] text-gray-700 dark:text-gray-200 gap-1">
                 {label}
             </label>
@@ -82,23 +82,31 @@ export const AdvancedControls = () => {
                 <div className="flex justify-between items-center mb-1 py-3">
                     <h2 className="text-sm font-medium text-gray-800">Advance Settings</h2>
                 </div>
+                <div className="space-y-[5px]">
                 <AddLoraText onSelect={(tune) => {
                     setPromptText(`<lora:${tune.id}:1> ${promptText}`);
                 }} onRemove={(loraText) => {
                     setPromptText(promptText.replace(loraText, ""));
                 }} />
+                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                 <SwitchInput label="Super Resolution" checked={superResolution} onCheckedChange={setSuperResolution} error={error?.super_resolution?.join(" ")} />
+                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                 <div className={"col-span-full justify-center flex items-center ${showAdvancedOptions ? 'pt-0' : 'pt-6'}"}>
                     <button onClick={() => setShowAdvancedOptions(!showAdvancedOptions)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
                         <ChevronDown className={`w-6 h-6 ${showAdvancedOptions ? 'hidden' : 'block'}`} />
                     </button>
                 </div>
 
+                </div>
+
                 {showAdvancedOptions && (
-                    <div className="space-y-1">
+                    <div className="space-y-[5px]">
                         <SwitchInput label="Inpaint Faces" checked={inpaintFaces} onCheckedChange={setInpaintFaces} disabled={!superResolution} error={error?.inpaint_faces?.join(" ")} />
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <SwitchInput label="Hi-Res Fix" checked={hiresFix} onCheckedChange={setHiresFix} disabled={!superResolution} error={error?.hires_fix?.join(" ")} />
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <ColorGradingSelector value={colorGrading} onChange={setColorGrading} error={error?.color_grading?.join(" ")} />
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-[400] text-gray-700 dark:text-gray-200">
                                 Number of Images
@@ -113,10 +121,14 @@ export const AdvancedControls = () => {
                             />
                             {error?.num_images && <p className="text-red-500 text-xs ml-2">{error.num_images.join(" ")}</p>}
                         </div>
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <SwitchInput label="Film Grain" checked={filmGrain} onCheckedChange={setFilmGrain} error={error?.film_grain?.join(" ")} />
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <SwitchInput label="Face Correct" checked={faceCorrect} onCheckedChange={setFaceCorrect} error={error?.face_correct?.join(" ")} />
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <SwitchInput label="Face Swap" checked={faceSwap} onCheckedChange={setFaceSwap} error={error?.face_swap?.join(" ")} />
-                        <div className="col-span-full justify-center flex items-center pt-4">
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                        <div className="col-span-full justify-center flex items-center pt-0">
                             <button onClick={() => setShowAdvancedOptions(!showAdvancedOptions)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
                                 <ChevronUp className={`w-6 h-6 ${showAdvancedOptions ? 'block' : 'hidden'}`} />
                             </button>
@@ -133,8 +145,11 @@ export const AdvancedControls = () => {
                     <p className="text-sm text-gray-500 mb-4">Please upload an image to use these controls</p>
                 )}
                 <ControlNetSelector error={error?.controlnet?.join(" ")} value={controlNet} onChange={setControlNet} />
+                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                 <RangeInput error={error?.denoising_strength?.join(" ") || null} label="Denoising Strength" value={denoisingStrength} onChange={setDenoisingStrength} />
+                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                 <RangeInput error={error?.controlnet_conditioning_scale?.join(" ") || null} label="Conditioning Scale" value={conditioningScale} onChange={setConditioningScale} />
+                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
             </div>
         </div>
     );
