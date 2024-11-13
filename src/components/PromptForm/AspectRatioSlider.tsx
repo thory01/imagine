@@ -105,7 +105,7 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
               key={label}
               variant="ghost"
               size="sm"
-              className={`font-bold text-sm ${index === 1 ? 'rounded-none' : index === 0 ? 'rounded-l-full' : 'rounded-r-full'} ${sliderValue === value ? 'bg-red-300 text-red-800' : 'text-gray-500'} hover:bg-gray-300`}
+              className={`font-bold text-sm ${index === 1 ? 'rounded-none' : index === 0 ? 'rounded-l-full' : 'rounded-r-full'} ${sliderValue === value ? 'bg-orange-300 text-orange-800' : 'text-gray-500'} hover:bg-gray-300`}
               onClick={() => handleSliderChange(value)}
             >
               {label}

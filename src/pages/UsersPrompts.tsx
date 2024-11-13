@@ -10,10 +10,11 @@ import { format, isToday, isYesterday, parseISO } from "date-fns";
 
 const UsersPrompts: React.FC = () => {
   const { userPrompts, fetchMoreData } = usePrompts();
+
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  console.log(error);
   const loadMorePrompts = useCallback(async () => {
     if (loading) return;
     setLoading(true);
@@ -21,7 +22,7 @@ const UsersPrompts: React.FC = () => {
     try {
       const hasMoreData = await fetchMoreData(false);
       setHasMore(hasMoreData);
-    } catch (e) {
+    } catch (error) {
       setError("An error occurred while loading more prompts. Please try again.");
       console.error(error);
     } finally {
@@ -89,4 +90,5 @@ const UsersPrompts: React.FC = () => {
   );
 };
 
-export default WithLayout(UsersPrompts);
+const UsersPromptsWithLayout = WithLayout(UsersPrompts);
+export default UsersPromptsWithLayout;

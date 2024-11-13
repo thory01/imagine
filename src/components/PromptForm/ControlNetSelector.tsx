@@ -44,7 +44,7 @@ const ControlNetSelector: React.FC<ControlNetSelectorProps> = ({
               value={option.value}
               className={cn(
                 "px-3 py-1 rounded-md text-sm font-medium",
-                value === option.value ? "bg-blue-500 text-white" : "text-gray-700",
+                value === option.value ? "bg-orange-300 text-orange-900" : "text-gray-700",
                 index === 1 ? 'rounded-none' : index === 0 ? 'rounded-l-full' : 'rounded-r-full'
               )}
             >

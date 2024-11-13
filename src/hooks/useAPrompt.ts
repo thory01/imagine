@@ -5,7 +5,7 @@ import { usePromptFormStore } from "@/store/promptFormStore";
 export const useAPrompt = () => {
   const [isPromptUsed, setIsPromptUsed] = useState(false);
 
-  const { setHeight, setWidth, setPromptText, setControlNet, setColorGrading, setSuperResolution, setHiresFix, setInpaintFaces, setFaceCorrect, setFaceSwap, setDenoisingStrength, setConditioningScale, setNumImages } = usePromptFormStore();
+  const { setHeight, setWidth, setPromptText, setControlNet, setColorGrading, setSuperResolution, setHiresFix, setInpaintFaces, setFaceCorrect, setFaceSwap, setDenoisingStrength, setConditioningScale, setNumImages, setUrlImage } = usePromptFormStore();
 
   const handleUsePrompt = async (prompt: Prompt) => {
     setHeight(prompt.h);
@@ -21,7 +21,7 @@ export const useAPrompt = () => {
     setDenoisingStrength(prompt.denoising_strength);
     setConditioningScale(prompt.controlnet_conditioning_scale);
     setNumImages(prompt.num_images);
-
+    setUrlImage(prompt.input_image);
     setIsPromptUsed(true);
     setTimeout(() => {
       setIsPromptUsed(false);

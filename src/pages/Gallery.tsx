@@ -15,4 +15,5 @@ const Gallery: React.FC = () => {
   );
 };
 
-export default WithLayout(Gallery);
+const GalleryWithLayout = WithLayout(Gallery);
+export default GalleryWithLayout;

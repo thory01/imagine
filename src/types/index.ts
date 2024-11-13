@@ -75,6 +75,7 @@ export interface PromptsState {
   retrieveSinglePrompt: (tuneId: number, promptId: number) => Promise<Prompt>;
   removeSinglePrompt: (promptId: number) => void;
   updateSinglePrompt: (tuneId: number, promptId: number) => Promise<void>;
+  updatePromptForm: (prompt: Prompt) => void;
 }
 
 
@@ -89,21 +90,50 @@ export type ErrorObject = {
 
 
 export interface PromptFormState {
-  promptText: string; setPromptText: (text: string) => void;
-  width: number; setWidth: (width: number) => void;
-  height: number; setHeight: (height: number) => void;
-  controlNet: string; setControlNet: (controlNet: string) => void;
-  colorGrading: string; setColorGrading: (colorGrading: string) => void;
-  filmGrain: boolean; setFilmGrain: (filmGrain: boolean) => void;
-  superResolution: boolean; setSuperResolution: (superResolution: boolean) => void;
-  hiresFix: boolean; setHiresFix: (hiresFix: boolean) => void;
-  inpaintFaces: boolean; setInpaintFaces: (inpaintFaces: boolean) => void;
-  faceCorrect: boolean; setFaceCorrect: (faceCorrect: boolean) => void;
-  faceSwap: boolean; setFaceSwap: (faceSwap: boolean) => void;
-  denoisingStrength: number; setDenoisingStrength: (denoisingStrength: number) => void;
-  conditioningScale: number; setConditioningScale: (conditioningScale: number) => void;
-  numImages: number; setNumImages: (numImages: number) => void;
-  loraTextList: string[]; setLoraTextList: (loraTextList: string[]) => void;
-  error: ErrorObject; setError: (error: ErrorObject) => void;
-  isLoading: boolean; setIsLoading: (isLoading: boolean) => void;
+  promptText: string;
+  setPromptText: (text: string) => void;
+  
+  width: number;
+  setWidth: (width: number) => void;
+  height: number;
+  setHeight: (height: number) => void;
+  
+  controlNet: string;
+  setControlNet: (controlNet: string) => void;
+  colorGrading: string;
+  setColorGrading: (colorGrading: string) => void;
+  filmGrain: boolean;
+  setFilmGrain: (filmGrain: boolean) => void;
+  
+  superResolution: boolean;
+  setSuperResolution: (superResolution: boolean) => void;
+  hiresFix: boolean;
+  setHiresFix: (hiresFix: boolean) => void;
+  inpaintFaces: boolean;
+  setInpaintFaces: (inpaintFaces: boolean) => void;
+  faceCorrect: boolean;
+  setFaceCorrect: (faceCorrect: boolean) => void;
+  faceSwap: boolean;
+  setFaceSwap: (faceSwap: boolean) => void;
+  
+  denoisingStrength: number;
+  setDenoisingStrength: (denoisingStrength: number) => void;
+  conditioningScale: number;
+  setConditioningScale: (conditioningScale: number) => void;
+  numImages: number;
+  setNumImages: (numImages: number) => void;
+  
+  loraTextList: string[];
+  setLoraTextList: (loraTextList: string[]) => void;
+  
+  error: ErrorObject;
+  setError: (error: ErrorObject) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+
+  // Add image-related state
+  image: File | null;
+  setImage: (image: File | null) => void;
+  urlImage: string | null;
+  setUrlImage: (urlImage: string | null) => void;
 }

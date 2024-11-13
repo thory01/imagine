@@ -1,17 +1,12 @@
 import { useDropzone } from 'react-dropzone';
 import { useState } from 'react';
-
-interface UseImageUploadProps {
-    initialImage?: File | null;
-    initialUrl?: string;
-}
+import { usePromptFormStore } from '@/store/promptFormStore';
+import { DropzoneRootProps, DropzoneInputProps } from 'react-dropzone';
 
 interface UseImageUploadReturn {
-    image: File | null;
-    urlImage: string | null;
     uploadError: string | null;
-    getRootProps: () => any;
-    getInputProps: () => any;
+    getRootProps: <T extends DropzoneRootProps>(props?: T) => T;
+    getInputProps: <T extends DropzoneInputProps>(props?: T) => T;
     setImage: (file: File | null) => void;
     handleImagePaste: (event: ClipboardEvent) => void;
     handleUrlUpload: (url: string) => Promise<void>;
@@ -19,9 +14,8 @@ interface UseImageUploadReturn {
     isDragActive: boolean;
 }
 
-export const useImageUpload = ({ initialImage = null, initialUrl = '' }: UseImageUploadProps): UseImageUploadReturn => {
-    const [image, setImage] = useState<File | null>(initialImage);
-    const [urlImage, setUrlImage] = useState<string | null>(initialUrl || null);
+export const useImageUpload = (): UseImageUploadReturn => {
+    const { setImage, setUrlImage } = usePromptFormStore();
     const [uploadError, setUploadError] = useState<string | null>(null);
 
     const onDrop = (acceptedFiles: File[]) => {
@@ -59,13 +53,9 @@ export const useImageUpload = ({ initialImage = null, initialUrl = '' }: UseImag
     };
 
     const handleUrlUpload = async (url: string) => {
-        try {
-            setImage(null);
-            setUrlImage(url);
-            setUploadError(null);
-        } catch (error) {
-            setUploadError('Invalid URL or unable to fetch image.');
-        }
+        setImage(null);
+        setUrlImage(url);
+        setUploadError(null);
     };
 
     const clearImage = () => {
@@ -74,8 +64,6 @@ export const useImageUpload = ({ initialImage = null, initialUrl = '' }: UseImag
     };
 
     return {
-        image,
-        urlImage,
         uploadError,
         handleImagePaste,
         getRootProps,

@@ -76,7 +76,7 @@ const Prompt: React.FC = () => {
     };
 
     determinePromptType();
-  }, [id, promptType, findPrompt, navigate]);
+  }, [id, promptType, findPrompt, navigate, galleryPrompts]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleEscape, { capture: true });
@@ -111,7 +111,6 @@ const Prompt: React.FC = () => {
         <div className="w-full h-full flex flex-col md:flex-row bg-light-mode">
           <PromptImage
             imageUrl={currentPrompt.images[index]}
-            type={promptType}
             setDisplay={setZoomImage}
           />
           <PromptDetails
@@ -130,4 +129,5 @@ const Prompt: React.FC = () => {
   );
 };
 
-export default WithPrompt(Prompt);
+const PromptWithLayout = WithPrompt(Prompt);
+export default PromptWithLayout;

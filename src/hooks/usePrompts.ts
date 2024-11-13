@@ -3,6 +3,7 @@ import { useStore } from "@/store/promptStore";
 import { fetchGalleryPrompts, fetchUserPrompts } from "@/api/prompts";
 import type { Prompt } from "../types";
 
+
 export type PromptType = "user" | "gallery" | null;
 
 interface UsePromptsResult {
@@ -66,12 +67,12 @@ const usePrompts = (promptId?: number): UsePromptsResult => {
       attemptCount += 1;
       if (attemptCount > 5) break; // Limit fetch attempts
 
-      const userPromise: Promise<boolean> = !userExhausted 
-        ? fetchMoreData(false) 
+      const userPromise: Promise<boolean> = !userExhausted
+        ? fetchMoreData(false)
         : Promise.resolve(false);
-      
-      const galleryPromise: Promise<boolean> = !galleryExhausted 
-        ? fetchMoreData(true) 
+
+      const galleryPromise: Promise<boolean> = !galleryExhausted
+        ? fetchMoreData(true)
         : Promise.resolve(false);
 
       const [hasMoreUserPrompts, hasMoreGalleryPrompts] = await Promise.all([
@@ -99,7 +100,7 @@ const usePrompts = (promptId?: number): UsePromptsResult => {
       if (promptId) {
         await findPrompt(promptId);
       }
-      
+
       if (galleryPrompts.length === 0) {
         await fetchMoreData(true);
       }
@@ -109,7 +110,7 @@ const usePrompts = (promptId?: number): UsePromptsResult => {
     };
 
     initializePrompts();
-  }, [promptId, fetchMoreData, findPrompt]);
+  }, [promptId, fetchMoreData, findPrompt, galleryPrompts.length, userPrompts.length]);
 
   return {
     galleryPrompts,

@@ -99,7 +99,7 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
     };
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-0">
             <div className="flex flex-wrap items-center justify-between">
                 <label className="text-sm font-[400] text-gray-700 dark:text-gray-200">
                     Add Loras ({loraTextList.length})
@@ -192,11 +192,11 @@ const AddLoraText: React.FC<AddLoraTextProps> = ({
             </div>
 
             {loraTextList.length > 0 && (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1">
                     {loraTextList.map((text, index) => (
                         <div
                             key={index}
-                            className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+                            className="bg-gray-100 dark:bg-gray-800 px-3 py-[1px] rounded-full text-sm flex items-center gap-2"
                         >
                             {text}
                             <button

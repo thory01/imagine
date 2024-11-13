@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 interface PromptImageProps {
   imageUrl: string;
-  type: string;
   setDisplay?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PromptImage: React.FC<PromptImageProps> = ({ imageUrl, type, setDisplay }) => {
+const PromptImage: React.FC<PromptImageProps> = ({ imageUrl, setDisplay }) => {
   const navigate = useNavigate();
 
   return (
@@ -31,11 +30,11 @@ const PromptImage: React.FC<PromptImageProps> = ({ imageUrl, type, setDisplay })
       <button
         onClick={(e) => {
           e.stopPropagation();
-          navigate(type === 'gallery' ? "/gallery" : '/');
+          navigate(-1);
         }}
-        className="absolute right-6 top-2 p-2 bg-white rounded-full hover:bg-gray-300"
+        className="absolute right-6 top-2 p-2 bg-white rounded-full hover:bg-gray-200"
       >
-        <X className="text-black" />
+        <X className="text-black w-4 h-4" />
       </button>
     </div>
   );

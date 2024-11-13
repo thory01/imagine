@@ -57,7 +57,10 @@ export const post = async <T>(url: string, data: object): Promise<ApiResponse<T>
 };
 
 const handleApiError = (error: AxiosError): void => {
-  if (error.response) {
+  if (error.response?.status === 401) {
+    window.location.href = 'https://astria.ai/login';
+    return;
+  } else if (error.response) {
     console.error('API Error:', error.response.status, error.response.data);
   } else if (error.request) {
     console.error('No response received:', error.request);

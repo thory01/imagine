@@ -28,7 +28,7 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt: initialPrompt, promptIn
       <div className="md:w-[30%] px-0 py-2 md:py-0 md:px-2 flex flex-col text-sm text-black">
         <div className="flex-1 order-2 md:order-1">
           <p className="font-medium">
-            {displayPrompt.text?.length > 100 ? `${displayPrompt.text.slice(0, 100)}...` : displayPrompt.text}
+            {displayPrompt.text?.length > 90 ? `${displayPrompt.text.slice(0, 90)}...` : displayPrompt.text}
           </p>
           <PropertiesDisplay prompt={displayPrompt} />
         </div>

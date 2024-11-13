@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
             <span className="ml-2 text-black text-md font-semibold hidden custom-lg:inline">Astria Imagine</span>
           </Link>
         </div>
-        <div className="flex flex-col text-center w-full space-y-4">
+        <div className="flex flex-col text-center item-center w-full py-2 space-y-4">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -76,11 +76,11 @@ const NavLink: React.FC<NavLinkProps> = ({ to, label, Icon, active }) => (
   <Link
     to={to}
     className={cn(
-      'w-full flex items-center justify-center md:justify-start px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-in-out',
-      active ? 'bg-gray-900 text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-black'
+      'w-fit custom-lg:w-full flex items-center justify-center custom-lg:justify-start px-2 custom-lg:px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-in-out',
+      active ? 'shadow-sm bg-orange-500 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-orange-300 text-orange-900' : 'text-gray-700 hover:bg-gray-100 hover:text-black'
     )}
   >
-    <Icon className="h-6 w-6 transition-transform duration-200 hover:scale-110" />
+      <Icon className="h-5 w-5 transition-transform duration-200 hover:scale-110" strokeWidth={2.5} />
     <span className="ml-2 hidden custom-lg:inline">{label}</span>
   </Link>
 );

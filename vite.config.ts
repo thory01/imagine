@@ -29,8 +29,8 @@ export default defineConfig({
         target: 'https://api.astria.ai',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
-        configure: (proxy, options) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyReq) => {
             proxyReq.setHeader('Authorization', `Bearer ${BEARER_TOKEN}`);
           });
         }
@@ -38,8 +38,8 @@ export default defineConfig({
       '/rails/active_storage/blobs': {
         target: 'https://api.astria.ai',
         changeOrigin: true,
-        configure: (proxy, options) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyReq) => {
             proxyReq.setHeader('Authorization', `Bearer ${BEARER_TOKEN}`);
           });
         }

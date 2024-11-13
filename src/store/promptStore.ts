@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import { PromptsState } from "@/types";
+import { Prompt, PromptsState } from "@/types";
 import { fetchGalleryPrompts, fetchUserPrompts, retrievePrompt } from "@/api/prompts";
+import { usePromptFormStore } from "./promptFormStore";
 
 export const useStore = create<PromptsState>((set) => ({
   galleryPrompts: [],
@@ -16,10 +17,15 @@ export const useStore = create<PromptsState>((set) => ({
     })),
 
   addUserPrompts: (prompts) =>
-    set((state) => ({
-      userPrompts: [...state.userPrompts, ...prompts],
-      userOffset: state.userOffset + prompts.length,
-    })),
+    set((state) => {
+      if (state.userPrompts.length === 0) {
+        state.updatePromptForm(prompts[0]);
+      }
+      return ({
+        userPrompts: [...state.userPrompts, ...prompts],
+        userOffset: state.userOffset + prompts.length,
+      })
+    }),
 
   resetGalleryPrompts: () =>
     set({
@@ -68,4 +74,24 @@ export const useStore = create<PromptsState>((set) => ({
       return { userPrompts };
     });
   },
+
+  updatePromptForm: (prompt: Prompt) => {
+    if (prompt) {
+      usePromptFormStore.getState().setPromptText(prompt.text);
+      usePromptFormStore.getState().setWidth(prompt.w);
+      usePromptFormStore.getState().setHeight(prompt.h);
+      usePromptFormStore.getState().setUrlImage(prompt.input_image);
+      usePromptFormStore.getState().setControlNet(prompt.controlnet);
+      usePromptFormStore.getState().setColorGrading(prompt.color_grading);
+      usePromptFormStore.getState().setFilmGrain(prompt.film_grain);
+      usePromptFormStore.getState().setSuperResolution(prompt.super_resolution);
+      usePromptFormStore.getState().setHiresFix(prompt.hires_fix);
+      usePromptFormStore.getState().setInpaintFaces(prompt.inpaint_faces);
+      usePromptFormStore.getState().setFaceCorrect(prompt.face_correct);
+      usePromptFormStore.getState().setFaceSwap(prompt.face_swap);
+      usePromptFormStore.getState().setDenoisingStrength(prompt.denoising_strength);
+      usePromptFormStore.getState().setConditioningScale(prompt.controlnet_conditioning_scale);
+      usePromptFormStore.getState().setNumImages(prompt.num_images);
+    }
+  }
 }));

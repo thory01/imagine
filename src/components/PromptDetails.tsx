@@ -80,7 +80,7 @@ const PromptDetails: React.FC<PromptDetailsProps> = ({ prompt, imageUrl }) => {
             </button>
           </div>
         </div>
-        <p className="overflow-y-auto max-h-48 text-sm text-gray-700">
+        <p className="overflow-y-auto max-h-48 text-sm text-gray-700 break-words">
           {prompt?.text?.length > 100 ? `${prompt?.text.slice(0, 200)}...` : prompt?.text}
         </p>
       </div>
