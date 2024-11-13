@@ -1,6 +1,7 @@
 import { usePromptFormStore } from "@/store/promptFormStore";
 import { createPrompt } from "@/api/prompts";
 import { toast } from "react-toastify";
+import { useStore } from "@/store/promptStore";
 
 export const usePromptSubmit = () => {
   const {
@@ -23,6 +24,8 @@ export const usePromptSubmit = () => {
     setIsLoading,
     setError,
   } = usePromptFormStore();
+
+  const { refreshUserPrompts } = useStore();
 
     const extractPromptText = (text: string) => {
     const allowedKeys = new Set([
@@ -81,6 +84,7 @@ export const usePromptSubmit = () => {
 
       await createPrompt(formData);
       toast.success("Prompt created successfully!");
+      refreshUserPrompts();
       return true;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
