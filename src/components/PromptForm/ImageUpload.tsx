@@ -1,6 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import { usePromptFormStore } from "@/store/promptFormStore";
+import { useMemo } from "react";
 
 interface ImageUploadProps {
   showControls: boolean;
@@ -23,6 +24,13 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ showControls, onImageU
     onImageUpload(null, null);
   };
 
+  const imageSrc = useMemo(() => {
+    if (image) {
+      return URL.createObjectURL(image);
+    }
+    return urlImage;
+  }, [image, urlImage]);
+
   if (!showControls && !image && !urlImage) return null;
 
   return (
@@ -36,7 +44,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ showControls, onImageU
         {image || urlImage ? (
           <div className="relative w-full h-full group">
             <img
-              src={image ? URL.createObjectURL(image) : urlImage!}
+              src={imageSrc!}
               alt="Uploaded"
               className="object-cover h-full rounded-md"
             />
