@@ -21,7 +21,6 @@ export const usePromptSubmit = () => {
     width,
     height,
     setIsLoading,
-    error,
     setError,
   } = usePromptFormStore();
 
