@@ -58,7 +58,7 @@ export const usePromptSubmit = () => {
       const promptData = {
         text: extractPromptText(promptText),
         tune_id: "1504944",
-        input_image: image,
+        input_image: URL.createObjectURL(image),
         input_image_url: urlImage,
         control_net: controlNet,
         color_grading: colorGrading,
