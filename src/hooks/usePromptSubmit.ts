@@ -3,6 +3,18 @@ import { createPrompt } from "@/api/prompts";
 import { toast } from "react-toastify";
 import { useStore } from "@/store/promptStore";
 
+async function convertImageToBase64(image) {
+  if (image) {
+    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.onload = () => resolve(reader.result.split(',')[1]); // Base64 part only
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(image);
+    });
+  }
+  return null;
+}
+
 export const usePromptSubmit = () => {
   const {
     promptText,
@@ -58,7 +70,7 @@ export const usePromptSubmit = () => {
       const promptData = {
         text: extractPromptText(promptText),
         tune_id: "1504944",
-        input_image: image,
+        input_image: image ? await convertImageToBase64(image) : null,
         input_image_url: urlImage,
         control_net: controlNet,
         color_grading: colorGrading,
@@ -78,11 +90,7 @@ export const usePromptSubmit = () => {
 
       Object.entries(promptData).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-            if (image) {
-              formData.append(`prompt[${key}]`, value);
-              } else {
             formData.append(`prompt[${key}]`, String(value));
-            }
         }
       });
 
