@@ -40,6 +40,7 @@ export interface Prompt {
   mask_image: string | null;
   controlnet: string;
   use_lpw: boolean;
+  backend_version: string;
 }
 
 export interface Tune {
@@ -118,6 +119,8 @@ export interface PromptFormState {
   faceSwap: boolean;
   setFaceSwap: (faceSwap: boolean) => void;
   
+  backendVersion: string;
+  setBackendVersion: (backendVersion: string) => void;
   denoisingStrength: number;
   setDenoisingStrength: (denoisingStrength: number) => void;
   conditioningScale: number;

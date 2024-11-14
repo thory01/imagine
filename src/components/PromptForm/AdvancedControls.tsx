@@ -68,7 +68,7 @@ export const AdvancedControls = () => {
     const { controlNet, setControlNet, colorGrading, setColorGrading, filmGrain, setFilmGrain,
         superResolution, setSuperResolution, hiresFix, setHiresFix, inpaintFaces, setInpaintFaces,
         faceCorrect, setFaceCorrect, faceSwap, setFaceSwap, denoisingStrength, setDenoisingStrength,
-        conditioningScale, setConditioningScale, numImages, setNumImages, promptText, setPromptText, error, image, urlImage: imageUrl, controlNetTXT2IMG, setControlNetTXT2IMG
+        conditioningScale, setConditioningScale, numImages, setNumImages, promptText, setPromptText, error, image, urlImage: imageUrl, controlNetTXT2IMG, setControlNetTXT2IMG, backendVersion, setBackendVersion
     } = usePromptFormStore();
 
     return (
@@ -79,10 +79,10 @@ export const AdvancedControls = () => {
             />
 
             <div className={`md:row-span-2 scrollbar bg-gray-50 px-4 rounded-bl-lg rounded-br-lg md:rounded-bl-none md:rounded-r-lg order-3 md:order-2`}>
-                <div className="flex justify-between items-center mb-1 py-3">
+                <div className="flex justify-between items-center mb-[3px] py-2">
                     <h2 className="text-sm font-medium text-gray-800">Advance Settings</h2>
                 </div>
-                <div className="space-y-[5px]">
+                <div className="space-y-[4px]">
                     <AddLoraText onSelect={(tune) => {
                         setPromptText(`<lora:${tune.id}:1> ${promptText}`);
                     }} onRemove={(loraText) => {
@@ -100,7 +100,22 @@ export const AdvancedControls = () => {
                 </div>
 
                 {showAdvancedOptions && (
-                    <div className="space-y-[5px]">
+                    <div className="space-y-[4px]">
+                        <div className="flex items-center justify-between">
+                            <label className="text-sm font-[400] text-gray-700 dark:text-gray-200">
+                                Backend Version
+                            </label>
+                            <select 
+                                className="col-span-2 border rounded-full h-6 py-0 px-2 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
+                                onChange={(e) => setBackendVersion(e.target.value)}
+                                value={backendVersion}
+                            >
+                                <option value="0">0 - Stable</option>
+                                <option value="1">1 - BETA</option>
+                            </select>
+                            {error?.backend_version && <p className="text-red-500 text-xs ml-2">{error.backend_version.join(" ")}</p>}
+                        </div>
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <SwitchInput label="Inpaint Faces" checked={inpaintFaces} onCheckedChange={setInpaintFaces} disabled={!superResolution} error={error?.inpaint_faces?.join(" ")} />
                         <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <SwitchInput label="Hi-Res Fix" checked={hiresFix} onCheckedChange={setHiresFix} disabled={!superResolution} error={error?.hires_fix?.join(" ")} />

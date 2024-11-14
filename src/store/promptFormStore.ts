@@ -39,6 +39,8 @@ export const usePromptFormStore = create<PromptFormState>((set) => ({
   setFaceSwap: (faceSwap) => set({ faceSwap }),
 
   // Advanced settings
+  backendVersion: '0',
+  setBackendVersion: (backendVersion) => set({ backendVersion }),
   denoisingStrength: 0.8,
   setDenoisingStrength: (denoisingStrength) => set({ denoisingStrength }),
   conditioningScale: 0.8,

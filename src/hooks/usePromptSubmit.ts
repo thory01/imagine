@@ -12,6 +12,7 @@ export const usePromptSubmit = () => {
     controlNet,
     colorGrading,
     controlNetTXT2IMG,
+    backendVersion,
     filmGrain,
     superResolution,
     hiresFix,
@@ -32,7 +33,7 @@ export const usePromptSubmit = () => {
   const extractPromptText = (text: string) => {
     const allowedKeys = new Set([
       'controlnet', 'color_grading', 'super_resolution', 'hires_fix', 'inpaint_faces',
-      'face_correct', 'face_swap', 'ar', 'denoising_strength', 'controlnet_conditioning_scale', 'controlnet_txt2img', 'num_images', 'w', 'h', 'input_image', 'film_grain'
+      'face_correct', 'face_swap', 'ar', 'denoising_strength', 'controlnet_conditioning_scale', 'controlnet_txt2img', 'num_images', 'w', 'h', 'input_image', 'film_grain', 'backend_version'
     ]);
     return text
       .split(' ')
@@ -68,7 +69,7 @@ export const usePromptSubmit = () => {
         num_images: numImages,
         w: width,
         h: height,
-        backend_version: "0",
+        backend_version: backendVersion,
       };
 
       // Append each entry in `promptData` to formData
