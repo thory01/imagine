@@ -3,24 +3,6 @@ import { createPrompt } from "@/api/prompts";
 import { toast } from "react-toastify";
 import { useStore } from "@/store/promptStore";
 
-async function convertImageToBase64(image: File | null): Promise<string | null> {
-  if (!image) return null;
-
-  const reader = new FileReader();
-  
-  return new Promise((resolve, reject) => {
-    reader.onload = () => {
-      const result = reader.result;
-      if (typeof result === 'string') {
-        resolve(result.split(',')[1]); // Return the Base64 part
-      } else {
-        reject(new Error("Failed to read image as a string"));
-      }
-    };
-    reader.onerror = (error) => reject(error);
-    reader.readAsDataURL(image);
-  });
-}
 
 export const usePromptSubmit = () => {
   const {
@@ -70,7 +52,7 @@ export const usePromptSubmit = () => {
       const promptData = {
         text: extractPromptText(promptText),
         tune_id: "1504944",
-        input_image: image ? await convertImageToBase64(image) : null,
+        input_image: image,
         input_image_url: urlImage,
         control_net: controlNet,
         color_grading: colorGrading,
@@ -91,7 +73,11 @@ export const usePromptSubmit = () => {
       // Append each entry in `promptData` to formData
       Object.entries(promptData).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-          formData.append(`prompt[${key}]`, String(value));
+          if (key === "input_image" && value instanceof File) {
+            formData.append(`prompt[${key}]`, value);
+          } else {
+            formData.append(`prompt[${key}]`, String(value));
+          }
         }
       });
 
@@ -99,7 +85,7 @@ export const usePromptSubmit = () => {
       toast.success("Prompt created successfully!");
       refreshUserPrompts();
       return true;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
       setError(error.response?.data || "Error creating prompt");
