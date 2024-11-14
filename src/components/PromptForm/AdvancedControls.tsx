@@ -68,7 +68,7 @@ export const AdvancedControls = () => {
     const { controlNet, setControlNet, colorGrading, setColorGrading, filmGrain, setFilmGrain,
         superResolution, setSuperResolution, hiresFix, setHiresFix, inpaintFaces, setInpaintFaces,
         faceCorrect, setFaceCorrect, faceSwap, setFaceSwap, denoisingStrength, setDenoisingStrength,
-        conditioningScale, setConditioningScale, numImages, setNumImages, promptText, setPromptText, error, image, urlImage: imageUrl
+        conditioningScale, setConditioningScale, numImages, setNumImages, promptText, setPromptText, error, image, urlImage: imageUrl, controlNetTXT2IMG, setControlNetTXT2IMG
     } = usePromptFormStore();
 
     return (
@@ -83,19 +83,19 @@ export const AdvancedControls = () => {
                     <h2 className="text-sm font-medium text-gray-800">Advance Settings</h2>
                 </div>
                 <div className="space-y-[5px]">
-                <AddLoraText onSelect={(tune) => {
-                    setPromptText(`<lora:${tune.id}:1> ${promptText}`);
-                }} onRemove={(loraText) => {
-                    setPromptText(promptText.replace(loraText, ""));
-                }} />
-                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
-                <SwitchInput label="Super Resolution" checked={superResolution} onCheckedChange={setSuperResolution} error={error?.super_resolution?.join(" ")} />
-                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
-                <div className={"col-span-full justify-center flex items-center ${showAdvancedOptions ? 'pt-0' : 'pt-6'}"}>
-                    <button onClick={() => setShowAdvancedOptions(!showAdvancedOptions)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
-                        <ChevronDown className={`w-6 h-6 ${showAdvancedOptions ? 'hidden' : 'block'}`} />
-                    </button>
-                </div>
+                    <AddLoraText onSelect={(tune) => {
+                        setPromptText(`<lora:${tune.id}:1> ${promptText}`);
+                    }} onRemove={(loraText) => {
+                        setPromptText(promptText.replace(loraText, ""));
+                    }} />
+                    <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                    <SwitchInput label="Super Resolution" checked={superResolution} onCheckedChange={setSuperResolution} error={error?.super_resolution?.join(" ")} />
+                    <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                    <div className={"col-span-full justify-center flex items-center ${showAdvancedOptions ? 'pt-0' : 'pt-6'}"}>
+                        <button onClick={() => setShowAdvancedOptions(!showAdvancedOptions)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
+                            <ChevronDown className={`w-6 h-6 ${showAdvancedOptions ? 'hidden' : 'block'}`} />
+                        </button>
+                    </div>
 
                 </div>
 
@@ -138,7 +138,7 @@ export const AdvancedControls = () => {
             </div>
 
             <div className={`w-full grid grid-cols-1 p-4 bg-gray-50 rounded-bl-lg md:order-3 order-2 ${!image && !imageUrl ? 'opacity-50 pointer-events-none' : ''}`}>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-2">
                     <h2 className="text-sm font-medium text-gray-800">ControlNet/Img2Img</h2>
                 </div>
                 {(!image && !imageUrl) && (
@@ -149,6 +149,8 @@ export const AdvancedControls = () => {
                 <RangeInput error={error?.denoising_strength?.join(" ") || null} label="Denoising Strength" value={denoisingStrength} onChange={setDenoisingStrength} />
                 <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                 <RangeInput error={error?.controlnet_conditioning_scale?.join(" ") || null} label="Conditioning Scale" value={conditioningScale} onChange={setConditioningScale} />
+                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                <SwitchInput label="ControlNet Txt2Img" checked={controlNetTXT2IMG} onCheckedChange={setControlNetTXT2IMG} error={error?.controlnet_txt2img?.join(" ")} />
                 <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
             </div>
         </div>

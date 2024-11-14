@@ -1,6 +1,7 @@
-# Astria Image Generation GUI
+# Flux Imagine GUI interface
 
-A GUI for image generation
+A modern and intuitive graphical user interface for generating images using Flux technology. This web-based application provides a seamless experience for creating, editing, and managing AI-generated images through a clean and responsive interface. Built with React and TypeScript, it offers real-time previews, batch processing capabilities, and integration with Flux's powerful image generation API.
+
 
 ## Table of Contents
 
@@ -54,7 +55,7 @@ To get a local copy up and running, follow these steps.
    Create a `.env` file in the root directory and add your API key:
    
    ```plaintext
-   VITE_APP_ASTRIA_API_KEY=your_api_key_here
+   ASTRIA_API_KEY=fill your astria api key
    ```
 
 ## Usage
@@ -62,10 +63,10 @@ To get a local copy up and running, follow these steps.
 After installation, you can run the project locally with:
 
 ```bash
-npm start
+npm run dev
 ```
 
-The app should now be running on `http://localhost:3000/imagine`.
+The app should now be running on `http://localhost:5173`.
 
 ## Project Structure
 
@@ -73,13 +74,27 @@ The project follows this folder structure for maintainability:
 
 ```plaintext
 src/
-├── components/        # Reusable components 
-├── pages/             # Main pages
-├── services/          # API calls (Axios instances and API functions)
-├── styles/            # CSS stylesheets or styled components
-├── utils/             # Utility functions
-└── types/             # TypeScript types and interfaces
+├── api/              # API configuration and endpoints
+├── components/       # Reusable components and UI elements
+├── hooks/            # Custom React hooks
+├── lib/              # Utility functions and helpers
+├── pages/            # Main application pages and routes
+├── services/         # API calls (Axios instances and API functions)
+├── store/            # State management (Zustand)
+└── types/            # TypeScript types and interfaces
 ```
+
+Each directory serves a specific purpose:
+
+- `api/`: Contains API configuration, endpoints, and related utilities
+- `components/`: Houses reusable UI components used throughout the application
+- `hooks/`: Custom React hooks for shared functionality
+- `lib/`: Helper functions, constants, and utility code
+- `pages/`: Main application pages and routing components
+- `services/`: API integration layer with Axios configurations
+- `store/`: State management logic using Zustand
+- `types/`: TypeScript type definitions and interfaces
+
 
 ## Deployment
 
@@ -112,6 +127,17 @@ Contributions are what make the open-source community such an amazing place to l
 4. Push to the Branch (`git push origin feature/YourFeature`)
 5. Open a Pull Request
 
+## Sponsored by Astria
+
+<p align="center">
+   <a href="https://astria.ai">
+      <img src="https://www.astria.ai/assets/logo-b4e21f646fb5879eb91113a70eae015a7413de8920960799acb72c60ad4eaa99.png" alt="Astria Logo" width="200"/>
+   </a>
+</p>
+
+This project is proudly sponsored by [Astria](https://astria.ai), a leading platform in AI-powered image generation and manipulation.
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+

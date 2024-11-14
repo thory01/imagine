@@ -104,6 +104,8 @@ export interface PromptFormState {
   setColorGrading: (colorGrading: string) => void;
   filmGrain: boolean;
   setFilmGrain: (filmGrain: boolean) => void;
+  controlNetTXT2IMG: boolean;
+  setControlNetTXT2IMG: (controlNetTXT2IMG: boolean) => void;
   
   superResolution: boolean;
   setSuperResolution: (superResolution: boolean) => void;

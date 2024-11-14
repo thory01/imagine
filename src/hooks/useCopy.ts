@@ -6,7 +6,7 @@ export const useCopy = () => {
   const allowedKeys = new Set([
     'controlnet', 'color_grading', 'super_resolution', 'hires_fix', 'inpaint_faces',
     'face_correct', 'face_swap', 'ar', 'denoising_strength', 'controlnet_conditioning_scale',
-    'num_images', 'w', 'h' , 'input_image'
+    'num_images', 'w', 'h' , 'input_image','controlnet_txt2img', 'film_grain'
 ]);
 
   const handleCopy = (prompt: Prompt) => {

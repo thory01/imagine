@@ -11,6 +11,7 @@ export const usePromptSubmit = () => {
     urlImage,
     controlNet,
     colorGrading,
+    controlNetTXT2IMG,
     filmGrain,
     superResolution,
     hiresFix,
@@ -31,8 +32,7 @@ export const usePromptSubmit = () => {
   const extractPromptText = (text: string) => {
     const allowedKeys = new Set([
       'controlnet', 'color_grading', 'super_resolution', 'hires_fix', 'inpaint_faces',
-      'face_correct', 'face_swap', 'ar', 'denoising_strength', 'controlnet_conditioning_scale',
-      'num_images', 'w', 'h', 'input_image'
+      'face_correct', 'face_swap', 'ar', 'denoising_strength', 'controlnet_conditioning_scale', 'controlnet_txt2img', 'num_images', 'w', 'h', 'input_image', 'film_grain'
     ]);
     return text
       .split(' ')
@@ -64,6 +64,7 @@ export const usePromptSubmit = () => {
         face_swap: faceSwap,
         denoising_strength: denoisingStrength,
         conditioning_scale: conditioningScale,
+        controlnet_txt2img: controlNetTXT2IMG,
         num_images: numImages,
         w: width,
         h: height,

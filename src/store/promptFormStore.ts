@@ -23,6 +23,8 @@ export const usePromptFormStore = create<PromptFormState>((set) => ({
   setColorGrading: (colorGrading) => set({ colorGrading }),
   filmGrain: false,
   setFilmGrain: (filmGrain) => set({ filmGrain }),
+  controlNetTXT2IMG: false,
+  setControlNetTXT2IMG: (controlNetTXT2IMG) => set({ controlNetTXT2IMG }),
 
   // Image enhancement settings
   superResolution: false,
