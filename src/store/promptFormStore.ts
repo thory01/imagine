@@ -47,6 +47,10 @@ export const usePromptFormStore = create<PromptFormState>((set) => ({
   setConditioningScale: (conditioningScale) => set({ conditioningScale }),
   numImages: 4,
   setNumImages: (numImages) => set({ numImages }),
+  steps: null,
+  setSteps: (steps) => set({ steps }),
+  seed: null,
+  setSeed: (seed) => set({ seed }),
   
   // Additional features
   loraTextList: [],

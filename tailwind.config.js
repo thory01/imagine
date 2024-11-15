@@ -21,6 +21,7 @@ export default {
       },
       screens: {
         'custom-lg': '1343px',
+        'min-h-660': { raw: '(min-height: 660px)' },
       },
     },
   },

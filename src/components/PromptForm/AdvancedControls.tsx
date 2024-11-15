@@ -68,18 +68,18 @@ export const AdvancedControls = () => {
     const { controlNet, setControlNet, colorGrading, setColorGrading, filmGrain, setFilmGrain,
         superResolution, setSuperResolution, hiresFix, setHiresFix, inpaintFaces, setInpaintFaces,
         faceCorrect, setFaceCorrect, faceSwap, setFaceSwap, denoisingStrength, setDenoisingStrength,
-        conditioningScale, setConditioningScale, numImages, setNumImages, promptText, setPromptText, error, image, urlImage: imageUrl, controlNetTXT2IMG, setControlNetTXT2IMG, backendVersion, setBackendVersion
+        conditioningScale, setConditioningScale, numImages, setNumImages, promptText, setPromptText, error, image, urlImage: imageUrl, controlNetTXT2IMG, setControlNetTXT2IMG, backendVersion, setBackendVersion, steps, setSteps, seed, setSeed
     } = usePromptFormStore();
 
     return (
-        <div className="advanced-controls grid md:grid-rows-2 grid-cols-1 md:grid-cols-2 gap-1 overflow-auto h-[400px] md:h-[410px] scrollbar dark:bg-zinc-900 dark:border-zinc-800">
+        <div className="advanced-controls grid md:grid-rows-2 grid-cols-1 md:grid-cols-2 gap-1 overflow-auto h-[410px] min-h-660:h-[480px] scrollbar dark:bg-zinc-900 dark:border-zinc-800">
             <AspectRatioSlider
                 baseSize={1024}
                 className="rounded-t-lg md:rounded-tr-none md:rounded-tl-lg"
             />
 
-            <div className={`md:row-span-2 scrollbar bg-gray-50 px-4 rounded-bl-lg rounded-br-lg md:rounded-bl-none md:rounded-r-lg order-3 md:order-2`}>
-                <div className="flex justify-between items-center mb-[3px] py-2">
+            <div className={`relative md:row-span-2 overflow-auto scrollbar bg-gray-50 px-4 rounded-bl-lg rounded-br-lg md:rounded-bl-none md:rounded-r-lg order-3 md:order-2`}>
+                <div className="flex justify-between items-center mb-[3px] py-2 sticky top-0 bg-gray-50 z-30">
                     <h2 className="text-sm font-medium text-gray-800">Advance Settings</h2>
                 </div>
                 <div className="space-y-[4px]">
@@ -105,7 +105,7 @@ export const AdvancedControls = () => {
                             <label className="text-sm font-[400] text-gray-700 dark:text-gray-200">
                                 Backend Version
                             </label>
-                            <select 
+                            <select
                                 className="col-span-2 border rounded-full h-6 py-0 px-2 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
                                 onChange={(e) => setBackendVersion(e.target.value)}
                                 value={backendVersion}
@@ -128,13 +128,39 @@ export const AdvancedControls = () => {
                             </label>
                             <input
                                 type="number"
-                                min="1"
-                                max="8"
                                 value={numImages}
                                 onChange={(e) => setNumImages(parseInt(e.target.value, 10))}
                                 className="col-span-2 border rounded-full h-6 py-1 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
                             />
                             {error?.num_images && <p className="text-red-500 text-xs ml-2">{error.num_images.join(" ")}</p>}
+                        </div>
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                        <div className="flex items-center justify-between">
+                            <label className="text-sm font-[400] text-gray-700 dark:text-gray-200">
+                                Steps
+                            </label>
+                            <input
+                                type="number"
+                                placeholder="Range: 10 - 50"
+                                value={steps ? steps : ""}
+                                onChange={(e) => setSteps(parseInt(e.target.value, 10))}
+                                className="col-span-2 border rounded-full h-6 py-1 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
+                            />
+                            {error?.steps && <p className="text-red-500 text-xs ml-2">{error.steps.join(" ")}</p>}
+                        </div>
+                        <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                        <div className="flex items-center justify-between">
+                            <label className="text-sm font-[400] text-gray-700 dark:text-gray-200">
+                                Seed
+                            </label>
+                            <input
+                                type="number"
+                                placeholder="42"
+                                value={seed ? seed : ""}
+                                onChange={(e) => setSeed(parseInt(e.target.value, 10))}
+                                className="col-span-2 border rounded-full h-6 py-1 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
+                            />
+                            {error?.seed && <p className="text-red-500 text-xs ml-2">{error.seed.join(" ")}</p>}
                         </div>
                         <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <SwitchInput label="Film Grain" checked={filmGrain} onCheckedChange={setFilmGrain} error={error?.film_grain?.join(" ")} />

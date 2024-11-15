@@ -3,6 +3,7 @@ import { useStore } from "@/store/promptStore";
 import { fetchGalleryPrompts, fetchUserPrompts } from "@/api/prompts";
 import type { Prompt } from "../types";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 
 export type PromptType = "user" | "gallery" | null;
@@ -46,6 +47,7 @@ const usePrompts = (promptId?: number): UsePromptsResult => {
     } catch (error: unknown) {
       console.error(`Error fetching ${isGallery ? "gallery" : "user"} prompts:`, error);
       if ((error as AxiosError).response?.status === 401) {
+        toast.error("Please log in to continue");
         window.location.href = "https://www.astria.ai/users/sign_in";
       }
       return false;

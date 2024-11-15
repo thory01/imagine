@@ -97,8 +97,8 @@ const PromptForm: React.FC = () => {
               className="fixed inset-0 z-[-1] opacity-100"
               onClick={() => setShowAdvancedControls(false)}
             />
-            <Card className="w-full mt-2">
-              <CardContent className="p-2 z-20">
+            <Card className="w-full mt-1">
+              <CardContent className="z-20 p-1">
                 <AdvancedControls />
               </CardContent>
             </Card>

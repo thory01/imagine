@@ -127,6 +127,10 @@ export interface PromptFormState {
   setConditioningScale: (conditioningScale: number) => void;
   numImages: number;
   setNumImages: (numImages: number) => void;
+  steps: number | null;
+  setSteps: (steps: number) => void;
+  seed: number | null;
+  setSeed: (seed: number) => void;
   
   loraTextList: string[];
   setLoraTextList: (loraTextList: string[]) => void;
