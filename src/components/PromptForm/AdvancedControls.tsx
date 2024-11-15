@@ -79,7 +79,7 @@ export const AdvancedControls = () => {
                 className="rounded-t-lg md:rounded-tr-none md:rounded-tl-lg"
             />
 
-            <div className={`md:relative md:row-span-2 overflow-auto md:scrollbar bg-gray-50 px-4 rounded-bl-lg rounded-br-lg md:rounded-bl-none md:rounded-r-lg order-3 md:order-2`}>
+            <div className={`md:relative md:row-span-2 md:overflow-auto md:scrollbar bg-gray-50 px-4 rounded-bl-lg rounded-br-lg md:rounded-bl-none md:rounded-r-lg order-3 md:order-2`}>
                 <div className="flex justify-between items-center mb-[3px] py-2 md:sticky md:top-0 bg-gray-50 z-30">
                     <h2 className="text-sm font-medium text-gray-800">Advance Settings</h2>
                 </div>
