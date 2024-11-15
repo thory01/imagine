@@ -2,6 +2,7 @@ import { useEffect, useCallback, useRef } from "react";
 import { useStore } from "@/store/promptStore";
 import { fetchGalleryPrompts, fetchUserPrompts } from "@/api/prompts";
 import type { Prompt } from "../types";
+import { AxiosError } from "axios";
 
 
 export type PromptType = "user" | "gallery" | null;
@@ -42,8 +43,11 @@ const usePrompts = (promptId?: number): UsePromptsResult => {
         addUserPrompts(prompts);
       }
       return true;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(`Error fetching ${isGallery ? "gallery" : "user"} prompts:`, error);
+      if ((error as AxiosError).response?.status === 401) {
+        window.location.href = "https://www.astria.ai/users/sign_in";
+      }
       return false;
     }
   }, [galleryOffset, userOffset, limit, addGalleryPrompts, addUserPrompts]);
