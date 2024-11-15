@@ -6,6 +6,7 @@ import ColorGradingSelector from "./ColorGradingSelector";
 import AddLoraText from "./AddLoraText";
 import { usePromptFormStore } from '@/store/promptFormStore';
 import { ChevronUp, ChevronDown } from "lucide-react";
+import { SelectLabel, Select, SelectItem, SelectTrigger, SelectContent, SelectValue, SelectGroup } from '../ui/select';
 
 
 interface RangeInputProps {
@@ -101,20 +102,23 @@ export const AdvancedControls = () => {
 
                 {showAdvancedOptions && (
                     <div className="space-y-[4px]">
-                        <div className="flex items-center justify-between">
-                            <label className="text-sm font-[400] text-gray-700 dark:text-gray-200">
+                        <SelectGroup className="flex items-center justify-between">
+                            <SelectLabel className="text-sm px-0 font-[400] text-gray-700 dark:text-gray-200 text-center">
                                 Backend Version
-                            </label>
-                            <select
-                                className="col-span-2 border rounded-full h-6 py-0 px-2 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
-                                onChange={(e) => setBackendVersion(e.target.value)}
-                                value={backendVersion}
-                            >
-                                <option value="0">0 - Stable</option>
-                                <option value="1">1 - BETA</option>
-                            </select>
+                            </SelectLabel>
+                            <Select onValueChange={(value) => setBackendVersion(value)} value={backendVersion}>
+                                <SelectTrigger className="w-[37%] text-center border rounded-full h-6 py-0 px-2 text-center bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
+                                    <SelectValue placeholder="Select a version" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem value="0">0 - Stable</SelectItem>
+                                        <SelectItem value="1">1 - BETA</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                             {error?.backend_version && <p className="text-red-500 text-xs ml-2">{error.backend_version.join(" ")}</p>}
-                        </div>
+                        </SelectGroup>
                         <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <SwitchInput label="Inpaint Faces" checked={inpaintFaces} onCheckedChange={setInpaintFaces} disabled={!superResolution} error={error?.inpaint_faces?.join(" ")} />
                         <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
