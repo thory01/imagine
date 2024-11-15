@@ -182,7 +182,7 @@ export const AdvancedControls = () => {
                 )}
             </div>
 
-            <div className={`w-full grid grid-cols-1 p-4 bg-gray-50 rounded-bl-lg md:order-3 order-2 ${!image && !imageUrl ? 'opacity-50 pointer-events-none' : ''}`}>
+            <div className={`w-full grid grid-cols-1 p-4 bg-gray-50 md:rounded-bl-lg md:order-3 order-2 ${!image && !imageUrl ? 'opacity-50 pointer-events-none' : ''}`}>
                 <div className="flex justify-between items-center mb-2">
                     <h2 className="text-sm font-medium text-gray-800">ControlNet/Img2Img</h2>
                 </div>
