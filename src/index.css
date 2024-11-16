@@ -79,11 +79,3 @@ input[type='range']::-moz-range-thumb {
   background: #4a5568;
   cursor: pointer;
 }
-
-.slick-list {
-  display: flex;
-  justify-content: center;
-}
-.slick-slide:last-child {
-  margin: 0 auto; /* Center the last slide */
-}

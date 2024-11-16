@@ -117,19 +117,31 @@ export const ImageZoom: React.FC<ImageZoomProps> = ({
           )}
           <div className="slider-container pt-0">
             <Slider
-             {...settings}>
+              {...settings}>
               {promptThumbnails.map((image, index) => (
-                <div className={`h-screen px-[1.5px]`}>
-                  <img
-                  key={index}
-                  src={image}
-                  alt={alt}
-                  className={`object-contain h-20 w-20 mx-1 rounded-xl cursor-pointer transition-transform duration-300 ${
-                    src === image ? "scale-150 " : ""
-                  }`}
-                  />
-                </div>
+                <>
+                  <div className={`h-screen px-[1.5px]`}>
+                    <img
+                      key={index}
+                      src={image}
+                      alt={alt}
+                      className={`object-contain h-20 w-20 mx-1 rounded-xl cursor-pointer transition-transform duration-300 ${src === image ? "scale-150 " : ""
+                        }`}
+                    />
+                  </div>
+                  {/* add dummy divs to center last slide */}
+                  {index === promptThumbnails.length - 1 && (
+                    <>
+                    
+                    </>
+                  )}
+                </>
               ))}
+              {/* add dummy divs to center last slide */}
+                {promptThumbnails.length - currentImageIndex < 9 &&
+                Array.from({ length: Math.max(0, 9 - (promptThumbnails.length - currentImageIndex)) }).map((_, index) => (
+                  <div key={index} className={`h-screen px-[1.5px]`}></div>
+                ))}
             </Slider>
           </div>
 
