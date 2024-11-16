@@ -8,7 +8,6 @@ import { usePromptFormStore } from '@/store/promptFormStore';
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { SelectLabel, Select, SelectItem, SelectTrigger, SelectContent, SelectValue, SelectGroup } from '../ui/select';
 
-
 interface RangeInputProps {
     label: string;
     value: number;
@@ -62,8 +61,6 @@ const SwitchInput = ({ label, checked, onCheckedChange, disabled = false, error 
     </div>
 );
 
-
-
 export const AdvancedControls = () => {
     const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
     const { controlNet, setControlNet, colorGrading, setColorGrading, filmGrain, setFilmGrain,
@@ -73,17 +70,17 @@ export const AdvancedControls = () => {
     } = usePromptFormStore();
 
     return (
-        <div className="advanced-controls grid md:grid-rows-2 grid-cols-1 md:grid-cols-2 gap-1 overflow-auto h-[410px] min-h-660:h-[480px] scrollbar dark:bg-zinc-900 dark:border-zinc-800">
+        <div className="advanced-controls grid md:grid-rows-2 grid-cols-1 md:grid-cols-2 gap-1 rounded-lg overflow-auto h-[420px] min-h-660:h-[480px] md:scrollbar dark:text-white dark:bg-zinc-900 dark:border-zinc-800">
             <AspectRatioSlider
                 baseSize={1024}
-                className="rounded-t-lg md:rounded-tr-none md:rounded-tl-lg"
+                className="rounded-t-lg md:rounded-tr-none md:rounded-tl-lg dark:bg-black dark:border-zinc-800 order-1 md:order-1"
             />
 
-            <div className={`md:relative md:row-span-2 md:overflow-auto md:scrollbar bg-gray-50 px-4 rounded-bl-lg rounded-br-lg md:rounded-bl-none md:rounded-r-lg order-3 md:order-2`}>
-                <div className="flex justify-between items-center mb-[3px] py-2 md:sticky md:top-0 bg-gray-50 z-30">
-                    <h2 className="text-sm font-medium text-gray-800">Advance Settings</h2>
+            <div className={`md:relative md:row-span-2 md:overflow-auto md:scrollbar bg-gray-50 dark:bg-black px-4 rounded-bl-lg rounded-br-lg md:rounded-bl-none md:rounded-r-lg order-3 md:order-2`}>
+                <div className="flex justify-between items-center mb-4 md:mb-[3px] py-2 md:sticky md:top-0 bg-gray-50 dark:bg-black z-30">
+                    <h2 className="text-sm font-medium text-gray-800 dark:text-gray-200 pt-2">Advance Settings</h2>
                 </div>
-                <div className="space-y-[4px]">
+                <div className="md:space-y-[4px] space-y-4">
                     <AddLoraText onSelect={(tune) => {
                         setPromptText(`<lora:${tune.id}:1> ${promptText}`);
                     }} onRemove={(loraText) => {
@@ -92,8 +89,8 @@ export const AdvancedControls = () => {
                     <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                     <SwitchInput label="Super Resolution" checked={superResolution} onCheckedChange={setSuperResolution} error={error?.super_resolution?.join(" ")} />
                     <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
-                    <div className={"col-span-full justify-center flex items-center ${showAdvancedOptions ? 'pt-0' : 'pt-6'}"}>
-                        <button onClick={() => setShowAdvancedOptions(!showAdvancedOptions)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
+                    <div className={`col-span-full justify-center flex items-center ${showAdvancedOptions ? 'pt-0' : 'pt-6'}`}>
+                        <button onClick={() => setShowAdvancedOptions(!showAdvancedOptions)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 text-sm">
                             <ChevronDown className={`w-6 h-6 ${showAdvancedOptions ? 'hidden' : 'block'}`} />
                         </button>
                     </div>
@@ -101,7 +98,7 @@ export const AdvancedControls = () => {
                 </div>
 
                 {showAdvancedOptions && (
-                    <div className="space-y-[4px]">
+                    <div className="md:space-y-[4px] space-y-4">
                         <SelectGroup className="flex items-center justify-between">
                             <SelectLabel className="text-sm px-0 font-[400] text-gray-700 dark:text-gray-200 text-center">
                                 Backend Version
@@ -174,7 +171,7 @@ export const AdvancedControls = () => {
                         <SwitchInput label="Face Swap" checked={faceSwap} onCheckedChange={setFaceSwap} error={error?.face_swap?.join(" ")} />
                         <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
                         <div className="col-span-full justify-center flex items-center pt-0">
-                            <button onClick={() => setShowAdvancedOptions(!showAdvancedOptions)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
+                            <button onClick={() => setShowAdvancedOptions(!showAdvancedOptions)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 text-sm">
                                 <ChevronUp className={`w-6 h-6 ${showAdvancedOptions ? 'block' : 'hidden'}`} />
                             </button>
                         </div>
@@ -182,21 +179,21 @@ export const AdvancedControls = () => {
                 )}
             </div>
 
-            <div className={`w-full grid grid-cols-1 p-4 bg-gray-50 md:rounded-bl-lg md:order-3 order-2 ${!image && !imageUrl ? 'opacity-50 pointer-events-none' : ''}`}>
-                <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-sm font-medium text-gray-800">ControlNet/Img2Img</h2>
+            <div className={`w-full grid grid-cols-1 p-4 bg-gray-50 dark:bg-black md:rounded-bl-lg md:order-3 order-2 ${!image && !imageUrl ? 'opacity-50 pointer-events-none' : ''}`}>
+                <div className="flex justify-between items-center mb-7 md:mb-2">
+                    <h2 className="text-sm font-medium text-gray-800 dark:text-gray-200">ControlNet/Img2Img</h2>
                 </div>
                 {(!image && !imageUrl) && (
-                    <p className="text-sm text-gray-500 mb-4">Please upload an image to use these controls</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Please upload an image to use these controls</p>
                 )}
                 <ControlNetSelector error={error?.controlnet?.join(" ")} value={controlNet} onChange={setControlNet} />
-                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                <hr className="border-t border-gray-200 dark:border-gray-700 md:m-0 my-4 p-0" />
                 <RangeInput error={error?.denoising_strength?.join(" ") || null} label="Denoising Strength" value={denoisingStrength} onChange={setDenoisingStrength} />
-                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                <hr className="border-t border-gray-200 dark:border-gray-700 md:m-0 my-4 p-0" />
                 <RangeInput error={error?.controlnet_conditioning_scale?.join(" ") || null} label="Conditioning Scale" value={conditioningScale} onChange={setConditioningScale} />
-                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                <hr className="border-t border-gray-200 dark:border-gray-700 md:m-0 my-4 p-0" />
                 <SwitchInput label="ControlNet Txt2Img" checked={controlNetTXT2IMG} onCheckedChange={setControlNetTXT2IMG} error={error?.controlnet_txt2img?.join(" ")} />
-                <hr className="border-t border-gray-200 dark:border-gray-700 m-0 p-0" />
+                <hr className="border-t border-gray-200 dark:border-gray-700 md:m-0 my-4 p-0" />
             </div>
         </div>
     );

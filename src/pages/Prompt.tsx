@@ -28,7 +28,6 @@ const Prompt: React.FC = () => {
     (prompt) => `${prompt?.id}` === id
   );
   const currentPrompt = prompts[currentPromptIndex];
-
   usePromptNavigation({
     currentPromptIndex,
     prompts,
@@ -92,6 +91,22 @@ const Prompt: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setZoomImage(true);
+      } else {
+        setZoomImage(false);
+      }
+    };
+
+    handleResize(); // Set initial state
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   if (isLoading) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
@@ -104,8 +119,8 @@ const Prompt: React.FC = () => {
     return null;
   }
 
-  return (
-    <div className="w-full h-screen flex flex-col overflow-hidden">
+  return (<>
+    <div className="hidden w-full h-screen md:flex flex-col overflow-hidden">
       <PromptForm />
       <div className="flex-1 p-0 md:p-4 overflow-auto">
         <div className="w-full h-full flex flex-col md:flex-row bg-light-mode">
@@ -119,13 +134,16 @@ const Prompt: React.FC = () => {
           />
         </div>
       </div>
-      <ImageZoom
-        src={currentPrompt.images[index]}
-        alt="Prompt image"
-        display={zoomImage}
-        setDisplay={setZoomImage}
-      />
     </div>
+    <ImageZoom
+      src={currentPrompt.images[index]}
+      alt="Prompt image"
+      display={zoomImage}
+      setDisplay={setZoomImage}
+      prompt={currentPrompt}
+      prompts={prompts}
+    />
+  </>
   );
 };
 

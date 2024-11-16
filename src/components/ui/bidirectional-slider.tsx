@@ -39,15 +39,19 @@ const BidirectionalSlider = React.forwardRef<
   const activeTrackWidth = `${(Math.abs(currentValue) / max) * 50}%`
 
   const getTrackColors = () => {
-    return currentValue === 0 ? 'bg-gray-300' : currentValue > 0 ? 'bg-gray-700' : 'bg-gray-500'
+    return currentValue === 0 
+      ? 'bg-gray-300 dark:bg-gray-700' 
+      : currentValue > 0 
+      ? 'bg-gray-700 dark:bg-gray-300' 
+      : 'bg-gray-500 dark:bg-gray-500'
   }
 
   const getThumbColors = () => {
     return currentValue === 0 
-      ? 'border-gray-400 hover:border-gray-500'
+      ? 'border-gray-400 hover:border-gray-500 dark:border-gray-500 dark:hover:border-gray-400'
       : currentValue > 0 
-      ? 'border-gray-600 hover:border-gray-700'
-      : 'border-gray-500 hover:border-gray-600'
+      ? 'border-gray-600 hover:border-gray-700 dark:border-gray-300 dark:hover:border-gray-400'
+      : 'border-gray-500 hover:border-gray-600 dark:border-gray-500 dark:hover:border-gray-400'
   }
 
   return (
@@ -65,9 +69,9 @@ const BidirectionalSlider = React.forwardRef<
         )}
       >
         {/* Background track */}
-        <SliderPrimitive.Track className="relative h-2 w-full grow rounded-full bg-gray-200">
+        <SliderPrimitive.Track className="relative h-2 w-full grow rounded-full bg-gray-200 dark:bg-gray-800">
           {/* Center line */}
-          <div className="absolute left-1/2 top-0 h-full w-0.5 -ml-px bg-gray-400" />
+          <div className="absolute left-1/2 top-0 h-full w-0.5 -ml-px bg-gray-400 dark:bg-gray-600" />
           
           {/* Active track */}
           <SliderPrimitive.Range 
@@ -85,9 +89,9 @@ const BidirectionalSlider = React.forwardRef<
         {/* Thumb */}
         <SliderPrimitive.Thumb
           className={cn(
-            "block h-6 w-6 rounded-full border-2 bg-white shadow-lg ring-offset-white",
+            "block h-6 w-6 rounded-full border-2 bg-white shadow-lg ring-offset-white dark:bg-gray-900 dark:ring-offset-gray-900",
             "transition-colors focus-visible:outline-none",
-            "focus-visible:ring-2 focus-visible:ring-gray-500",
+            "focus-visible:ring-2 focus-visible:ring-gray-500 dark:focus-visible:ring-gray-400",
             "focus-visible:ring-offset-2 disabled:pointer-events-none",
             "disabled:opacity-50",
             getThumbColors()

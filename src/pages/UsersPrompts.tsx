@@ -55,7 +55,7 @@ const UsersPrompts: React.FC = () => {
   return (
     <div className="flex-1 relative">
       <PromptForm />
-      <div className="mx-auto overflow-hidden px-4">
+      <div className="mx-auto overflow-hidden px-2 md:px-4">
         <InfiniteScroll
           dataLength={userPrompts.length}
           next={loadMorePrompts}
@@ -72,7 +72,7 @@ const UsersPrompts: React.FC = () => {
           <div className="grid grid-cols-1 gap-2">
             {Object.entries(groupedPrompts).map(([dateHeader, groupedPrompts]) => (
               <React.Fragment key={dateHeader}>
-                <h2 className="text-xl font-semibold mt-4 mb-2 text-black">{dateHeader}</h2>
+                <h2 className="text-xl font-semibold mt-4 mb-2 text-black dark:text-white">{dateHeader}</h2>
                 {groupedPrompts.map((prompt, index) => (
                   <div
                     key={prompt.id || index}

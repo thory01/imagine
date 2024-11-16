@@ -9,7 +9,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
-      <div className="flex w-full justify-around select-text bg-light-mode min-h-screen" >
+      <div className="flex w-full justify-around select-text bg-light-mode dark:bg-zinc-900 min-h-screen" >
         <Navbar />
         <MobileTabNav />
         <div className="flex-1 p-1">

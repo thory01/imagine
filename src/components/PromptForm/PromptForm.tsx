@@ -55,7 +55,7 @@ const PromptForm: React.FC = () => {
   }, [promptText]);
 
   return (
-    <div className="sticky top-0 z-10 w-full bg-gradient-to-b from-[#fafbfc] pb-4 md:pb-6">
+    <div className="sticky top-0 z-10 w-full bg-gradient-to-b from-[#fafbfc] pb-4 md:pb-6 dark:from-zinc-900  ">
       <div className="px-0 pt-6 md:px-6 max-w-7xl mx-auto">
         <Card className="w-full">
           <CardContent className="p-0">
@@ -78,7 +78,7 @@ const PromptForm: React.FC = () => {
                       setPromptText(e.target.value)
                     }}
                     rows={1}
-                    autoFocus
+                    autoFocus={window.innerWidth > 768}
                   />
                 </div>
 

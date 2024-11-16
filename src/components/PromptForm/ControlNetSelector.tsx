@@ -28,7 +28,7 @@ const ControlNetSelector: React.FC<ControlNetSelectorProps> = ({
   return (
     <div className="leading-0">
     <div className={cn("color-grading-selector gap-1 grid grid-cols-3 items-center", className)}>
-      <label htmlFor="color-grading" className="text-gray-700 text-sm font-[400] mb-2">
+      <label htmlFor="color-grading" className="text-gray-700 text-sm font-[400] mb-2 dark:text-white">
         ControlNet
       </label>
       <div className="col-span-2 ml-auto">

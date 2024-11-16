@@ -34,7 +34,7 @@ const Gallery: React.FC<MasonryGalleryProps> = ({
   };
 
   return (
-    <div className="mx-auto overflow-hidden px-4">
+    <div className="mx-auto overflow-hidden px-1 md:px-4">
       <InfiniteScroll
         dataLength={prompts.length}
         next={loadMorePrompts}

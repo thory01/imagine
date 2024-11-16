@@ -89,12 +89,12 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
   return (
     <div className={`w-full ${className} p-4 bg-gray-50`}>
       <div className="flex justify-between items-center">
-        <h2 className="text-sm font-medium text-gray-800">Aspect Ratio</h2>
+        <h2 className="text-sm font-medium text-gray-800 dark:text-white">Aspect Ratio</h2>
         <div className="flex items-center gap-2">
           <div style={{ height: `${baseSize / 25}px`, display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
             <div className="border border-gray-300 rounded-md shadow-sm" style={{ width: dimensions.width / 25, height: dimensions.height / 25 }} />
           </div>
-          <Button variant="ghost" size="sm" onClick={handleReset} className="text-sm text-gray-600 hover:text-gray-900 transition">Reset</Button>
+          <Button variant="ghost" size="sm" onClick={handleReset} className="text-sm text-gray-600 hover:text-gray-900 transition dark:text-white">Reset</Button>
         </div>
       </div>
       <div className="grid grid-cols-3 mb-2 bg-gray-200 rounded-full">
@@ -113,9 +113,9 @@ const AspectRatioSlider: React.FC<AspectRatioSliderProps> = ({
           );
         })}
       </div>
-      <hr className="my-3 border-gray-200" />
+      <hr className="my-3 border-gray-200 dark:border-gray-700" />
       <BidirectionalSlider value={sliderValue} max={5} step={1} onValueChange={handleSliderChange} className="mb-4" />
-      <div className="flex justify-between text-sm text-gray-600">
+      <div className="flex justify-between text-sm text-gray-600 dark:text-white">
         <span>{`${dimensions.width} × ${dimensions.height}px`}</span>
         <span>{selectedRatio}</span>
       </div>

@@ -54,7 +54,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ prompt, index }) => {
               "https://www.astria.ai/assets/logo-b4e21f646fb5879eb91113a70eae015a7413de8920960799acb72c60ad4eaa99.png";
           }}
         />
-        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black from-0% bg-opacity-50 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-between items-center">
+        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black from-0% bg-opacity-50 p-1 md:p-4 flex justify-between items-center md:opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-300">
           <div className="text-sm text-white font-medium hover:bg-white hover:bg-opacity-20 px-4 py-2 rounded-full cursor-pointer">
             {index + 1}
           </div>
@@ -62,8 +62,8 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ prompt, index }) => {
             <button
               className={`p-2 rounded-full transition-colors ${isCopied ? "bg-green-500" : "hover:bg-white/20"}`}
               onClick={(e) => {
-                e.stopPropagation();
-                handleCopy(prompt);
+          e.stopPropagation();
+          handleCopy(prompt);
               }}
               aria-label="Copy prompt text"
             >
