@@ -115,7 +115,7 @@ export const ImageZoom: React.FC<ImageZoomProps> = ({
               <Loader2 className="w-8 h-8 text-white animate-spin" />
             </div>
           )}
-          <div className="slider-container pt-0">
+          <div className="slider-container pt-0" onClick={handleClose}>
             <Slider
               {...settings}>
               {promptThumbnails.map((image, index) => (
