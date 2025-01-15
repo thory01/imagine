@@ -27,7 +27,8 @@ const PromptDetails: React.FC<PromptDetailsProps> = ({ prompt, imageUrl }) => {
     if (imageUrl) {
       const element = document.createElement("a");
       element.href = imageUrl;
-      element.download = `${prompt?.id || "image"}.png`;
+      element.download = `${prompt.id}.png`;
+      element.target = "_blank";
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);
@@ -35,19 +36,19 @@ const PromptDetails: React.FC<PromptDetailsProps> = ({ prompt, imageUrl }) => {
   };
 
   return (
-    <div className="hidden md:w-2/5 lg:w-1/3 h-full md:flex flex-col justify-between rounded-xl p-4 shadow-lg bg-white">
+    <div className="hidden md:w-2/5 lg:w-1/3 h-full md:flex flex-col justify-between rounded-xl p-4 shadow-lg bg-white dark:bg-black">
       <div>
         <div className="flex mb-2 justify-between items-center">
           <h2 className="text-lg font-semibold">{prompt?.id}</h2>
-          <div className="p-2 flex items-center gap-1">
+            <div className="p-2 flex items-center gap-1">
             <button
-              className="p-2 rounded-full hover:bg-gray-100"
+              className="p-2 rounded-full hover:bg-gray-100 group"
               onClick={handleDownload}
             >
-              <DownloadIcon className="text-gray-600 w-4 h-4" />
+              <DownloadIcon className="text-gray-600 dark:text-white group-hover:dark:text-gray-600 w-4 h-4" />
             </button>
             <button
-              className={`p-2 rounded-full hover:bg-gray-100 ${isPromptUsed ? "text-green-500" : "text-gray-600"
+              className={`p-2 rounded-full hover:bg-gray-100 dark:hover:text-gray-600 ${isPromptUsed ? "text-green-500" : "text-gray-600 dark:text-white"
               }`}
               onClick={() => handleUsePrompt(prompt)}
             >
@@ -58,29 +59,29 @@ const PromptDetails: React.FC<PromptDetailsProps> = ({ prompt, imageUrl }) => {
               )}
             </button>
             <button
-              className="p-2 rounded-full hover:bg-gray-100"
+              className="p-2 rounded-full hover:bg-gray-100 group"
               onClick={() => handleCopy(prompt)}
             >
               {isCopied ? (
-                <>
-                  <CheckIcon className="text-green-500 w-4 h-4" />
-                </>
+              <>
+                <CheckIcon className="text-green-500 w-4 h-4" />
+              </>
               ) : (
-                <>
-                  <CopyIcon className="text-gray-600 w-4 h-4" />
-                </>
+              <>
+                <CopyIcon className="text-gray-600 dark:text-white group-hover:dark:text-gray-600 w-4 h-4" />
+              </>
               )}
             </button>
             <button
-              className={`p-2 rounded-full hover:bg-gray-100 ${isLiked ? "text-red-500" : "text-gray-600"
-                }`}
+              className={`p-2 rounded-full hover:bg-gray-100 dark:hover:text-gray-600 ${isLiked ? "text-red-500" : "text-gray-600 dark:text-white"
+              }`}
               onClick={toggleLike}
             >
               <Heart className={`w-4 h-4 ${isLiked ? "fill-current" : ""}`} />
             </button>
-          </div>
+            </div>
         </div>
-        <p className="overflow-y-auto max-h-48 text-sm text-gray-700 break-words">
+        <p className="overflow-y-auto max-h-48 text-sm text-gray-700 dark:text-white break-words">
           {prompt?.text?.length > 100 ? `${prompt?.text.slice(0, 200)}...` : prompt?.text}
         </p>
       </div>

@@ -55,7 +55,7 @@ const Prompt: React.FC = () => {
 
   useEffect(() => {
     const determinePromptType = async () => {
-      console.log({ promptType, id, galleryPrompts });
+      // console.log({ promptType, id, galleryPrompts });
       if (!promptType && id) {
         setIsLoading(true);
         try {
@@ -123,7 +123,7 @@ const Prompt: React.FC = () => {
     <div className="hidden w-full h-screen md:flex flex-col overflow-hidden">
       <PromptForm />
       <div className="flex-1 p-0 md:p-4 overflow-auto">
-        <div className="w-full h-full flex flex-col md:flex-row bg-light-mode">
+        <div className="w-full h-full flex flex-col md:flex-row bg-light-mode dark:bg-zinc-900">
           <PromptImage
             imageUrl={currentPrompt.images[index]}
             setDisplay={setZoomImage}

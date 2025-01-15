@@ -61,7 +61,7 @@ const displayProperties: DisplayProperty[] = [
 export const PropertiesDisplay: React.FC<PropertiesDisplayProps> = ({
   prompt,
 }) => {
-  console.log("prompt", { prompt });
+  // console.log("prompt", { prompt });
   return (
     <>
       {prompt.input_image && (

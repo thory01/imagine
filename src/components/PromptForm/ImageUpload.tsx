@@ -18,7 +18,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ showControls, onImageU
   } = useImageUpload();
 
   const { image, urlImage } = usePromptFormStore();
-  console.log({ image, urlImage });
+  // console.log({ image, urlImage });
   const handleClear = () => {
     clearImage();
     onImageUpload(null, null);

@@ -23,7 +23,7 @@ export const retrievePrompt = async (tuneId: number, promptId: number): Promise<
 
 export const likePrompt = async (promptId: number) => {
   const response = await apiClient.post(`/prompts/${promptId}/like`);
-  console.log(response);
+  // console.log(response);
   if (response.status === 200 ){
     return true;
   }

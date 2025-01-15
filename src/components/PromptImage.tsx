@@ -12,7 +12,7 @@ const PromptImage: React.FC<PromptImageProps> = ({ imageUrl, setDisplay }) => {
 
   return (
     <div 
-      className="flex-1 relative cursor-zoom-in overflow-hidden pb-12 md:pb-0" 
+      className="flex-1 relative cursor-zoom-in overflow-hidden pb-12 md:pb-0 dark:bg-zinc-900" 
       onClick={() => setDisplay && setDisplay(true)}
     >
       <div className="h-full p-6 flex justify-center items-center">

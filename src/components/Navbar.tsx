@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 h-screen w-20 custom-lg:w-60 flex-col items-center justify-between p-4 bg-none hidden md:flex transition-all duration-300 ease-in-out">
+    <nav className={`sticky top-0 h-screen w-20 custom-lg:w-60 flex-col items-center justify-between p-4 bg-none hidden md:flex transition-all duration-300 ease-in-out ${location.state?.type !== 'user' && location.state?.type !== 'gallery' ? '' : 'dark:bg-black'}`}>
       <div className="flex w-full grow flex-col items-center gap-6">
         {/* Logo and brand */}
         <div className="flex-shrink-0 my-3 transition-all duration-200 ease-in-out">
@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
               alt="Logo"
               className="h-7 w-7 transition-transform duration-200 hover:scale-110"
             />
-            <span className="ml-2 text-black text-md font-semibold hidden custom-lg:inline">Astria Imagine</span>
+            <span className="ml-2 text-black text-md font-semibold hidden custom-lg:inline dark:text-white">Astria Imagine</span>
           </Link>
         </div>
         <div className="flex flex-col text-center item-center w-full py-2 space-y-4">
@@ -56,11 +56,11 @@ const Navbar: React.FC = () => {
         <div className="flex-shrink-0 my-3 transition-all duration-200 ease-in-out">
           <Link to="https://github.com/astriaai/imagine" className="flex items-center justify-center md:justify-start" target="_blank" rel="noopener noreferrer">
             <img
-              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              src={window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "./github-mark-white.png" : "./github-mark.png"}
               alt="GitHub Logo"
               className="h-7 w-7 transition-transform duration-200 hover:scale-110"
             />
-            <span className="ml-2 text-black text-md font-semibold hidden custom-lg:inline">Open Source Code</span>
+            <span className="ml-2 text-black text-md font-semibold hidden custom-lg:inline dark:text-white">Open Source Code</span>
           </Link>
         </div>
       </footer>
@@ -77,10 +77,10 @@ const NavLink: React.FC<NavLinkProps> = ({ to, label, Icon, active }) => (
     to={to}
     className={cn(
       'w-fit custom-lg:w-full flex items-center justify-center custom-lg:justify-start px-2 custom-lg:px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-in-out',
-      active ? 'bg-orange-500 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border text-orange-900' : 'text-gray-700 hover:bg-gray-100 hover:text-black'
+      active ? 'bg-orange-500 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 text-orange-900 dark:text-orange-500 dark:bg-opacity-20' : 'text-gray-700 hover:bg-gray-100 hover:text-black dark:text-white dark:hover:bg-gray-800 dark:hover:text-white',
     )}
   >
-      <Icon className="h-5 w-5 transition-transform duration-200 hover:scale-110" strokeWidth={2.5} />
+    <Icon className="h-5 w-5 transition-transform duration-200 hover:scale-110" strokeWidth={2.5} />
     <span className="ml-2 hidden custom-lg:inline">{label}</span>
   </Link>
 );

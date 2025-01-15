@@ -32,7 +32,7 @@ export const usePromptForm = () => {
   };
 
   const handlePaste = (event: ClipboardEvent) => {
-    console.log('handlePaste');
+    // console.log('handlePaste');
     //stop propagation to prevent the default paste behavior
     event.preventDefault();
     event.stopPropagation();
