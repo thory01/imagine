@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { PhotoIcon, HomeIcon } from '@heroicons/react/24/outline';
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
 
 interface NavItem {
   to: string;
@@ -55,11 +56,7 @@ const Navbar: React.FC = () => {
       <footer className="text-sm text-gray-500">
         <div className="flex-shrink-0 my-3 transition-all duration-200 ease-in-out">
           <Link to="https://github.com/astriaai/imagine" className="flex items-center justify-center md:justify-start" target="_blank" rel="noopener noreferrer">
-            <img
-              src={window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "./github-mark-white.png" : "./github-mark.png"}
-              alt="GitHub Logo"
-              className="h-7 w-7 transition-transform duration-200 hover:scale-110"
-            />
+            <GitHubLogoIcon className='h-7 w-7 transition-transform duration-200 hover:scale-110 text white' />
             <span className="ml-2 text-black text-md font-semibold hidden custom-lg:inline dark:text-white">Open Source Code</span>
           </Link>
         </div>
